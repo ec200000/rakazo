@@ -58,6 +58,76 @@ export function modelStreamIdleTimeoutMs(): number {
   );
 }
 
+/** Waits before the first same-model retries of a transient failure; later ones keep doubling. */
+const MODEL_RETRY_DELAYS_MS = [2_000, 8_000, 20_000] as const;
+const DEFAULT_MODEL_RETRY_ATTEMPTS = MODEL_RETRY_DELAYS_MS.length;
+const DEFAULT_MODEL_RETRY_MAX_DELAY_MS = 20_000;
+export const DEFAULT_MODEL_REPLY_RECOVERIES = 3;
+
+export type ModelRetryPolicy = {
+  /** Same-model retries of one call after a transient failure before any reply text. */
+  attempts: number;
+  /** Time those retries may take, from the call's first attempt; Infinity for no limit. */
+  windowMs: number;
+  /** Longest wait between two retries. */
+  maxDelayMs: number;
+  /** Retries after a stalled stream: once by default, otherwise as many as `attempts`. */
+  idleAttempts: number;
+};
+
+function wholeNumberFromEnv(value: string | undefined, fallback: number, max: number): number {
+  const raw = Number(value?.trim() || fallback);
+  return Number.isInteger(raw) && raw >= 0 && raw <= max ? raw : fallback;
+}
+
+/**
+ * How hard one model call retries a dropped connection, timeout, overload or stalled stream.
+ * The defaults are the built-in schedule; a slow local model server can raise them so a run
+ * waits for an answer instead of failing. MODEL_RETRY_WINDOW_MS=0 removes the time limit.
+ */
+export function modelRetryPolicy(): ModelRetryPolicy {
+  const attempts = wholeNumberFromEnv(
+    process.env.MODEL_RETRY_ATTEMPTS,
+    DEFAULT_MODEL_RETRY_ATTEMPTS,
+    10_000,
+  );
+  const window = process.env.MODEL_RETRY_WINDOW_MS?.trim();
+  const windowMs = !window
+    ? modelStreamTimeoutMs()
+    : window === "0"
+      ? Number.POSITIVE_INFINITY
+      : timeoutMsFromEnv(window, modelStreamTimeoutMs(), 1_000, 2_147_483_647);
+  return {
+    attempts,
+    windowMs,
+    maxDelayMs: timeoutMsFromEnv(
+      process.env.MODEL_RETRY_MAX_DELAY_MS,
+      DEFAULT_MODEL_RETRY_MAX_DELAY_MS,
+      1_000,
+      3_600_000,
+    ),
+    idleAttempts: attempts > DEFAULT_MODEL_RETRY_ATTEMPTS ? attempts : 1,
+  };
+}
+
+/** The wait before retry number `retry` (0-based), or undefined once the policy allows no more. */
+export function modelRetryDelayMs(retry: number, policy: ModelRetryPolicy): number | undefined {
+  if (retry >= policy.attempts) return undefined;
+  const scheduled =
+    MODEL_RETRY_DELAYS_MS[retry] ??
+    MODEL_RETRY_DELAYS_MS.at(-1)! * 2 ** (retry - MODEL_RETRY_DELAYS_MS.length + 1);
+  return Math.min(scheduled, policy.maxDelayMs);
+}
+
+/** Times per run a reply cut short (dropped connection, output limit) is repeated or continued. */
+export function modelReplyRecoveries(): number {
+  return wholeNumberFromEnv(
+    process.env.MODEL_REPLY_RECOVERIES,
+    DEFAULT_MODEL_REPLY_RECOVERIES,
+    1_000,
+  );
+}
+
 export const TOOL_RESULT_TEXT_LIMIT = 12_000;
 
 export function clipToolResultText(text: string, limit: number = TOOL_RESULT_TEXT_LIMIT): string {

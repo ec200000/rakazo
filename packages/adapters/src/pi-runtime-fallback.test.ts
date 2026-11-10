@@ -392,6 +392,52 @@ describe("Pi runtime transient model retries", () => {
     expect(providerState.delay.mock.calls.map(([delay]) => delay)).toEqual([2_000, 8_000, 20_000]);
   });
 
+  it("keeps retrying a flaky local model as often as MODEL_RETRY_ATTEMPTS allows", async () => {
+    vi.stubEnv("MODEL_RETRY_ATTEMPTS", "8");
+    vi.stubEnv("MODEL_RETRY_WINDOW_MS", "0");
+    vi.stubEnv("MODEL_RETRY_MAX_DELAY_MS", "60000");
+    const failures = ["Connection error.", "socket hang up", "terminated", "read ECONNRESET"];
+    for (let i = 0; i < 6; i++) {
+      providerState.stream.mockImplementationOnce(() =>
+        stream(primary, message(primary, [], "error", failures[i % failures.length])),
+      );
+    }
+    providerState.stream.mockImplementation(() =>
+      stream(primary, message(primary, [{ type: "text", text: "Finally." }], "stop")),
+    );
+    expect(await run(request())).toContainEqual({ type: "text", text: "Finally." });
+    expect(providerState.stream).toHaveBeenCalledTimes(7);
+    expect(providerState.delay.mock.calls.map(([delay]) => delay)).toEqual([
+      2_000, 8_000, 20_000, 40_000, 60_000, 60_000,
+    ]);
+    // Without a window, each attempt still waits the full header timeout, not forever.
+    expect(providerState.stream.mock.calls[6]?.[2].timeoutMs).toBe(MODEL_STREAM_TIMEOUT_MS);
+  });
+
+  it("gives up after MODEL_RETRY_ATTEMPTS retries", async () => {
+    vi.stubEnv("MODEL_RETRY_ATTEMPTS", "5");
+    vi.stubEnv("MODEL_RETRY_WINDOW_MS", "0");
+    providerState.stream.mockImplementation(() =>
+      stream(primary, message(primary, [], "error", "Connection error.")),
+    );
+    await expect(run(request())).rejects.toThrow("Connection error.");
+    expect(providerState.stream).toHaveBeenCalledTimes(6);
+  });
+
+  it("retries stalled streams as often as other failures once attempts are raised", async () => {
+    vi.stubEnv("MODEL_RETRY_ATTEMPTS", "10");
+    for (let i = 0; i < 4; i++) {
+      providerState.stream.mockImplementationOnce(() =>
+        stream(primary, message(primary, [], "error", MODEL_STREAM_IDLE_TIMEOUT_MESSAGE)),
+      );
+    }
+    providerState.stream.mockImplementation(() =>
+      stream(primary, message(primary, [{ type: "text", text: "Unstuck." }], "stop")),
+    );
+    expect(await run(request())).toContainEqual({ type: "text", text: "Unstuck." });
+    expect(providerState.stream).toHaveBeenCalledTimes(5);
+  });
+
   it.each(["Request timed out.", "Connection error.", "HTTP 503 unavailable"])(
     "does not retry %s after the request budget is spent",
     async (error) => {

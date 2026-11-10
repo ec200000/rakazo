@@ -9,6 +9,9 @@ import {
   MODEL_STREAM_IDLE_TIMEOUT_MS,
   MODEL_STREAM_TIMEOUT_MS,
   modelConnectTimeoutMs,
+  modelReplyRecoveries,
+  modelRetryDelayMs,
+  modelRetryPolicy,
   modelStreamIdleTimeoutMs,
   modelStreamMaxRetries,
   modelStreamTimeoutMs,
@@ -268,5 +271,62 @@ describe("clipToolResultContent", () => {
       .filter((part) => part.type === "text")
       .reduce((sum, part) => sum + part.text.replace(/…$/, "").length, 0);
     expect(textChars).toBe(TOOL_RESULT_TEXT_LIMIT);
+  });
+});
+
+describe("modelRetryPolicy", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("keeps the built-in schedule when unset", () => {
+    const policy = modelRetryPolicy();
+    expect(policy).toEqual({
+      attempts: 3,
+      windowMs: MODEL_STREAM_TIMEOUT_MS,
+      maxDelayMs: 20_000,
+      idleAttempts: 1,
+    });
+    expect([0, 1, 2, 3].map((retry) => modelRetryDelayMs(retry, policy))).toEqual([
+      2_000,
+      8_000,
+      20_000,
+      undefined,
+    ]);
+    expect(modelReplyRecoveries()).toBe(3);
+  });
+
+  it("raises attempts, lifts the window and doubles waits up to the cap", () => {
+    vi.stubEnv("MODEL_RETRY_ATTEMPTS", "200");
+    vi.stubEnv("MODEL_RETRY_WINDOW_MS", "0");
+    vi.stubEnv("MODEL_RETRY_MAX_DELAY_MS", "60000");
+    vi.stubEnv("MODEL_REPLY_RECOVERIES", "50");
+    const policy = modelRetryPolicy();
+    expect(policy).toEqual({
+      attempts: 200,
+      windowMs: Number.POSITIVE_INFINITY,
+      maxDelayMs: 60_000,
+      idleAttempts: 200,
+    });
+    expect([2, 3, 4, 5, 199, 200].map((retry) => modelRetryDelayMs(retry, policy))).toEqual([
+      20_000,
+      40_000,
+      60_000,
+      60_000,
+      60_000,
+      undefined,
+    ]);
+    expect(modelReplyRecoveries()).toBe(50);
+  });
+
+  it("keeps defaults for invalid values", () => {
+    vi.stubEnv("MODEL_RETRY_ATTEMPTS", "-1");
+    vi.stubEnv("MODEL_RETRY_WINDOW_MS", "soon");
+    vi.stubEnv("MODEL_RETRY_MAX_DELAY_MS", "10");
+    vi.stubEnv("MODEL_REPLY_RECOVERIES", "1.5");
+    expect(modelRetryPolicy()).toMatchObject({
+      attempts: 3,
+      windowMs: MODEL_STREAM_TIMEOUT_MS,
+      maxDelayMs: 20_000,
+    });
+    expect(modelReplyRecoveries()).toBe(3);
   });
 });

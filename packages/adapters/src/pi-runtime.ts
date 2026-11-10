@@ -56,7 +56,6 @@ import {
   fallbackAwareModelStream,
   MAX_CONTINUATION_MARKER,
   MAX_CONTINUATION_OVERLAP,
-  MAX_SELF_RECOVERIES_PER_RUN,
 } from "./pi-runtime-fallback.js";
 import {
   isHistoryReply,
@@ -66,6 +65,7 @@ import {
   withLeadingUser,
   withoutSteeringMessages,
 } from "./pi-runtime-history.js";
+import { modelReplyRecoveries } from "./pi-runtime-limits.js";
 import type { RuntimeModelTarget } from "./pi-runtime-models.js";
 import {
   cardOutputCeiling,
@@ -956,7 +956,7 @@ export class PiAgentRuntime implements AgentRuntime {
               !streamed.slice(limitContinuation.start).trim() &&
               !cutBy
             ) {
-              if (fallbackState.selfRecoveries >= MAX_SELF_RECOVERIES_PER_RUN) {
+              if (fallbackState.selfRecoveries >= modelReplyRecoveries()) {
                 outputCutFailed = true;
               } else {
                 fallbackState.selfRecoveries += 1;

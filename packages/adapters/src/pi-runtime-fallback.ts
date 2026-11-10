@@ -35,6 +35,9 @@ import { OPENAI_COMPATIBLE_PROVIDER_ID } from "./pi-openai-compatible-provider.j
 import { assistantText, messageHasToolCall, sanitizeProviderError } from "./pi-runtime-errors.js";
 import {
   effectiveOutputReserve,
+  modelReplyRecoveries,
+  modelRetryDelayMs,
+  modelRetryPolicy,
   modelStreamTimeoutMs,
   operatorMaxTokens,
   resolveCompletionMaxTokens,
@@ -57,8 +60,6 @@ import {
   withoutThinkingBlocks,
   withoutThinkingFrom,
 } from "./thinking-signatures.js";
-
-const MODEL_PROVIDER_RETRY_DELAYS_MS = [2_000, 8_000, 20_000] as const;
 
 /** Why a reply ended before the model finished it. */
 export type CutReplyReason = "connection" | "limit";
@@ -131,7 +132,6 @@ function eventHasVisibleOutput(event: AssistantMessageEvent): boolean {
   return assistantHasVisibleOutput(event.partial);
 }
 
-export const MAX_SELF_RECOVERIES_PER_RUN = 3;
 const MIN_CONTINUATION_OVERLAP = 4;
 export const MAX_CONTINUATION_OVERLAP = 240;
 
@@ -444,12 +444,15 @@ export function fallbackAwareModelStream(
   const run = async () => {
     let buffered: AssistantMessageEvent[] = [];
     let retries = 0;
-    let recoveredIdle = false;
+    let idleRetries = 0;
+    const retryPolicy = modelRetryPolicy();
     let sizingFailure: Extract<AssistantMessageEvent, { type: "error" }> | undefined;
     // Bound same-model retries. Explicit backups retain their per-model header
     // timeout: a post-header idle watchdog can already exceed that timeout.
     let startedAt = Date.now();
     const timeoutMs = options?.timeoutMs ?? modelStreamTimeoutMs();
+    // Same-model retries share this window; by default it is the header timeout itself.
+    const retryWindowMs = options?.timeoutMs ?? retryPolicy.windowMs;
     let firstRetryableError: Extract<AssistantMessageEvent, { type: "error" }> | undefined;
     // Set once this call has been repeated after spending its output budget on nothing visible.
     let lengthRecovered = false;
@@ -459,7 +462,7 @@ export function fallbackAwareModelStream(
     const continuingCutReply = Boolean(state.continuingCutReply);
     state.continuingCutReply = false;
     while (!signalAborted()) {
-      const remainingMs = timeoutMs - (Date.now() - startedAt);
+      const remainingMs = retryWindowMs - (Date.now() - startedAt);
       const failure = firstRetryableError ?? sizingFailure;
       if ((retries > 0 || sizingFailure) && remainingMs <= 0 && failure) {
         output.push(failure);
@@ -476,7 +479,7 @@ export function fallbackAwareModelStream(
       const outputCap = state.outputCaps?.get(targetKey);
       const attemptOptions = {
         ...options,
-        ...(retries > 0 || sizingFailure ? { timeoutMs: remainingMs } : {}),
+        ...(retries > 0 || sizingFailure ? { timeoutMs: Math.min(timeoutMs, remainingMs) } : {}),
         ...(outputCap !== undefined
           ? { maxTokens: Math.min(outputCap, options?.maxTokens ?? outputCap) }
           : {}),
@@ -663,22 +666,29 @@ export function fallbackAwareModelStream(
                 firstRetryableError ??= event;
                 const idle = event.error.errorMessage === MODEL_STREAM_IDLE_TIMEOUT_MESSAGE;
                 const delay = idle
-                  ? recoveredIdle
-                    ? undefined
-                    : MODEL_PROVIDER_RETRY_DELAYS_MS[0]
-                  : MODEL_PROVIDER_RETRY_DELAYS_MS[retries];
+                  ? idleRetries < retryPolicy.idleAttempts
+                    ? modelRetryDelayMs(0, retryPolicy)
+                    : undefined
+                  : modelRetryDelayMs(retries, retryPolicy);
                 if (idle && delay !== undefined) {
                   // The post-header idle bound can outlast the header retry window.
-                  // Renew it once for this empty call, retaining completed tool results.
-                  recoveredIdle = true;
+                  // Renew it for this empty call, retaining completed tool results.
+                  idleRetries += 1;
                   startedAt = Date.now();
                 }
                 // Ordinary failures and backoff share the remaining retry window.
-                if (delay !== undefined && Date.now() - startedAt + delay < timeoutMs) {
+                if (delay !== undefined && Date.now() - startedAt + delay < retryWindowMs) {
                   retries += 1;
+                  getLogger().info("model.retry", {
+                    runId: state.request.runId,
+                    provider: target.config.provider,
+                    model: target.config.id,
+                    retry: retries,
+                    delayMs: delay,
+                  });
                   await abortableDelay(delay, signal);
                   if (failIfAborted(target)) return;
-                  if (Date.now() - startedAt < timeoutMs) {
+                  if (Date.now() - startedAt < retryWindowMs) {
                     buffered = [];
                     restart = true;
                     break;
@@ -697,7 +707,7 @@ export function fallbackAwareModelStream(
               !messageHasToolCall(lastPartial) &&
               event.reason === "error" &&
               !signalAborted() &&
-              state.selfRecoveries < MAX_SELF_RECOVERIES_PER_RUN &&
+              state.selfRecoveries < modelReplyRecoveries() &&
               isTransientModelError(event.error)
             ) {
               // End the call with the text the user already sees; the runtime asks for the rest.
@@ -740,7 +750,7 @@ export function fallbackAwareModelStream(
             ) {
               // pi fails a tool call cut at the limit and asks for it again. That re-issue gets
               // more room; once the run's recoveries are spent, the run fails instead of looping.
-              if (state.selfRecoveries >= MAX_SELF_RECOVERIES_PER_RUN) {
+              if (state.selfRecoveries >= modelReplyRecoveries()) {
                 const failure: AssistantMessage = {
                   ...event.message,
                   content: event.message.content.filter((part) => part.type !== "toolCall"),
@@ -779,7 +789,7 @@ export function fallbackAwareModelStream(
                 content: event.message.content.filter((part) => part.type === "text"),
               };
               const message: AssistantMessage =
-                state.selfRecoveries >= MAX_SELF_RECOVERIES_PER_RUN
+                state.selfRecoveries >= modelReplyRecoveries()
                   ? { ...ended, stopReason: "error", errorMessage: MODEL_OUTPUT_CUT_ERROR }
                   : { ...ended, stopReason: "stop" };
               if (message.stopReason === "stop") {
@@ -808,7 +818,7 @@ export function fallbackAwareModelStream(
               event.message.stopReason === "length" &&
               !event.message.errorMessage &&
               !assistantHasVisibleOutput(event.message) &&
-              state.selfRecoveries < MAX_SELF_RECOVERIES_PER_RUN &&
+              state.selfRecoveries < modelReplyRecoveries() &&
               !signalAborted()
                 ? lengthRecovery(target, sentMaxTokens, thinkingLevel, outputCap)
                 : undefined;
