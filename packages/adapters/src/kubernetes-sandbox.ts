@@ -44,6 +44,25 @@ const CONTAINER_NAME = "computer";
 // never reused or replaced.
 const BOT_ID_LABEL = "rakazo-bot-id";
 const HOME_VOLUME = "home";
+const TRUST_VOLUME = "trust";
+const TRUST_DIR = "/etc/rakazo-ca";
+/** System CAs plus the deployment's, for tools that read one bundle file. */
+const TRUST_BUNDLE = `${TRUST_DIR}/ca-bundle.crt`;
+/** The deployment's CAs alone, for Node, which adds them to its own list. */
+const TRUST_EXTRA = `${TRUST_DIR}/extra.crt`;
+/** Where common tools look for a CA bundle; each is pointed at TRUST_BUNDLE. */
+const TRUST_BUNDLE_ENV = [
+  "SSL_CERT_FILE",
+  "CURL_CA_BUNDLE",
+  "GIT_SSL_CAINFO",
+  "REQUESTS_CA_BUNDLE",
+  "PIP_CERT",
+];
+const CONTAINER_SECURITY = {
+  allowPrivilegeEscalation: false,
+  capabilities: { drop: ["ALL"] },
+  seccompProfile: { type: "RuntimeDefault" },
+};
 const READY_PORT = 6080;
 const DESKTOP_PORT_START = 6100;
 export interface KubernetesSandboxOptions {
@@ -65,6 +84,12 @@ export interface KubernetesSandboxOptions {
   homeClaim?: string;
   homeColocateNamespace?: string;
   homeColocateLabels?: Record<string, string>;
+  /**
+   * PEM certificates of the deployment's own CAs. Each new Computer trusts them besides the
+   * system CAs, so git, curl, Python and Node reach internal HTTPS servers. Certificates are
+   * public, so they travel in the pod spec rather than a Secret in the Computer namespace.
+   */
+  caBundle?: string;
 }
 
 export interface KubernetesSandboxSdk {
@@ -84,6 +109,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
   private readonly homeClaim: string | undefined;
   private readonly homeColocateNamespace: string | undefined;
   private readonly homeColocateLabels: Record<string, string>;
+  private readonly caBundle: string | undefined;
   private clientsValue: KubernetesSandboxSdk | undefined;
   private readonly shell = new ExecComputer((...exec) => this.execRaw(...exec), "Kubernetes");
 
@@ -129,6 +155,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
     this.homeClaim = options.homeClaim?.trim() || undefined;
     this.homeColocateNamespace = options.homeColocateNamespace?.trim() || undefined;
     this.homeColocateLabels = { ...options.homeColocateLabels };
+    this.caBundle = options.caBundle?.includes("BEGIN CERTIFICATE") ? options.caBundle : undefined;
     if (
       this.homeClaim &&
       (!this.homeColocateNamespace || Object.keys(this.homeColocateLabels).length === 0)
@@ -377,6 +404,17 @@ export class KubernetesSandboxProvider implements SandboxProvider {
       ...(this.cpuLimit ? { cpu: this.cpuLimit } : {}),
       ...(this.memoryLimit ? { memory: this.memoryLimit } : {}),
     };
+    const resources = Object.keys(limits).length ? { resources: { limits } } : {};
+    const home = this.homeClaim ? this.homeSpec(botId) : undefined;
+    const trust = this.caBundle;
+    const volumes = [
+      ...(home?.volumes ?? []),
+      ...(trust ? [{ name: TRUST_VOLUME, emptyDir: {} }] : []),
+    ];
+    const volumeMounts = [
+      ...(home ? [{ name: HOME_VOLUME, mountPath: WORKSPACE, subPath: homeSubPath(botId) }] : []),
+      ...(trust ? [{ name: TRUST_VOLUME, mountPath: TRUST_DIR, readOnly: true }] : []),
+    ];
     return {
       apiVersion: "v1",
       kind: "Pod",
@@ -395,8 +433,32 @@ export class KubernetesSandboxProvider implements SandboxProvider {
         enableServiceLinks: false,
         restartPolicy: "Never",
         terminationGracePeriodSeconds: 10,
-        ...(this.homeClaim ? this.homeSpec(botId) : {}),
+        ...(home ? { securityContext: home.securityContext, affinity: home.affinity } : {}),
+        ...(volumes.length ? { volumes } : {}),
         ...(this.runtimeClassName ? { runtimeClassName: this.runtimeClassName } : {}),
+        ...(trust
+          ? {
+              // The image user cannot change the system store, so the bundle is written beside it.
+              initContainers: [
+                {
+                  name: "trust",
+                  image: this.computerImage,
+                  command: [
+                    "/usr/bin/env",
+                    "-u",
+                    "LD_PRELOAD",
+                    "sh",
+                    "-c",
+                    `printf '%s\\n' "$RAKAZO_EXTRA_CA" > ${TRUST_EXTRA} && { cat /etc/ssl/certs/ca-certificates.crt 2>/dev/null; cat ${TRUST_EXTRA}; } > ${TRUST_BUNDLE}`,
+                  ],
+                  env: [{ name: "RAKAZO_EXTRA_CA", value: trust }],
+                  securityContext: CONTAINER_SECURITY,
+                  volumeMounts: [{ name: TRUST_VOLUME, mountPath: TRUST_DIR }],
+                  ...resources,
+                },
+              ],
+            }
+          : {}),
         containers: [
           {
             name: CONTAINER_NAME,
@@ -404,14 +466,16 @@ export class KubernetesSandboxProvider implements SandboxProvider {
             env: [
               ...Object.entries(COMPUTER_CACHE_ENV).map(([name, value]) => ({ name, value })),
               { name: "VNC_RESOLUTION", value: "1280x800" },
+              ...(trust
+                ? [
+                    ...TRUST_BUNDLE_ENV.map((name) => ({ name, value: TRUST_BUNDLE })),
+                    { name: "NODE_EXTRA_CA_CERTS", value: TRUST_EXTRA },
+                  ]
+                : []),
             ],
             ports: [{ name: "screen", containerPort: READY_PORT, protocol: "TCP" }],
             // Matches the Docker computer: no capabilities, no privilege escalation, default seccomp.
-            securityContext: {
-              allowPrivilegeEscalation: false,
-              capabilities: { drop: ["ALL"] },
-              seccompProfile: { type: "RuntimeDefault" },
-            },
+            securityContext: CONTAINER_SECURITY,
             readinessProbe: {
               tcpSocket: { port: READY_PORT },
               initialDelaySeconds: 1,
@@ -419,14 +483,8 @@ export class KubernetesSandboxProvider implements SandboxProvider {
               timeoutSeconds: 1,
               failureThreshold: Math.ceil(this.readyTimeoutMs / 1_000),
             },
-            ...(this.homeClaim
-              ? {
-                  volumeMounts: [
-                    { name: HOME_VOLUME, mountPath: WORKSPACE, subPath: homeSubPath(botId) },
-                  ],
-                }
-              : {}),
-            ...(Object.keys(limits).length ? { resources: { limits } } : {}),
+            ...(volumeMounts.length ? { volumeMounts } : {}),
+            ...resources,
           },
         ],
       },

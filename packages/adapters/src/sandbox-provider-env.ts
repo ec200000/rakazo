@@ -84,6 +84,7 @@ export function sandboxProviderOptionsFromEnv(
   | "kubernetesHomeClaim"
   | "kubernetesHomeColocateNamespace"
   | "kubernetesHomeColocateLabels"
+  | "kubernetesCaFile"
   | "incusUrl"
   | "incusClientCert"
   | "incusClientKey"
@@ -147,6 +148,7 @@ export function sandboxProviderOptionsFromEnv(
       source.KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS,
       "KUBERNETES_SANDBOX_HOME_COLOCATE_LABELS",
     ),
+    kubernetesCaFile: optional(source.KUBERNETES_SANDBOX_CA_FILE),
     incusUrl: optional(source.INCUS_SANDBOX_URL),
     incusClientCert: pem(source.INCUS_SANDBOX_CLIENT_CERT),
     incusClientKey: pem(source.INCUS_SANDBOX_CLIENT_KEY),

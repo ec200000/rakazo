@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import type { ComputerRef, SandboxProvider } from "@rakazo/adapter-kit";
 import { SandboxKind } from "@rakazo/contracts";
 import { CreateOSSandboxProvider } from "./createos-sandbox.js";
@@ -49,6 +50,8 @@ export interface SandboxProviderOptions {
   kubernetesHomeClaim?: string;
   kubernetesHomeColocateNamespace?: string;
   kubernetesHomeColocateLabels?: KubernetesSandboxOptions["homeColocateLabels"];
+  /** PEM file of extra CAs every computer pod trusts besides the system ones. */
+  kubernetesCaFile?: string;
   incusUrl?: string;
   incusClientCert?: string;
   incusClientKey?: string;
@@ -162,6 +165,7 @@ export async function createSandboxProvider(
         homeClaim: opts.kubernetesHomeClaim,
         homeColocateNamespace: opts.kubernetesHomeColocateNamespace,
         homeColocateLabels: opts.kubernetesHomeColocateLabels,
+        caBundle: opts.kubernetesCaFile ? readFileSync(opts.kubernetesCaFile, "utf8") : undefined,
       });
     case "incus": {
       const required = {

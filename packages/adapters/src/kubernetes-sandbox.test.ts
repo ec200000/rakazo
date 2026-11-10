@@ -353,6 +353,81 @@ describe("KubernetesSandboxProvider", () => {
     ).rejects.toThrow("belongs to another bot");
   });
 
+  describe("deployment CAs", () => {
+    const pem = "-----BEGIN CERTIFICATE-----\nMIIBfake\n-----END CERTIFICATE-----";
+    const created = async (options: Record<string, unknown>) => {
+      const create = vi.fn().mockResolvedValue(readyPod);
+      const provider = providerFor(
+        {
+          readNamespacedPod: vi
+            .fn()
+            .mockRejectedValueOnce(Object.assign(new Error("missing"), { code: 404 }))
+            .mockResolvedValue(readyPod),
+          createNamespacedPod: create,
+        },
+        vi.fn(),
+        options,
+      );
+      await provider.provision({ botId: "team-ab12", homePath: "/data/homes/team-ab12" }, context);
+      return create.mock.calls[0]?.[0]?.body.spec;
+    };
+
+    it("writes a bundle of system and deployment CAs and points common tools at it", async () => {
+      const spec = await created({ caBundle: pem, cpuLimit: "1" });
+      expect(spec.volumes).toEqual([{ name: "trust", emptyDir: {} }]);
+      expect(spec.initContainers).toEqual([
+        expect.objectContaining({
+          name: "trust",
+          env: [{ name: "RAKAZO_EXTRA_CA", value: pem }],
+          volumeMounts: [{ name: "trust", mountPath: "/etc/rakazo-ca" }],
+          securityContext: expect.objectContaining({ allowPrivilegeEscalation: false }),
+          resources: { limits: { cpu: "1" } },
+        }),
+      ]);
+      const container = spec.containers[0];
+      expect(container.volumeMounts).toEqual([
+        { name: "trust", mountPath: "/etc/rakazo-ca", readOnly: true },
+      ]);
+      const env = Object.fromEntries(
+        container.env.map((entry: { name: string; value: string }) => [entry.name, entry.value]),
+      );
+      expect(env).toMatchObject({
+        SSL_CERT_FILE: "/etc/rakazo-ca/ca-bundle.crt",
+        GIT_SSL_CAINFO: "/etc/rakazo-ca/ca-bundle.crt",
+        REQUESTS_CA_BUNDLE: "/etc/rakazo-ca/ca-bundle.crt",
+        NODE_EXTRA_CA_CERTS: "/etc/rakazo-ca/extra.crt",
+      });
+    });
+
+    it("keeps a mounted home beside the trust volume", async () => {
+      const spec = await created({
+        caBundle: pem,
+        homeClaim: "data-claim",
+        homeColocateNamespace: "rakazo",
+        homeColocateLabels: { app: "rakazo-api" },
+      });
+      expect(spec.volumes.map((volume: { name: string }) => volume.name)).toEqual([
+        "home",
+        "trust",
+      ]);
+      expect(spec.containers[0].volumeMounts.map((mount: { name: string }) => mount.name)).toEqual([
+        "home",
+        "trust",
+      ]);
+      expect(spec.securityContext).toEqual({
+        fsGroup: 1000,
+        fsGroupChangePolicy: "OnRootMismatch",
+      });
+    });
+
+    it("changes nothing without certificates", async () => {
+      const spec = await created({ caBundle: "not a certificate" });
+      expect(spec.initContainers).toBeUndefined();
+      expect(spec.volumes).toBeUndefined();
+      expect(spec.containers[0].volumeMounts).toBeUndefined();
+    });
+  });
+
   describe("mounted home", () => {
     const home = {
       homeClaim: "data-claim",
