@@ -1,6 +1,10 @@
 import { setTimeout as sleep } from "node:timers/promises";
 import type { JobPublisher, JobWorkerHost } from "@rakazo/adapter-kit";
-import { unwrapEnvFromKeyManager } from "@rakazo/adapters";
+import {
+  applyDeploymentConfigEnv,
+  loadDeploymentConfig,
+  unwrapEnvFromKeyManager,
+} from "@rakazo/adapters";
 import { loadRootEnv } from "@rakazo/core/node/load-root-env";
 import { stopOnShutdownSignals } from "@rakazo/core/node/shutdown-signals";
 import { startWorkerHealth, watchEventLoopStalls } from "./health.js";
@@ -8,6 +12,16 @@ import { createWorkerSecretStore } from "./secret-store.js";
 
 loadRootEnv();
 await unwrapEnvFromKeyManager();
+// The operator's rakazo.jsonc: refuse to start on a bad file rather than run without it.
+try {
+  const deployment = loadDeploymentConfig();
+  if (deployment) applyDeploymentConfigEnv(deployment);
+} catch (error) {
+  process.stderr.write(
+    `rakazo config: ${error instanceof Error ? error.message : String(error)}\n`,
+  );
+  process.exit(1);
+}
 
 import {
   apnsVoipConfig,

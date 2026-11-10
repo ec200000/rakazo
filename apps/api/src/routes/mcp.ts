@@ -22,6 +22,7 @@ import {
   serverAvailability,
   serverSecretSpace,
 } from "../availability.js";
+import { isDeploymentInstall } from "../deployment-capabilities.js";
 import {
   queueMcpConnectedRun,
   resolveMcpApprovalCards,
@@ -54,6 +55,21 @@ export function mcpRoutes(ctx: RouterContext) {
     announceMcpServer,
     authed,
   } = ctx;
+  /** Servers from the deployment file follow the file; OAuth sign-in and bot choice stay open. */
+  const assertServerNotManaged = async (
+    db: Pick<Prisma.TransactionClient, "capabilityInstall">,
+    installId: string | null,
+  ) => {
+    if (!installId) return;
+    const install = await db.capabilityInstall.findFirst({
+      where: { id: installId },
+      select: { source: true },
+    });
+    if (isDeploymentInstall(install))
+      throw new ORPCError("FORBIDDEN", {
+        message: "This server is set by the server's administrator and can't be changed here",
+      });
+  };
   return {
     mcp: {
       servers: {
@@ -113,6 +129,7 @@ export function mcpRoutes(ctx: RouterContext) {
                 },
               });
               if (!existing) throw new IsolationError();
+              await assertServerNotManaged(tx, existing.installId);
               const existingSecret = existing.secretId
                 ? await tx.secret.findFirst({
                     where: {
@@ -390,9 +407,10 @@ export function mcpRoutes(ctx: RouterContext) {
               id: input.id,
               ...availableInSpace(context.actor),
             },
-            select: { id: true, secretId: true },
+            select: { id: true, secretId: true, installId: true },
           });
           if (!server) throw new IsolationError();
+          await assertServerNotManaged(deps.prisma, server.installId);
           // Assignments cascade; the encrypted credential must go with the server.
           // Cards are closed first, including ones that were never assigned.
           const seqs = await deps.prisma.$transaction((tx) =>

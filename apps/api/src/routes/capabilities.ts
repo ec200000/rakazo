@@ -3,6 +3,7 @@ import { ORPCError } from "@orpc/server";
 import {
   applyMcpSourcePreset,
   createPluginMarketplace,
+  gitHostsFromConfig,
   isTransientFetchError,
   MCP_SOURCE_PRESETS,
   pluginPreviewDto,
@@ -17,6 +18,7 @@ import { comparePlugins, containsSecret, matchesPluginQuery } from "@rakazo/core
 import type { Prisma } from "@rakazo/db";
 import { AVAILABILITY_SELECT, availableInSpace, itemSecretIn, spaceAvailability } from "@rakazo/db";
 import { requireAdmin } from "../admins.js";
+import { isDeploymentInstall } from "../deployment-capabilities.js";
 import { searchIntegrationCatalog } from "../integration-catalog.js";
 import { assertMcpRemoteEndpoint, mayUsePrivateEndpoint } from "../mcp-servers.js";
 import { installPlugin, lockPluginInstalls, setPluginParts } from "../plugin-installs.js";
@@ -29,7 +31,23 @@ import type { RouterContext } from "./context.js";
 
 export function capabilitiesRoutes(ctx: RouterContext) {
   const { deps, removeMcpServerInTransaction, authed } = ctx;
-  const pluginMarketplace = createPluginMarketplace(deps.pluginMarketplaceRead);
+  const config = deps.deploymentConfig;
+  const pluginMarketplace = createPluginMarketplace(deps.pluginMarketplaceRead, {
+    registries: config?.marketplaces,
+    defaultRegistries: config?.defaultMarketplaces,
+    hosts: gitHostsFromConfig(config ?? null),
+  });
+  /** Installs from the deployment file follow the file; users cannot remove or trim them. */
+  const assertNotManaged = async (actor: Actor, id: string) => {
+    const install = await deps.prisma.capabilityInstall.findFirst({
+      where: { id, ...availableInSpace(actor) },
+      select: { source: true },
+    });
+    if (isDeploymentInstall(install))
+      throw new ORPCError("FORBIDDEN", {
+        message: "This is set by the server's administrator and can't be changed here",
+      });
+  };
   /** Removes an install and, for a plugin, the servers, secrets and skills it added. */
   const removeInstall = async (actor: Actor, id: string) => {
     const notify: Array<{ threadId: string; seq: number }> = [];
@@ -293,10 +311,12 @@ export function capabilitiesRoutes(ctx: RouterContext) {
         }
       }),
       remove: authed.capabilities.remove.handler(async ({ context, input }) => {
+        await assertNotManaged(context.actor, input.id);
         await removeInstall(context.actor, input.id);
         return { ok: true as const };
       }),
       pluginParts: authed.capabilities.pluginParts.handler(async ({ context, input }) => {
+        await assertNotManaged(context.actor, input.id);
         const notify: Array<{ threadId: string; seq: number }> = [];
         const install = await setPluginParts(
           {

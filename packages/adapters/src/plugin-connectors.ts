@@ -129,7 +129,9 @@ function safePath(path: string): string {
 }
 
 /** URL syntax: https://host/owner/repo[.git][@ref][#subdir].
- * GitHub's /tree/ref/subdir form is accepted for single-segment refs. */
+ * GitHub's /tree/ref/subdir form is accepted for single-segment refs. Other hosts may also use a
+ * port, nest the repository (GitLab groups, Azure DevOps collection/project/_git/repo), and link a
+ * folder the GitLab way (/-/tree/ref/dir) or the Azure DevOps way (?path=/dir&version=GBbranch). */
 export function parsePluginSource(source: string): PluginSourceRef {
   const input = source.trim();
   if (!input || input.length > 2048) throw new Error("Plugin source must be an HTTPS git URL");
@@ -141,8 +143,28 @@ export function parsePluginSource(source: string): PluginSourceRef {
   }
   if (url.protocol !== "https:") throw new Error("Plugin source must use HTTPS");
   if (url.username || url.password) throw new Error("Plugin source must not contain credentials");
-  if (url.search || url.port)
+  const github = url.hostname === "github.com";
+  if (github && (url.search || url.port))
     throw new Error("Plugin source must not contain a query or custom port");
+  // Azure DevOps names a folder and branch (GB), tag (GT) or commit (GC) in the query.
+  let queryRef: string | undefined;
+  let querySubdir: string | undefined;
+  if (url.search) {
+    const keys = [...url.searchParams.keys()];
+    if (
+      !url.pathname.includes("/_git/") ||
+      keys.some((key) => !["path", "version", "_a"].includes(key))
+    )
+      throw new Error("Plugin source must not contain a query");
+    querySubdir = url.searchParams.get("path")?.replace(/^\/+|\/+$/g, "") || undefined;
+    const version = url.searchParams.get("version");
+    if (version) {
+      const match = /^G[BTC](.+)$/.exec(version);
+      if (!match) throw new Error("Plugin ref is invalid");
+      queryRef = match[1];
+    }
+    url.search = "";
+  }
   const subdirFromHash = url.hash.slice(1);
   url.hash = "";
   let path = url.pathname.replace(/\/$/, "");
@@ -152,18 +174,37 @@ export function parsePluginSource(source: string): PluginSourceRef {
     ref = path.slice(at + 1);
     path = path.slice(0, at);
   }
-  let subdir = subdirFromHash || undefined;
+  ref ??= queryRef;
+  let subdir = subdirFromHash || querySubdir || undefined;
   const tree = /^\/([^/]+)\/([^/]+)\/tree\/([^/]+)(?:\/(.+))?$/.exec(path);
-  if (url.hostname === "github.com" && tree) {
+  // GitLab's /-/tree/ref/subdir form, where the project path may be nested in groups.
+  const gitlabTree = /^(\/.+?)\/-\/tree\/([^/]+)(?:\/(.+))?$/.exec(path);
+  if (github && tree) {
     path = `/${tree[1]}/${tree[2]}`;
     ref ??= tree[3];
     subdir ??= tree[4];
+  } else if (!github && gitlabTree) {
+    path = gitlabTree[1]!;
+    ref ??= gitlabTree[2];
+    subdir ??= gitlabTree[3];
   }
   path = path.replace(/\.git$/, "");
-  if (
-    !/^\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(path) ||
-    path.split("/").some((p) => p === "." || p === "..")
-  ) {
+  // GitHub paths are owner/repo; other hosts may nest a repository and encode spaces.
+  const repoPath = github
+    ? /^\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/
+    : /^(?:\/(?:[A-Za-z0-9_.~()-]|%[0-9A-Fa-f]{2})+){2,10}$/;
+  const unsafeSegment = (segment: string) => {
+    let decoded: string;
+    try {
+      decoded = decodeURIComponent(segment);
+    } catch {
+      return true;
+    }
+    return (
+      /[/\\]/.test(decoded) || decoded === "." || decoded === ".." || hasControlCharacters(decoded)
+    );
+  };
+  if (!repoPath.test(path) || path.split("/").slice(1).some(unsafeSegment)) {
     throw new Error("Plugin source must identify an owner and repository");
   }
   if (
@@ -226,8 +267,31 @@ export async function fetchGitHubRepo(
   };
   if (tree.truncated || !Array.isArray(tree.tree))
     throw new Error("Plugin repository tree is incomplete");
-  const prefix = ref.subdir ? `${ref.subdir}/` : "";
-  const selected = tree.tree.filter((entry) => entry.path.startsWith(prefix));
+  const files = await collectRepoFiles(tree.tree, ref.subdir, (path) =>
+    read(
+      `https://raw.githubusercontent.com${repo}/${sha}/${path.split("/").map(encodeURIComponent).join("/")}`,
+      MAX_FILE_BYTES,
+      deadline,
+    ),
+  );
+  return { files, resolvedSha: sha };
+}
+
+/** One entry of a repository listing, as git trees describe it. */
+export type PluginRepoEntry = { path: string; type: string; mode: string; size?: number };
+
+/**
+ * Picks the plugin files under `subdir` from a repository listing and reads them through
+ * `read`, under the same limits whatever the host: component text only, bounded counts and
+ * sizes, and links or submodules recorded as unreadable instead of followed.
+ */
+export async function collectRepoFiles(
+  listing: PluginRepoEntry[],
+  subdir: string | undefined,
+  read: (path: string) => Promise<string>,
+): Promise<PluginRepoFile[]> {
+  const prefix = subdir ? `${subdir}/` : "";
+  const selected = listing.filter((entry) => entry.path.startsWith(prefix));
   const files: PluginRepoFile[] = [];
   const entries = selected.filter((entry) => {
     safePath(entry.path.slice(prefix.length));
@@ -261,11 +325,8 @@ export async function fetchGitHubRepo(
   await Promise.all(
     Array.from({ length: FETCH_CONCURRENCY }, async () => {
       for (let path = queue.shift(); path !== undefined; path = queue.shift()) {
-        const body = await read(
-          `https://raw.githubusercontent.com${repo}/${sha}/${path.split("/").map(encodeURIComponent).join("/")}`,
-          MAX_FILE_BYTES,
-          deadline,
-        );
+        const body = await read(path);
+        if (Buffer.byteLength(body) > MAX_FILE_BYTES) throw new Error("Plugin file is too large");
         total += Buffer.byteLength(body);
         if (total > MAX_BYTES) throw new Error("Plugin content is too large");
         files.push({ path, content: body });
@@ -274,7 +335,7 @@ export async function fetchGitHubRepo(
   );
   // Parallel downloads finish in any order; parsing must not depend on it.
   files.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
-  return { files, resolvedSha: sha };
+  return files;
 }
 
 function object(value: unknown): value is Record<string, unknown> {

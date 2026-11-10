@@ -37,6 +37,7 @@ import {
   createConnectorRuntime,
   createMediaGenerationProvider,
   createPaymentWalletProvider,
+  createPluginRepoFetcher,
   createProductAnalytics,
   createRunReconciler,
   createRunRuntime,
@@ -44,9 +45,11 @@ import {
   createRunSecretWriter,
   createSecretStore,
   createTicketChangeNotifier,
+  deploymentConfig,
   EmailEmulator,
   ExpoPushProvider,
   GraphileJobPublisher,
+  gitHostsFromConfig,
   InMemoryJobQueue,
   InMemoryRealtimeFanout,
   installedMessaging,
@@ -259,6 +262,11 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     ...envOverrides
   } = overrides;
   const env = { ...loadEnv(process.env), ...envOverrides };
+  // Loaded and validated at startup (index.ts); null without RAKAZO_CONFIG_FILE.
+  const config = deploymentConfig();
+  const repoFetcher =
+    pluginRepoFetcher ??
+    (config ? createPluginRepoFetcher({ hosts: gitHostsFromConfig(config) }) : undefined);
   const runtimeEnv: RunRuntimeEnv = { ...env, inboundEmailDomain: env.inboundEmail?.domain };
   const logger = loggerOverride ?? createServiceLogger({ service: SERVICE_NAMES.api });
   installLogger(logger);
@@ -707,8 +715,9 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
             }),
           },
     analytics,
-    pluginRepoFetcher,
+    pluginRepoFetcher: repoFetcher,
     pluginMarketplaceRead,
+    deploymentConfig: config,
     cloudAgent,
     paymentWallet,
     codexCatalog,

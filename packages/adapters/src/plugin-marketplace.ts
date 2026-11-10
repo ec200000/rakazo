@@ -3,6 +3,8 @@ import { comparePlugins, matchesPluginQuery, pluginCategory } from "@rakazo/core
 import { z } from "zod";
 import type { PluginCompleteness, PluginTextReader } from "./plugin-connectors.js";
 import { classifyPluginFiles, parsePluginSource } from "./plugin-connectors.js";
+import type { GitHosts, GitRunner } from "./plugin-git.js";
+import { withGitSnapshot } from "./plugin-git.js";
 import { fetchSafeWebText } from "./web-ssrf.js";
 
 const REGISTRIES = [
@@ -23,7 +25,26 @@ const REGISTRIES = [
     componentIndex: ".grok-plugin/plugin-index.json",
   },
 ];
-type Registry = (typeof REGISTRIES)[number];
+type Registry = {
+  name: string;
+  repository: string;
+  path: string;
+  manifest: string;
+  componentIndex: string | null;
+};
+/** Index locations a catalog on another git host may use, with its plugins' manifest path. */
+const INDEX_FORMATS = [
+  { path: ".cursor-plugin/marketplace.json", manifest: ".cursor-plugin/plugin.json" },
+  { path: ".grok-plugin/marketplace.json", manifest: ".grok-plugin/plugin.json" },
+];
+
+/** How a catalog's files are read: GitHub's public API, or a git snapshot. */
+type RegistryReader = {
+  tree(): Promise<{ paths: string[]; sizes: Map<string, number> }>;
+  /** Null for a file that does not exist, undefined when it could not be read now. */
+  text(path: string, maxBytes: number): Promise<string | null | undefined>;
+  logo(path: string): string | null;
+};
 const MANIFEST_TTL_MS = 60 * 60_000;
 const CATALOG_TTL_MS = 10 * 60_000;
 const MANIFEST_CONCURRENCY = 16;
@@ -51,6 +72,8 @@ const entrySchema = z.object({
 export function parsePluginMarketplace(
   raw: string,
   registry: { name: string; repository: string },
+  /** Hosts besides github.com whose plugins may be listed. */
+  hosts: ReadonlySet<string> = new Set(),
 ): { entries: PluginMarketplaceEntry[]; skipped: number } {
   const index: unknown = JSON.parse(raw);
   if (
@@ -85,7 +108,8 @@ export function parsePluginMarketplace(
               ? `${source.url}#${source.path.replace(/^\.?\//, "")}`
               : source.url;
       const ref = parsePluginSource(from);
-      if (new URL(ref.gitUrl).hostname !== "github.com") throw new Error("Unsupported plugin host");
+      const host = new URL(ref.gitUrl).hostname;
+      if (host !== "github.com" && !hosts.has(host)) throw new Error("Unsupported plugin host");
       if (typeof source !== "string" && "sha" in source && ref.ref && ref.ref !== source.sha)
         throw new Error("Conflicting plugin pin");
       const pin = typeof source !== "string" && "sha" in source ? source.sha : ref.ref;
@@ -177,9 +201,35 @@ function displayName(name: string): string {
 const publicRead: PluginTextReader = async (url, maxBytes, signal) =>
   (await fetchSafeWebText(url, { maxBytes, signal })).body;
 
+export type PluginMarketplaceOptions = {
+  /** Catalogs from the deployment file, read from github.com or a listed git host. */
+  registries?: Array<{ name: string; url: string }>;
+  /** false leaves out the built-in public catalogs. */
+  defaultRegistries?: boolean;
+  /** Git hosts the deployment allows, with credentials. */
+  hosts?: GitHosts;
+  run?: GitRunner;
+};
+
 /** Cache is per API router instance; failures are never cached. Concurrent
  * requests share one bounded fetch, without sharing an actor's abort signal. */
-export function createPluginMarketplace(read: PluginTextReader = publicRead) {
+export function createPluginMarketplace(
+  read: PluginTextReader = publicRead,
+  options: PluginMarketplaceOptions = {},
+) {
+  const hosts = options.hosts ?? new Map();
+  const hostNames = new Set(hosts.keys());
+  const registries: Registry[] = [
+    ...(options.defaultRegistries === false ? [] : REGISTRIES),
+    // A configured catalog's index location is found when it is first read.
+    ...(options.registries ?? []).map((entry) => ({
+      name: entry.name,
+      repository: entry.url.replace(/\.git$/, "").replace(/\/$/, ""),
+      path: "",
+      manifest: "",
+      componentIndex: null,
+    })),
+  ];
   const cache = new Map<
     string,
     { expires: number; data: ReturnType<typeof parsePluginMarketplace> }
@@ -226,24 +276,33 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
     trees.set(registry.name, { ...listing, expires: Date.now() + MANIFEST_TTL_MS });
     return listing;
   }
+  function githubReader(registry: Registry): RegistryReader {
+    const raw = `https://raw.githubusercontent.com${new URL(registry.repository).pathname}/HEAD/`;
+    const signal = AbortSignal.timeout(15_000);
+    return {
+      tree: () => repoTree(registry),
+      text: (path, maxBytes) => cachedText(`${raw}${path}`, maxBytes, signal),
+      logo: (path) => `${raw}${path}`,
+    };
+  }
   /** Vendored plugins describe their title, category and logo in a manifest beside them, and
    * their MCP config decides whether the connector installs. Plugins that would not install
    * completely, or whose parts cannot be told, are left out. */
   async function withDetails(
     registry: Registry,
     entries: PluginMarketplaceEntry[],
+    reader: RegistryReader,
   ): Promise<PluginMarketplaceEntry[]> {
-    const raw = `https://raw.githubusercontent.com${new URL(registry.repository).pathname}/HEAD/`;
     const prefix = `${registry.repository}#`;
-    const signal = AbortSignal.timeout(15_000);
     const [{ paths, sizes }, index] = await Promise.all([
       registry.componentIndex
         ? Promise.resolve({ paths: [] as string[], sizes: new Map<string, number>() })
-        : repoTree(registry),
+        : reader.tree(),
       registry.componentIndex
-        ? read(`${raw}${registry.componentIndex}`, 2_000_000, signal).then((text) =>
-            componentIndexSchema.parse(JSON.parse(text)),
-          )
+        ? reader.text(registry.componentIndex, 2_000_000).then((text) => {
+            if (!text) throw new Error("Registry component index is missing");
+            return componentIndexSchema.parse(JSON.parse(text));
+          })
         : Promise.resolve(null),
     ]);
     const details = new Map<
@@ -257,7 +316,7 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
           ? entry.installedSource.slice(prefix.length)
           : null;
         const manifestText = dir
-          ? await cachedText(`${raw}${dir}/${registry.manifest}`, 64_000, signal)
+          ? await reader.text(`${dir}/${registry.manifest}`, 64_000)
           : undefined;
         const manifest = manifestText ? parseManifest(manifestText) : undefined;
         let parts: PluginCompleteness | null = null;
@@ -271,9 +330,7 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
             .filter((path) => path.startsWith(`${dir}/`))
             .map((path) => path.slice(dir.length + 1));
           const mcpPath = own.find((path) => path === "mcp.json" || path === ".mcp.json");
-          const mcpText = mcpPath
-            ? await cachedText(`${raw}${dir}/${mcpPath}`, 256_000, signal)
-            : undefined;
+          const mcpText = mcpPath ? await reader.text(`${dir}/${mcpPath}`, 256_000) : undefined;
           const ownSizes = new Map(
             own.map((path) => [path, sizes.get(`${dir}/${path}`) ?? 0] as const),
           );
@@ -295,7 +352,7 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
           ...detail.parts,
           displayName: manifest?.displayName ?? entry.displayName,
           category: entry.category ?? manifest?.category?.toLowerCase() ?? null,
-          logo: manifest?.logo ? `${raw}${dir}/${manifest.logo.replace(/^\.\//, "")}` : null,
+          logo: manifest?.logo ? reader.logo(`${dir}/${manifest.logo.replace(/^\.\//, "")}`) : null,
         },
       ];
     });
@@ -310,23 +367,67 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
     }
     return refresh(registry);
   }
-  async function refresh(registry: Registry): Promise<ReturnType<typeof parsePluginMarketplace>> {
-    const active = pending.get(registry.name);
-    if (active) return active;
-    const request = (async () => {
+  async function load(registry: Registry): Promise<ReturnType<typeof parsePluginMarketplace>> {
+    const finish = async (text: string | null | undefined, reader: RegistryReader) => {
+      if (!text) throw new Error("Marketplace index is missing");
+      if (Buffer.byteLength(text) > 2_000_000) throw new Error("Marketplace index is too large");
+      const parsed = parsePluginMarketplace(text, registry, hostNames);
+      const entries = await withDetails(registry, parsed.entries, reader);
+      return { entries, skipped: parsed.skipped + parsed.entries.length - entries.length };
+    };
+    if (!hosts.has(new URL(registry.repository).hostname)) {
+      if (!registry.path) {
+        // A configured catalog on github.com: find its index once.
+        const reader = githubReader(registry);
+        for (const format of INDEX_FORMATS) {
+          const text = await reader.text(format.path, 2_000_000);
+          if (text) {
+            Object.assign(registry, format);
+            return finish(text, reader);
+          }
+        }
+        throw new Error("Marketplace index is missing");
+      }
       const repo = new URL(registry.repository).pathname;
       const text = await read(
         `https://raw.githubusercontent.com${repo}/HEAD/${registry.path}`,
         2_000_000,
         AbortSignal.timeout(15_000),
       );
-      if (Buffer.byteLength(text) > 2_000_000) throw new Error("Marketplace index is too large");
-      const parsed = parsePluginMarketplace(text, registry);
-      const entries = await withDetails(registry, parsed.entries);
-      const data = {
-        entries,
-        skipped: parsed.skipped + parsed.entries.length - entries.length,
+      return finish(text, githubReader(registry));
+    }
+    // Another git host: one shallow snapshot holds the index and every vendored plugin.
+    return withGitSnapshot(registry.repository, undefined, { hosts, run: options.run }, (snap) => {
+      const blobs = snap.entries.filter(
+        (entry) => entry.type === "blob" && entry.mode !== "120000",
+      );
+      const listed = new Set(blobs.map((entry) => entry.path));
+      const reader: RegistryReader = {
+        tree: async () => ({
+          paths: blobs.map((entry) => entry.path),
+          sizes: new Map(blobs.map((entry) => [entry.path, entry.size ?? 0])),
+        }),
+        text: async (path, maxBytes) => {
+          if (!listed.has(path)) return null;
+          const text = await snap.read(path);
+          return Buffer.byteLength(text) > maxBytes ? undefined : text;
+        },
+        // Logos would need the host's own file URLs, which differ by server.
+        logo: () => null,
       };
+      const format = registry.path
+        ? registry
+        : INDEX_FORMATS.find((candidate) => listed.has(candidate.path));
+      if (!format) throw new Error("Marketplace index is missing");
+      Object.assign(registry, { path: format.path, manifest: format.manifest });
+      return reader.text(registry.path, 2_000_000).then((text) => finish(text, reader));
+    });
+  }
+  async function refresh(registry: Registry): Promise<ReturnType<typeof parsePluginMarketplace>> {
+    const active = pending.get(registry.name);
+    if (active) return active;
+    const request = (async () => {
+      const data = await load(registry);
       cache.set(registry.name, { data, expires: Date.now() + CATALOG_TTL_MS });
       return data;
     })();
@@ -339,7 +440,7 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
   }
   return {
     async catalog(query: string): Promise<PluginMarketplaceCatalog> {
-      const results = await Promise.allSettled(REGISTRIES.map(registryData));
+      const results = await Promise.allSettled(registries.map(registryData));
       const entries: PluginMarketplaceEntry[] = [];
       const unavailableRegistries: string[] = [];
       let skippedEntries = 0;
@@ -347,7 +448,7 @@ export function createPluginMarketplace(read: PluginTextReader = publicRead) {
         if (result.status === "fulfilled") {
           entries.push(...result.value.entries);
           skippedEntries += result.value.skipped;
-        } else unavailableRegistries.push(REGISTRIES[i]!.name);
+        } else unavailableRegistries.push(registries[i]!.name);
       }
       const now = Date.now();
       return {

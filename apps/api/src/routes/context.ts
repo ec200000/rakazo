@@ -38,9 +38,11 @@ import {
   OPENAI_COMPATIBLE_PROVIDER_ID,
 } from "@rakazo/contracts";
 import { createGroupRepos, createRepos, recordSecurityEvent, runAsTenant } from "@rakazo/db";
+import { getLogger } from "@rakazo/logging";
 import { createAgentImportServices } from "../agent-import-services.js";
 import { createAgentSkillsService } from "../agent-skills.js";
 import { createBotRemoval } from "../bot-removal.js";
+import { createDeploymentSync } from "../deployment-capabilities.js";
 import { createMcpServers } from "../mcp-servers.js";
 import { createModelConnector, prepareAllowedThinkingLevels } from "../model-credentials.js";
 import type { RouterDeps } from "../router.js";
@@ -99,6 +101,14 @@ export function createRouterContext(deps: RouterDeps) {
     insertMcpServer,
     announceMcpServer,
   } = createMcpServers(deps, onboardingDeps, mcpOAuth);
+  const deploymentSync = deps.deploymentConfig
+    ? createDeploymentSync(deps.deploymentConfig, { ...deps, removeMcpServerInTransaction })
+    : undefined;
+  void deploymentSync?.start().catch((error: unknown) =>
+    getLogger().error("deployment capabilities did not load", {
+      error: error instanceof Error ? error.message : String(error),
+    }),
+  );
   const announceRoutine = createRoutineAnnouncer(deps);
   const codexCatalog = deps.codexCatalog ?? new CodexCatalogCache();
   const { verifyModelConnection, connectModelCredential } = createModelConnector(
@@ -414,6 +424,8 @@ export function createRouterContext(deps: RouterDeps) {
   const signedIn = os.middleware(async ({ context, next }) => {
     const actor = context.actor;
     if (!actor) throw new ORPCError("UNAUTHORIZED");
+    // Never throws: a failure is logged and retried later, and the request goes on.
+    await deploymentSync?.ensure(actor);
     return asTenant(actor, () => next({ context: { ...context, actor } }));
   });
 
