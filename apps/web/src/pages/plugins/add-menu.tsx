@@ -47,7 +47,7 @@ export function AddMenu({
         <DropdownMenuItem onClick={() => onSource("api")}>OpenAPI</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onSource("graphql")}>GraphQL</DropdownMenuItem>
         {presets.map((preset) => (
-          <DropdownMenuItem key={preset.id} onClick={() => onSource("mcp", preset)}>
+          <DropdownMenuItem key={preset.id} onClick={() => onSource(preset.kind ?? "mcp", preset)}>
             {preset.name}
           </DropdownMenuItem>
         ))}

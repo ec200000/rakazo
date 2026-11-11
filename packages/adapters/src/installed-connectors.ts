@@ -13,6 +13,7 @@ import type { PrismaClient } from "@rakazo/db";
 import { availableInSpace, itemSecretIn } from "@rakazo/db";
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
+import { azureDevOpsPreset } from "./azure-devops-preset.js";
 import {
   AuthSchema,
   applyCredential,
@@ -72,13 +73,39 @@ export const MCP_SOURCE_PRESETS: McpSourcePreset[] = [
   { id: "executor", name: "Executor", urlPlaceholder: "https://executor.example/mcp" },
 ];
 
+/**
+ * The presets this deployment offers: the built-in ones, plus its Echo team chat's MCP endpoint
+ * when Echo is configured, so each person connects Echo with their own API token.
+ */
+export function mcpSourcePresets(
+  env: { echoUrl?: string | undefined; azureDevOpsUrl?: string | undefined } = {},
+): McpSourcePreset[] {
+  const echo = env.echoUrl?.trim();
+  const azureDevOps = azureDevOpsPreset(env.azureDevOpsUrl);
+  return [
+    ...MCP_SOURCE_PRESETS,
+    ...(echo
+      ? [
+          {
+            id: "echo",
+            name: "Echo",
+            url: new URL("mcp", `${echo.replace(/\/+$/, "")}/`).href,
+            credentialLabel: "Echo API token",
+          },
+        ]
+      : []),
+    ...(azureDevOps ? [azureDevOps] : []),
+  ];
+}
+
 /** Applies a preset named in an MCP install: its fixed URL and bearer auth, so clients send
  * only the id. Stored configs keep only fixed-URL preset ids; the rest store as custom. */
 export function applyMcpSourcePreset(
   source: string,
   config: Record<string, unknown>,
+  presets: McpSourcePreset[] = MCP_SOURCE_PRESETS,
 ): { source: string; config: Record<string, unknown> } {
-  const preset = MCP_SOURCE_PRESETS.find((entry) => entry.id === config.preset);
+  const preset = presets.find((entry) => entry.id === config.preset);
   if (!preset) return { source, config: { ...config, preset: "custom" } };
   return {
     source: preset.url ?? source,
@@ -107,6 +134,8 @@ const ApiOperationSchema = z.object({
   readOnly: z.boolean().default(false),
   queryParameters: z.array(z.string().min(1).max(120)).default([]),
   headerParameters: z.array(ModelHeaderName).default([]),
+  /** Query parameters every call sends, such as an API version; arguments cannot replace them. */
+  fixedQuery: z.record(z.string().min(1).max(120), z.string().max(200)).default({}),
 });
 
 const ApiConfigSchema = z.object({
@@ -634,6 +663,7 @@ export function importOpenApiDocument(document: Record<string, unknown>): {
         readOnly: method === "get",
         queryParameters,
         headerParameters,
+        fixedQuery: {},
       });
       if (operations.length >= 100) break;
     }
@@ -955,6 +985,10 @@ async function executeApiOperation(
     return encodeURIComponent(String(value));
   });
   const url = joinApiUrl(baseUrl, path);
+  for (const [key, value] of Object.entries(operation.fixedQuery)) {
+    url.searchParams.set(key, value);
+    consumed.add(key);
+  }
   const headers: Record<string, string> = { accept: "application/json", ...config.headers };
   let body: string | undefined;
   for (const key of operation.headerParameters) {

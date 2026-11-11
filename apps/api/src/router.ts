@@ -150,6 +150,11 @@ export interface RouterDeps {
     gitSha?: string;
     integrationsCatalogUrl?: string;
     mcpAllowPrivateEndpoint?: boolean;
+    /** Echo team chat's origin; offers its MCP endpoint as a preset. */
+    echoUrl?: string;
+    /** Azure DevOps Server collection URL; offers it as a per-person API connector. */
+    azureDevOpsUrl?: string;
+    azureDevOpsApiVersion?: string;
     desktopHostChoiceEnabled?: boolean;
     computerSettingsEnabled?: boolean;
     mcpStdioEnabled?: boolean;

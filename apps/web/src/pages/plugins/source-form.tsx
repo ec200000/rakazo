@@ -204,7 +204,8 @@ export function SourceFormView({
         {!custom || authType !== "none" ? (
           <Field>
             <FieldLabel htmlFor="source-credential">
-              {sourcePreset ? <Trans>Bearer token</Trans> : <Trans>Credential</Trans>}
+              {sourcePreset?.credentialLabel ??
+                (sourcePreset ? <Trans>Bearer token</Trans> : <Trans>Credential</Trans>)}
             </FieldLabel>
             <Input
               id="source-credential"

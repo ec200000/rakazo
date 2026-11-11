@@ -9,7 +9,7 @@ export const HeaderName = z
   .refine((name) => !isTransportHeader(name), "Transport-level headers cannot be customized");
 export const AuthSchema = z
   .object({
-    type: z.enum(["none", "bearer", "header", "query"]).default("none"),
+    type: z.enum(["none", "bearer", "basic", "header", "query"]).default("none"),
     name: HeaderName.optional(),
   })
   .default({ type: "none" });
@@ -51,6 +51,12 @@ export function applyCredential(
   }
   const name = auth.type === "header" ? auth.name : "authorization";
   if (!name) throw new Error("Authentication header name is required");
+  if (auth.type === "basic") {
+    // A bare token (an Azure DevOps personal access token) goes with an empty user name.
+    const pair = credential.includes(":") ? credential : `:${credential}`;
+    headers[name] = `Basic ${Buffer.from(pair).toString("base64")}`;
+    return;
+  }
   headers[name] = auth.type === "bearer" ? `Bearer ${credential}` : credential;
 }
 

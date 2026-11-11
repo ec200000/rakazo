@@ -171,9 +171,13 @@ export function parseMcpOAuthAuthorizationParams(value: string): Record<string, 
 export const McpSourcePresetSchema = z.object({
   id: z.string(),
   name: z.string(),
+  /** What the preset installs: an MCP server (default) or a ready-made HTTP API. */
+  kind: z.enum(["mcp", "api"]).optional(),
   /** Fixed endpoint; omitted when the person enters their own. */
   url: z.string().url().optional(),
   urlPlaceholder: z.string().optional(),
+  /** What the credential field asks for, e.g. "Personal access token". */
+  credentialLabel: z.string().optional(),
 });
 export type McpSourcePreset = z.infer<typeof McpSourcePresetSchema>;
 

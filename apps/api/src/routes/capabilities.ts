@@ -1,12 +1,15 @@
 import { createHash } from "node:crypto";
 import { ORPCError } from "@orpc/server";
 import {
+  AZURE_DEVOPS_PRESET_ID,
   applyMcpSourcePreset,
+  azureDevOpsInstallConfig,
+  azureDevOpsPreset,
   createPluginMarketplace,
   gitHostsFromConfig,
   inspectPluginRepository,
   isTransientFetchError,
-  MCP_SOURCE_PRESETS,
+  mcpSourcePresets,
   pluginPreviewDto,
   prepareApiInstall,
   prepareGraphqlInstall,
@@ -141,7 +144,9 @@ export function capabilitiesRoutes(ctx: RouterContext) {
           createdAt: row.createdAt.toISOString(),
         }));
       }),
-      sourcePresets: authed.capabilities.sourcePresets.handler(() => MCP_SOURCE_PRESETS),
+      sourcePresets: authed.capabilities.sourcePresets.handler(() =>
+        mcpSourcePresets({ echoUrl: deps.env.echoUrl, azureDevOpsUrl: deps.env.azureDevOpsUrl }),
+      ),
       catalogSearch: authed.capabilities.catalogSearch.handler(async ({ context, input }) => {
         const baseUrl =
           deps.env.integrationsCatalogUrl ??
@@ -202,7 +207,14 @@ export function capabilitiesRoutes(ctx: RouterContext) {
         }
         try {
           if (input.kind === "mcp") {
-            ({ source, config } = applyMcpSourcePreset(source, config));
+            ({ source, config } = applyMcpSourcePreset(
+              source,
+              config,
+              mcpSourcePresets({
+                echoUrl: deps.env.echoUrl,
+                azureDevOpsUrl: deps.env.azureDevOpsUrl,
+              }),
+            ));
             const verified = await verifyMcpInstall({
               source,
               config,
@@ -214,6 +226,14 @@ export function capabilitiesRoutes(ctx: RouterContext) {
             config = verified.config;
           }
           if (input.kind === "api") {
+            // The Azure DevOps preset: the deployment's collection, its operations, the person's token.
+            const azureDevOps = azureDevOpsPreset(deps.env.azureDevOpsUrl);
+            if (config.preset === AZURE_DEVOPS_PRESET_ID) {
+              if (!azureDevOps?.url)
+                throw new Error("Azure DevOps is not configured on this server");
+              source = azureDevOps.url;
+              config = azureDevOpsInstallConfig(deps.env.azureDevOpsApiVersion);
+            }
             const prepared = await prepareApiInstall({
               source,
               config,

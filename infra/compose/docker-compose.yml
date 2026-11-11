@@ -433,6 +433,9 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       <<: *app-environment
+      # Azure DevOps Server collection, offered as a per-person connector: API only.
+      AZURE_DEVOPS_URL:
+      AZURE_DEVOPS_API_VERSION:
       # Sign-in, sessions, billing and inbound webhooks: API only.
       API_HOST: "0.0.0.0"
       API_PORT:

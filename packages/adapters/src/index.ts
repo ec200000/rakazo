@@ -147,6 +147,7 @@ export * from "./novita-sandbox.js";
 export * from "./novita-template.js";
 export * from "./openai-compatible-connection-test.js";
 export * from "./plugin-inspect.js";
+export * from "./azure-devops-preset.js";
 export * from "./openai-compatible-url.js";
 export * from "./openai-compatible-voice.js";
 export * from "./openai-voice.js";

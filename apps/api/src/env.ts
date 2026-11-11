@@ -162,6 +162,9 @@ export interface AppEnv {
   echoUrl: string | undefined;
   echoBotToken: string | undefined;
   echoBotUsername: string | undefined;
+  /** Azure DevOps Server collection URL, e.g. https://ado.example/tfs/DefaultCollection. */
+  azureDevOpsUrl: string | undefined;
+  azureDevOpsApiVersion: string | undefined;
   /** Unknown chat senders auto-provision their own accounts when true. */
   messagingOpenSignup: boolean;
   /** Bot that owns team/external chat rooms on the messaging surface. */
@@ -350,6 +353,8 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
     echoUrl: optional(source.ECHO_URL),
     echoBotToken: optional(source.ECHO_BOT_TOKEN),
     echoBotUsername: optional(source.ECHO_BOT_USERNAME),
+    azureDevOpsUrl: optional(source.AZURE_DEVOPS_URL),
+    azureDevOpsApiVersion: optional(source.AZURE_DEVOPS_API_VERSION),
     messagingOpenSignup: source.MESSAGING_OPEN_SIGNUP === "true",
     teamChatBotId: optional(source.TEAM_CHAT_BOT_ID) ?? optional(source.SLACK_RAKAZO_BOT_ID),
     teamChatJudgeProvider: optional(source.TEAM_CHAT_JUDGE_PROVIDER),
