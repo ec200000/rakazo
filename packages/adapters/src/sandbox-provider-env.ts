@@ -76,6 +76,7 @@ export function sandboxProviderOptionsFromEnv(
   | "kubernetesNamespace"
   | "kubernetesRuntimeClassName"
   | "kubernetesRunAsUser"
+  | "kubernetesServiceAccount"
   | "kubernetesComputerImage"
   | "kubernetesCpuLimit"
   | "kubernetesMemoryLimit"
@@ -126,6 +127,7 @@ export function sandboxProviderOptionsFromEnv(
     boxdOrg: optional(source.BOXD_ORG),
     kubernetesNamespace: optional(source.KUBERNETES_SANDBOX_NAMESPACE),
     kubernetesRuntimeClassName: optional(source.KUBERNETES_SANDBOX_RUNTIME_CLASS_NAME),
+    kubernetesServiceAccount: optional(source.KUBERNETES_SANDBOX_SERVICE_ACCOUNT),
     kubernetesRunAsUser: positiveInteger(
       source.KUBERNETES_SANDBOX_RUN_AS_USER,
       "KUBERNETES_SANDBOX_RUN_AS_USER",

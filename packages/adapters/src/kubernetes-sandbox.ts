@@ -61,7 +61,6 @@ const TRUST_BUNDLE_ENV = [
 const CONTAINER_SECURITY = {
   allowPrivilegeEscalation: false,
   capabilities: { drop: ["ALL"] },
-  seccompProfile: { type: "RuntimeDefault" },
 };
 const READY_PORT = 6080;
 const DESKTOP_PORT_START = 6100;
@@ -96,6 +95,8 @@ export interface KubernetesSandboxOptions {
    * (1000) where a security policy lets the creating account run pods as that uid.
    */
   runAsUser?: number;
+  /** Service account of every Computer; its token is never mounted. Unset means "default". */
+  serviceAccountName?: string;
 }
 
 export interface KubernetesSandboxSdk {
@@ -107,6 +108,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
   private readonly namespace: string;
   private readonly runtimeClassName: string | undefined;
   private readonly runAsUser: number | undefined;
+  private readonly serviceAccountName: string | undefined;
   private readonly computerImage: string;
   private readonly cpuLimit: string | undefined;
   private readonly memoryLimit: string | undefined;
@@ -153,6 +155,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
   constructor(options: KubernetesSandboxOptions = {}, clients?: KubernetesSandboxSdk) {
     this.namespace = options.namespace?.trim() || DEFAULT_NAMESPACE;
     this.runtimeClassName = options.runtimeClassName?.trim() || undefined;
+    this.serviceAccountName = options.serviceAccountName?.trim() || undefined;
     this.runAsUser =
       Number.isSafeInteger(options.runAsUser) && options.runAsUser! > 0 ? options.runAsUser : undefined;
     this.computerImage = options.computerImage?.trim() || DEFAULT_COMPUTER_IMAGE;
@@ -438,6 +441,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
         },
       },
       spec: {
+        ...(this.serviceAccountName ? { serviceAccountName: this.serviceAccountName } : {}),
         automountServiceAccountToken: false,
         enableServiceLinks: false,
         restartPolicy: "Never",
@@ -493,7 +497,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
                 : []),
             ],
             ports: [{ name: "screen", containerPort: READY_PORT, protocol: "TCP" }],
-            // Matches the Docker computer: no capabilities, no privilege escalation, default seccomp.
+            // No capabilities and no privilege escalation; the cluster's policy decides the seccomp profile.
             securityContext: CONTAINER_SECURITY,
             readinessProbe: {
               tcpSocket: { port: READY_PORT },

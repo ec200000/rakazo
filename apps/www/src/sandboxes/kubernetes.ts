@@ -111,7 +111,7 @@ export const kubernetes: Sandbox = {
     {
       heading: "Limits and security",
       paragraphs: [
-        "Each pod runs as the image's own non-root user, with no service account token mounted, all Linux capabilities dropped, privilege escalation off and the `RuntimeDefault` seccomp profile. Those are the same protections Rakazo gives a Docker computer.",
+        "Each pod runs as the image's own non-root user, with no service account token mounted, all Linux capabilities dropped and privilege escalation off. The pod spec sets no seccomp profile, so the cluster's policy decides it.",
       ],
       bullets: [
         "Without a runtime class, a pod shares its node's kernel like any container. Set `KUBERNETES_SANDBOX_RUNTIME_CLASS_NAME` to gVisor or Kata for a stronger boundary, if your cluster has one installed.",

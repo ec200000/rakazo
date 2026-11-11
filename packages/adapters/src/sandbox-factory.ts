@@ -42,6 +42,7 @@ export interface SandboxProviderOptions {
   kubernetesNamespace?: string;
   kubernetesRuntimeClassName?: string;
   kubernetesRunAsUser?: number;
+  kubernetesServiceAccount?: string;
   kubernetesComputerImage?: string;
   kubernetesCpuLimit?: string;
   kubernetesMemoryLimit?: string;
@@ -158,6 +159,7 @@ export async function createSandboxProvider(
         namespace: opts.kubernetesNamespace,
         runtimeClassName: opts.kubernetesRuntimeClassName,
         runAsUser: opts.kubernetesRunAsUser,
+        serviceAccountName: opts.kubernetesServiceAccount,
         computerImage: opts.kubernetesComputerImage,
         cpuLimit: opts.kubernetesCpuLimit,
         memoryLimit: opts.kubernetesMemoryLimit,

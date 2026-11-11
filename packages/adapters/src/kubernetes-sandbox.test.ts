@@ -473,6 +473,12 @@ describe("KubernetesSandboxProvider", () => {
     it("leaves the uid to the cluster when unset", async () => {
       expect((await created({})).securityContext).toBeUndefined();
     });
+
+    it("runs under the configured service account without its token", async () => {
+      const spec = await created({ serviceAccountName: "bots" });
+      expect(spec).toMatchObject({ serviceAccountName: "bots", automountServiceAccountToken: false });
+      expect((await created({})).serviceAccountName).toBeUndefined();
+    });
   });
 
   describe("mounted home", () => {
@@ -753,7 +759,6 @@ describe("KubernetesSandboxProvider", () => {
     expect(spec?.containers[0]?.securityContext).toEqual({
       allowPrivilegeEscalation: false,
       capabilities: { drop: ["ALL"] },
-      seccompProfile: { type: "RuntimeDefault" },
     });
   });
 
