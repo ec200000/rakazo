@@ -40,7 +40,7 @@ export type PluginSkippedEntry = {
   reason: string;
 };
 export type ParsedPlugin = {
-  format: "agent-plugins" | "cursor" | "grok";
+  format: "agent-plugins" | "cursor" | "grok" | "claude" | "folder";
   name: string;
   version: string | null;
   description: string;
@@ -69,7 +69,12 @@ const SCHEMAS = new Set([
   "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "https://agent-plugins.org/schemas/1.1.0/plugin.schema.json",
 ]);
-const MANIFESTS = ["plugin.json", ".cursor-plugin/plugin.json", ".grok-plugin/plugin.json"];
+const MANIFESTS = [
+  "plugin.json",
+  ".cursor-plugin/plugin.json",
+  ".grok-plugin/plugin.json",
+  ".claude-plugin/plugin.json",
+];
 /** Parts that only run inside an editor or execute the plugin's own code on the host. */
 const UNSUPPORTED_DIRS = new Set(["rules", "hooks", "automations"]);
 const UNSUPPORTED_FILES = new Set([".lsp.json"]);
@@ -292,6 +297,10 @@ export async function collectRepoFiles(
 ): Promise<PluginRepoFile[]> {
   const prefix = subdir ? `${subdir}/` : "";
   const selected = listing.filter((entry) => entry.path.startsWith(prefix));
+  // A folder holding SKILL.md is one skill; its text files are that skill's references.
+  const singleSkill = selected.some((entry) => entry.path === `${prefix}SKILL.md`);
+  const wantsContent = (path: string) =>
+    isFetchedComponent(path) || (singleSkill && SKILL_TEXT_FILE.test(path));
   const files: PluginRepoFile[] = [];
   const entries = selected.filter((entry) => {
     safePath(entry.path.slice(prefix.length));
@@ -308,12 +317,12 @@ export async function collectRepoFiles(
   for (const entry of entries) {
     const path = entry.path.slice(prefix.length);
     // Fetch only component text. Other paths are retained for skipped-part reporting.
-    if (!isFetchedComponent(path)) {
+    if (!wantsContent(path)) {
       files.push({ path: entry.path, content: "" });
       continue;
     }
     // An oversized reference refuses only its own skill, not the whole plugin.
-    if (SKILL_COMPANION.test(path) && (entry.size ?? 0) > MAX_FILE_BYTES) {
+    if ((singleSkill || SKILL_COMPANION.test(path)) && (entry.size ?? 0) > MAX_FILE_BYTES) {
       files.push({ path: entry.path, content: OVERSIZED_FILE });
       continue;
     }
@@ -583,6 +592,8 @@ function collectMcpServers(
 export function parsePluginDirectory(input: {
   files: PluginRepoFile[];
   resolvedSha: string;
+  /** Names skills that have no plugin manifest; without it a manifest is required. */
+  name?: string;
 }): ParsedPlugin {
   if (!FULL_SHA.test(input.resolvedSha))
     throw new Error("Plugin requires a full resolved commit SHA");
@@ -598,15 +609,24 @@ export function parsePluginDirectory(input: {
     files.set(path, file.content);
   }
   const manifestPath = MANIFESTS.find((path) => files.has(path));
-  if (!manifestPath) throw new Error("No plugin manifest found");
-  const raw: unknown = JSON.parse(files.get(manifestPath) ?? "");
+  const bareSkills = [...files.keys()].some(
+    (path) => /^skills\/[^/]+\/SKILL\.md$/.test(path) || AGENT_FILE.test(path),
+  );
+  // A folder of skills with no manifest installs under its folder's name.
+  if (!manifestPath && !(bareSkills && input.name)) throw new Error("No plugin manifest found");
+  const raw: unknown = manifestPath
+    ? JSON.parse(files.get(manifestPath) ?? "")
+    : { name: input.name };
   if (!object(raw)) throw new Error("Plugin manifest must be an object");
-  const format =
-    manifestPath === "plugin.json"
+  const format = !manifestPath
+    ? "folder"
+    : manifestPath === "plugin.json"
       ? "agent-plugins"
       : manifestPath.startsWith(".cursor")
         ? "cursor"
-        : "grok";
+        : manifestPath.startsWith(".claude")
+          ? "claude"
+          : "grok";
   const schema = format === "agent-plugins" ? raw.$schema : undefined;
   if (format === "agent-plugins" && (typeof schema !== "string" || !SCHEMAS.has(schema)))
     throw new Error("Unsupported Agent Plugins schema");
@@ -759,7 +779,34 @@ export async function previewPluginInstall(options: {
     }));
   if (source.subdir && !files.length)
     throw new Error(`Plugin subdirectory "${source.subdir}" not found`);
-  return { ...parsePluginDirectory({ files, resolvedSha: repo.resolvedSha }), source };
+  const name = folderPluginName(source);
+  // A folder that is one skill installs as a plugin holding just that skill.
+  const single =
+    files.some((file) => file.path === "SKILL.md") &&
+    !files.some((file) => MANIFESTS.includes(file.path));
+  const parts = single
+    ? files.map((file) => ({ ...file, path: `skills/${name}/${file.path}` }))
+    : files;
+  return {
+    ...parsePluginDirectory({ files: parts, resolvedSha: repo.resolvedSha, name }),
+    source,
+  };
+}
+
+/** A plugin name for skills without a manifest: their folder's, else the repository's. */
+export function folderPluginName(source: Pick<PluginSourceRef, "gitUrl" | "subdir">): string {
+  const base =
+    source.subdir?.split("/").filter(Boolean).at(-1) ??
+    decodeURIComponent(new URL(source.gitUrl).pathname.split("/").filter(Boolean).at(-1) ?? "");
+  const slug = base
+    .toLowerCase()
+    .replace(/[^a-z0-9.-]+/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/\.{2,}/g, ".")
+    .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, "")
+    .slice(0, 64)
+    .replace(/[^a-z0-9]+$/, "");
+  return slug || "skills";
 }
 
 /** Public preview deliberately excludes skill bodies and all header values. */

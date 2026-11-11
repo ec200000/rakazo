@@ -46,6 +46,28 @@ export const runGit: GitRunner = (args, options) =>
     });
   });
 
+/** The `git.hosts` key that allows every HTTPS git host. */
+export const ANY_GIT_HOST = "*";
+
+/**
+ * How `host` may be read: its own entry, else the "*" entry, which allows every HTTPS host
+ * anonymously. A token under "*" is never sent, so one host's key cannot reach another.
+ */
+export function gitHostCredentials(hosts: GitHosts, host: string): GitHostCredentials | undefined {
+  const own = hosts.get(host.toLowerCase());
+  if (own) return own;
+  const any = hosts.get(ANY_GIT_HOST);
+  return any ? { username: any.username } : undefined;
+}
+
+/** Whether plugins and marketplaces may come from `host` through git. */
+export function allowsGitHost(hosts: GitHosts, host: string): boolean {
+  const name = host.toLowerCase();
+  // github.com keeps its public API unless the deployment lists it by name.
+  if (name === "github.com") return hosts.has(name);
+  return gitHostCredentials(hosts, name) !== undefined;
+}
+
 /** Hosts the deployment file allows, with their credentials. */
 export function gitHostsFromConfig(
   config: DeploymentConfig | null,
@@ -153,7 +175,7 @@ export async function withGitSnapshot<T>(
   options: { hosts: GitHosts; signal?: AbortSignal; run?: GitRunner },
   use: (snapshot: GitSnapshot) => Promise<T>,
 ): Promise<T> {
-  const credentials = options.hosts.get(new URL(gitUrl).hostname.toLowerCase());
+  const credentials = gitHostCredentials(options.hosts, new URL(gitUrl).hostname);
   if (!credentials) throw new Error("This plugin host isn't allowed here");
   const run = options.run ?? runGit;
   const dir = await mkdtemp(join(tmpdir(), "rakazo-git-"));
@@ -243,14 +265,14 @@ export async function readPluginFolder(
   return { files, resolvedSha: hash.digest("hex") };
 }
 
-/** github.com through its public API unless the deployment lists it; listed hosts through git. */
+/** github.com through its public API unless the deployment lists it; allowed hosts through git. */
 export function createPluginRepoFetcher(options: {
   hosts: GitHosts;
   run?: GitRunner;
 }): PluginRepoFetcher {
   return (ref, signal) => {
     const host = new URL(ref.gitUrl).hostname.toLowerCase();
-    if (options.hosts.has(host)) return fetchGitRepo(ref, { ...options, signal });
+    if (allowsGitHost(options.hosts, host)) return fetchGitRepo(ref, { ...options, signal });
     if (host === "github.com") return fetchGitHubRepo(ref, signal);
     return Promise.reject(new Error("This plugin host isn't allowed here"));
   };

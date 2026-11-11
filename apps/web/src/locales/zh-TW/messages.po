@@ -47,7 +47,14 @@ msgstr "{0, plural, other {# 個月免費使用期}}"
 msgid "{0, plural, one {# more} other {# more}}"
 msgstr "{0, plural, other {另有 # 項}}"
 
+#. placeholder {0}: data.plugins.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{0, plural, one {# plugin} other {# plugins}}"
+msgstr "{0, plural, other {# 個外掛}}"
+
 #. placeholder {0}: skillCount(install)
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, other {# 項技能}}"
@@ -412,6 +419,10 @@ msgstr "今天已花費 {shown}"
 msgid "{size} B"
 msgstr "{size} B"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{skillTotal, plural, one {# skill} other {# skills}}"
+msgstr "{skillTotal, plural, other {# 項技能}}"
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "{summary} Backup models failed or were unavailable for this request."
@@ -682,6 +693,10 @@ msgstr "新增要執行的命令"
 msgid "Add a file or folder to watch"
 msgstr "新增要監視的檔案或資料夾"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Add a marketplace"
+msgstr "新增市集"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add a model in Settings to use this."
 msgstr "請在設定中新增模型後再使用。"
@@ -745,6 +760,10 @@ msgstr "新增標頭"
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "新增項目"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Add marketplace"
+msgstr "新增市集"
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -986,6 +1005,10 @@ msgstr "Anthropic API"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Anthropic Messages"
 msgstr "Anthropic Messages"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Any git server: Azure DevOps, GitLab, Gitea, GitHub and others. Add @branch to read a branch, or #folder to read one folder."
+msgstr "任何 git 伺服器：Azure DevOps、GitLab、Gitea、GitHub 等。加上 @分支 讀取某個分支，或加上 #資料夾 只讀取一個資料夾。"
 
 #: src/pages/Paywall.tsx
 msgid "Any model, with your own key"
@@ -2491,6 +2514,10 @@ msgstr "無法連線到模型伺服器。"
 msgid "Could not reach the server"
 msgstr "無法連線伺服器"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Could not read the repository"
+msgstr "無法讀取此儲存庫"
+
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/use-agent-import-source.ts
 msgid "Could not read these files"
@@ -3583,9 +3610,18 @@ msgstr "正在完成 MCP 連線…"
 msgid "Focus message"
 msgstr "移至訊息欄"
 
+#. placeholder {0}: entry.name
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Forget {0}"
+msgstr "移除 {0}"
+
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
 msgstr "忘記密碼？"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "found in its folders"
+msgstr "在其資料夾中找到"
 
 #: src/components/ModelCredits.tsx
 msgid "Free"
@@ -3617,6 +3653,9 @@ msgid "From {0}"
 msgstr "自 {0} 起"
 
 #: src/components/integrations/skills-dialog.tsx
+msgid "From a git URL"
+msgstr "透過 git URL"
+
 #: src/pages/plugins/add-menu.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "From GitHub"
@@ -3666,6 +3705,10 @@ msgstr "正在準備"
 #: src/pages/RoutineList.tsx
 msgid "Git event"
 msgstr "Git 事件"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Git repository URL"
+msgstr "Git 儲存庫 URL"
 
 #: src/components/InviteDialog.tsx
 msgid "Give a friend {weeks} weeks free"
@@ -3790,6 +3833,10 @@ msgstr "按住說話，放開傳送"
 msgid "Home"
 msgstr "住家"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Hosted in another repository"
+msgstr "託管在另一個儲存庫"
+
 #: src/lib/cron.ts
 msgid "hour"
 msgstr "小時"
@@ -3912,6 +3959,10 @@ msgstr "輸入"
 #: src/components/SidebarFooter.tsx
 msgid "Install update"
 msgstr "安裝更新"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Installed"
+msgstr "已安裝"
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Installing…"
@@ -4159,6 +4210,10 @@ msgstr "載入更多"
 msgid "Load older runs"
 msgstr "載入更早的執行紀錄"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Load skills"
+msgstr "載入技能"
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "自動載入網路圖片"
@@ -4193,6 +4248,7 @@ msgid "Loading voice providers…"
 msgstr "正在載入語音供應商…"
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
@@ -4256,6 +4312,7 @@ msgstr "由機器人建立"
 msgid "Main model"
 msgstr "主模型"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage"
@@ -4908,6 +4965,10 @@ msgstr "沒有符合篩選條件的執行紀錄。"
 msgid "No runs yet"
 msgstr "還沒有執行紀錄"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "No skills found. A skill is a folder with a SKILL.md file; plugins keep theirs in a skills/ folder."
+msgstr "找不到技能。技能是包含 SKILL.md 檔案的資料夾；外掛會將技能放在 skills/ 資料夾中。"
+
 #: src/pages/KnowledgeSection.tsx
 msgid "No skills yet"
 msgstr "尚無技能"
@@ -5397,10 +5458,13 @@ msgstr "播放中…"
 msgid "Plugin"
 msgstr "外掛程式"
 
-#: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Plugin GitHub URL"
 msgstr "外掛 GitHub 網址"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Plugin or skill folder URL"
+msgstr "外掛或技能資料夾 URL"
 
 #: src/pages/AdminPluginsPage.tsx
 msgid "Plugin submissions"
@@ -5422,6 +5486,7 @@ msgstr "PR 審查員"
 msgid "Preferences"
 msgstr "偏好設定"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Preview"
@@ -5522,6 +5587,10 @@ msgstr "讀取自頁面，未核實"
 #: src/pages/shell/bot-settings-sections.tsx
 msgid "Read replies aloud"
 msgstr "朗讀回覆"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Reading the repository…"
+msgstr "正在讀取儲存庫…"
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -6104,6 +6173,10 @@ msgstr "週六"
 msgid "Save"
 msgstr "儲存"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Save marketplace"
+msgstr "儲存市集"
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "儲存工作空間並安裝最新軟體。"
@@ -6113,11 +6186,16 @@ msgid "Save to Vault"
 msgstr "儲存到保管庫"
 
 #: src/components/ComputerProviderSettings.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/SecretAskCard.tsx
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Saved"
 msgstr "已儲存"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Saved marketplaces"
+msgstr "已儲存的市集"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Saved, but list refresh failed"
@@ -6232,6 +6310,10 @@ msgstr "搜尋執行紀錄"
 #: src/components/integrations/skills-dialog.tsx
 msgid "Search skills"
 msgstr "搜尋技能"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Search this marketplace"
+msgstr "搜尋此市集"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Search tools"
@@ -6424,9 +6506,18 @@ msgstr "顯示"
 msgid "Show all"
 msgstr "顯示全部"
 
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show all {0}"
+msgstr "顯示全部 {0} 項"
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "顯示機器人"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show fewer"
+msgstr "顯示較少"
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Show key"
@@ -7898,6 +7989,10 @@ msgstr "你的預設值"
 #: src/pages/Auth.tsx
 msgid "Your email address"
 msgstr "你的電子信箱"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Your marketplaces"
+msgstr "你的市集"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

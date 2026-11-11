@@ -114,6 +114,7 @@ import {
   MessagingLinkedIdentitySchema,
   MessagingStatusSchema,
   PluginMarketplaceCatalogSchema,
+  PluginMarketplaceInspectionSchema,
   PluginPartSchema,
   PluginPreviewSchema,
   PluginSubmissionReviewSchema,
@@ -1085,6 +1086,10 @@ export const appContract = {
     catalog: oc
       .input(z.object({ query: z.string().trim().max(200).default("") }))
       .output(PluginMarketplaceCatalogSchema),
+    /** Reads any allowed git repository and lists the plugins and skills it offers. */
+    inspect: oc
+      .input(z.object({ url: z.string().trim().min(1).max(2048) }))
+      .output(PluginMarketplaceInspectionSchema),
     /** Admins only. */
     submissions: oc
       .input(z.object({ status: PluginSubmissionStatusSchema.default("pending") }))

@@ -4,7 +4,7 @@ import { z } from "zod";
 import type { PluginCompleteness, PluginTextReader } from "./plugin-connectors.js";
 import { classifyPluginFiles, parsePluginSource } from "./plugin-connectors.js";
 import type { GitHosts, GitRunner } from "./plugin-git.js";
-import { withGitSnapshot } from "./plugin-git.js";
+import { ANY_GIT_HOST, allowsGitHost, withGitSnapshot } from "./plugin-git.js";
 import { fetchSafeWebText } from "./web-ssrf.js";
 
 const REGISTRIES = [
@@ -33,9 +33,10 @@ type Registry = {
   componentIndex: string | null;
 };
 /** Index locations a catalog on another git host may use, with its plugins' manifest path. */
-const INDEX_FORMATS = [
+export const PLUGIN_INDEX_FORMATS = [
   { path: ".cursor-plugin/marketplace.json", manifest: ".cursor-plugin/plugin.json" },
   { path: ".grok-plugin/marketplace.json", manifest: ".grok-plugin/plugin.json" },
+  { path: ".claude-plugin/marketplace.json", manifest: ".claude-plugin/plugin.json" },
 ];
 
 /** How a catalog's files are read: GitHub's public API, or a git snapshot. */
@@ -60,8 +61,20 @@ const entrySchema = z.object({
     z.object({
       source: z.literal("url"),
       url: z.string().max(2048),
-      sha: z.string().regex(/^[a-f0-9]{40}$/),
+      sha: z
+        .string()
+        .regex(/^[a-f0-9]{40}$/)
+        .optional(),
       path: z.string().max(2048).optional(),
+    }),
+    z.object({
+      source: z.literal("github"),
+      repo: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/),
+      ref: z.string().max(200).optional(),
+      sha: z
+        .string()
+        .regex(/^[a-f0-9]{40}$/)
+        .optional(),
     }),
     z.object({ type: z.literal("local"), path: z.string().startsWith("./").max(2048) }),
   ]),
@@ -74,6 +87,8 @@ export function parsePluginMarketplace(
   registry: { name: string; repository: string },
   /** Hosts besides github.com whose plugins may be listed. */
   hosts: ReadonlySet<string> = new Set(),
+  /** The folder the index sits under, which its "./" sources are relative to. */
+  base = "",
 ): { entries: PluginMarketplaceEntry[]; skipped: number } {
   const index: unknown = JSON.parse(raw);
   if (
@@ -97,22 +112,29 @@ export function parsePluginMarketplace(
     const entry = parsed.data;
     try {
       const source = entry.source;
+      const local = (path: string) => {
+        const dir = `${base}${path.replace(/^\.\//, "")}`.replace(/\/+$/, "");
+        return dir ? `${registry.repository}#${dir}` : registry.repository;
+      };
       const from =
         typeof source === "string"
           ? source.startsWith("https://")
             ? source
-            : `${registry.repository}#${source.replace(/^\.\//, "")}`
-          : !("url" in source)
-            ? `${registry.repository}#${source.path.slice(2)}`
-            : source.path
-              ? `${source.url}#${source.path.replace(/^\.?\//, "")}`
-              : source.url;
+            : local(source)
+          : "repo" in source
+            ? `https://github.com/${source.repo}`
+            : !("url" in source)
+              ? local(source.path)
+              : source.path
+                ? `${source.url}#${source.path.replace(/^\.?\//, "")}`
+                : source.url;
       const ref = parsePluginSource(from);
       const host = new URL(ref.gitUrl).hostname;
-      if (host !== "github.com" && !hosts.has(host)) throw new Error("Unsupported plugin host");
-      if (typeof source !== "string" && "sha" in source && ref.ref && ref.ref !== source.sha)
-        throw new Error("Conflicting plugin pin");
-      const pin = typeof source !== "string" && "sha" in source ? source.sha : ref.ref;
+      if (host !== "github.com" && !hosts.has(host) && !hosts.has(ANY_GIT_HOST))
+        throw new Error("Unsupported plugin host");
+      const sha = typeof source !== "string" && "sha" in source ? source.sha : undefined;
+      if (sha && ref.ref && ref.ref !== sha) throw new Error("Conflicting plugin pin");
+      const pin = sha ?? (typeof source !== "string" && "repo" in source ? source.ref : ref.ref);
       const suffix = ref.subdir ? `#${ref.subdir}` : "";
       const installedSource = ref.gitUrl + suffix;
       const installSource = ref.gitUrl + (pin ? `@${pin}` : "") + suffix;
@@ -375,11 +397,13 @@ export function createPluginMarketplace(
       const entries = await withDetails(registry, parsed.entries, reader);
       return { entries, skipped: parsed.skipped + parsed.entries.length - entries.length };
     };
-    if (!hosts.has(new URL(registry.repository).hostname)) {
+    if (!allowsGitHost(hosts, new URL(registry.repository).hostname)) {
+      if (new URL(registry.repository).hostname !== "github.com")
+        throw new Error("This git host isn't allowed here");
       if (!registry.path) {
         // A configured catalog on github.com: find its index once.
         const reader = githubReader(registry);
-        for (const format of INDEX_FORMATS) {
+        for (const format of PLUGIN_INDEX_FORMATS) {
           const text = await reader.text(format.path, 2_000_000);
           if (text) {
             Object.assign(registry, format);
@@ -417,7 +441,7 @@ export function createPluginMarketplace(
       };
       const format = registry.path
         ? registry
-        : INDEX_FORMATS.find((candidate) => listed.has(candidate.path));
+        : PLUGIN_INDEX_FORMATS.find((candidate) => listed.has(candidate.path));
       if (!format) throw new Error("Marketplace index is missing");
       Object.assign(registry, { path: format.path, manifest: format.manifest });
       return reader.text(registry.path, 2_000_000).then((text) => finish(text, reader));

@@ -19,7 +19,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft, LayoutTemplate, X } from "lucide-react";
 import { useState } from "react";
 import { useSpaceQueries } from "../../lib/query";
+import type { SavedMarketplace } from "../../lib/skill-marketplaces-pref";
+import { readSavedMarketplaces, writeSavedMarketplaces } from "../../lib/skill-marketplaces-pref";
 import { AgentSkills } from "../../pages/KnowledgeSection";
+import { MarketplaceInspector } from "./marketplace-inspector";
 import type { PluginSelection } from "./plugin-marketplace";
 import {
   PluginDetail,
@@ -53,6 +56,15 @@ export function SkillsDialog({
   const [selection, setSelection] = useState<PluginSelection | null>(null);
   const [importing, setImporting] = useState(false);
   const [gitSource, setGitSource] = useState("");
+  /** The marketplace view's repository; null when the view is closed, "" before one is entered. */
+  const [marketplaceUrl, setMarketplaceUrl] = useState<string | null>(null);
+  const [savedMarketplaces, setSavedMarketplaces] = useState(readSavedMarketplaces);
+  function saveMarketplace(entry: SavedMarketplace) {
+    setSavedMarketplaces((list) => writeSavedMarketplaces([entry, ...list]));
+  }
+  function forgetMarketplace(url: string) {
+    setSavedMarketplaces((list) => writeSavedMarketplaces(list.filter((e) => e.url !== url)));
+  }
   const catalog = useQuery(
     queries.marketplace.catalog.queryOptions({ input: { query: "" }, staleTime: 60_000 }),
   );
@@ -108,13 +120,26 @@ export function SkillsDialog({
           onChanged={refresh}
         />
       );
+    if (marketplaceUrl !== null)
+      return (
+        <MarketplaceInspector
+          key={marketplaceUrl}
+          initialUrl={marketplaceUrl}
+          saved={savedMarketplaces}
+          installs={pluginInstalls}
+          back={back(() => setMarketplaceUrl(null))}
+          onOpen={setSelection}
+          onSave={saveMarketplace}
+          onForget={forgetMarketplace}
+        />
+      );
     if (importing)
       return (
         <div data-testid="skills-git-import" className="max-w-xl space-y-6">
           <div className="flex items-center gap-2">
             {back(() => setImporting(false))}
             <SectionHeading as="h2" variant="heading">
-              <Trans>From GitHub</Trans>
+              <Trans>From a git URL</Trans>
             </SectionHeading>
           </div>
           <form
@@ -132,13 +157,13 @@ export function SkillsDialog({
           >
             <Field>
               <FieldLabel htmlFor="skills-git-url">
-                <Trans>Plugin GitHub URL</Trans>
+                <Trans>Plugin or skill folder URL</Trans>
               </FieldLabel>
               <Input
                 id="skills-git-url"
                 value={gitSource}
                 onChange={(event) => setGitSource(event.target.value)}
-                placeholder="https://github.com/owner/plugin"
+                placeholder="https://git.example.com/team/repo#skills/my-skill"
                 maxLength={2048}
                 autoFocus
               />
@@ -185,6 +210,26 @@ export function SkillsDialog({
                   </button>
                 );
               })}
+            </div>
+          </section>
+        ) : null}
+        {savedMarketplaces.length ? (
+          <section data-testid="saved-marketplaces">
+            <h3 className="mb-2 px-2.5 text-body font-medium text-muted-foreground">
+              <Trans>Your marketplaces</Trans>
+            </h3>
+            <div className="flex flex-wrap gap-2 px-2.5">
+              {savedMarketplaces.map((entry) => (
+                <Button
+                  key={entry.url}
+                  variant="outline"
+                  size="sm"
+                  title={entry.url}
+                  onClick={() => setMarketplaceUrl(entry.url)}
+                >
+                  {entry.name}
+                </Button>
+              ))}
             </div>
           </section>
         ) : null}
@@ -250,7 +295,7 @@ export function SkillsDialog({
             <Trans>Skills</Trans>
           </DialogTitle>
           <div className="flex items-center gap-2">
-            {!selection && !importing && onOpenTemplates ? (
+            {!selection && !importing && marketplaceUrl === null && onOpenTemplates ? (
               <Button
                 variant="ghost"
                 size="sm"
@@ -261,10 +306,15 @@ export function SkillsDialog({
                 <Trans>Templates</Trans>
               </Button>
             ) : null}
-            {!selection && !importing ? (
-              <Button variant="ghost" size="sm" onClick={() => setImporting(true)}>
-                <Trans>From GitHub</Trans>
-              </Button>
+            {!selection && !importing && marketplaceUrl === null ? (
+              <>
+                <Button variant="ghost" size="sm" onClick={() => setMarketplaceUrl("")}>
+                  <Trans>Add marketplace</Trans>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={() => setImporting(true)}>
+                  <Trans>From a git URL</Trans>
+                </Button>
+              </>
             ) : null}
             <DialogClose
               render={<Button variant="ghost" size="icon-sm" aria-label={t`Close skills`} />}

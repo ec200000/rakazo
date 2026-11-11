@@ -46,7 +46,14 @@ msgstr "{0, plural, one {# bezpłatny miesiąc} few {# bezpłatne miesiące} man
 msgid "{0, plural, one {# more} other {# more}}"
 msgstr "{0, plural, one {Jeszcze #} few {Jeszcze #} many {Jeszcze #} other {Jeszcze #}}"
 
+#. placeholder {0}: data.plugins.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{0, plural, one {# plugin} other {# plugins}}"
+msgstr "{0, plural, one {# wtyczka} few {# wtyczki} many {# wtyczek} other {# wtyczki}}"
+
 #. placeholder {0}: skillCount(install)
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, one {# umiejętność} few {# umiejętności} many {# umiejętności} other {# umiejętności}}"
@@ -411,6 +418,10 @@ msgstr "Wydano dziś: {shown}"
 msgid "{size} B"
 msgstr "{size} B"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{skillTotal, plural, one {# skill} other {# skills}}"
+msgstr "{skillTotal, plural, one {# umiejętność} few {# umiejętności} many {# umiejętności} other {# umiejętności}}"
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "{summary} Backup models failed or were unavailable for this request."
@@ -681,6 +692,10 @@ msgstr "Dodaj polecenie do uruchomienia"
 msgid "Add a file or folder to watch"
 msgstr "Dodaj plik lub folder do obserwowania"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Add a marketplace"
+msgstr "Dodaj marketplace"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add a model in Settings to use this."
 msgstr "Aby użyć tej funkcji, dodaj model w Ustawieniach."
@@ -744,6 +759,10 @@ msgstr "Dodaj nagłówek"
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "Dodaj element"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Add marketplace"
+msgstr "Dodaj marketplace"
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -985,6 +1004,10 @@ msgstr "Anthropic API"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Anthropic Messages"
 msgstr "Anthropic Messages"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Any git server: Azure DevOps, GitLab, Gitea, GitHub and others. Add @branch to read a branch, or #folder to read one folder."
+msgstr "Dowolny serwer git: Azure DevOps, GitLab, Gitea, GitHub i inne. Dodaj @gałąź, aby odczytać gałąź, lub #folder, aby odczytać jeden folder."
 
 #: src/pages/Paywall.tsx
 msgid "Any model, with your own key"
@@ -2490,6 +2513,10 @@ msgstr "Nie udało się połączyć z serwerem modelu."
 msgid "Could not reach the server"
 msgstr "Nie udało się połączyć z serwerem"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Could not read the repository"
+msgstr "Nie udało się odczytać repozytorium"
+
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/use-agent-import-source.ts
 msgid "Could not read these files"
@@ -3582,9 +3609,18 @@ msgstr "Kończenie połączenia MCP…"
 msgid "Focus message"
 msgstr "Przejdź do wiadomości"
 
+#. placeholder {0}: entry.name
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Forget {0}"
+msgstr "Zapomnij {0}"
+
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
 msgstr "Nie pamiętasz hasła?"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "found in its folders"
+msgstr "znalezione w folderach"
 
 #: src/components/ModelCredits.tsx
 msgid "Free"
@@ -3616,6 +3652,9 @@ msgid "From {0}"
 msgstr "Od {0}"
 
 #: src/components/integrations/skills-dialog.tsx
+msgid "From a git URL"
+msgstr "Z adresu git"
+
 #: src/pages/plugins/add-menu.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "From GitHub"
@@ -3665,6 +3704,10 @@ msgstr "Przygotowywanie"
 #: src/pages/RoutineList.tsx
 msgid "Git event"
 msgstr "Zdarzenie Git"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Git repository URL"
+msgstr "Adres repozytorium git"
 
 #: src/components/InviteDialog.tsx
 msgid "Give a friend {weeks} weeks free"
@@ -3789,6 +3832,10 @@ msgstr "Przytrzymaj, aby mówić. Puść, aby wysłać"
 msgid "Home"
 msgstr "Strona główna"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Hosted in another repository"
+msgstr "W innym repozytorium"
+
 #: src/lib/cron.ts
 msgid "hour"
 msgstr "godzina"
@@ -3911,6 +3958,10 @@ msgstr "Dane wejściowe"
 #: src/components/SidebarFooter.tsx
 msgid "Install update"
 msgstr "Zainstaluj aktualizację"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Installed"
+msgstr "Zainstalowano"
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Installing…"
@@ -4158,6 +4209,10 @@ msgstr "Wczytaj więcej"
 msgid "Load older runs"
 msgstr "Wczytaj starsze uruchomienia"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Load skills"
+msgstr "Wczytaj umiejętności"
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "Automatycznie wczytuj obrazy z sieci"
@@ -4192,6 +4247,7 @@ msgid "Loading voice providers…"
 msgstr "Wczytywanie dostawców głosu…"
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
@@ -4255,6 +4311,7 @@ msgstr "Utworzone przez boty"
 msgid "Main model"
 msgstr "Główny model"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage"
@@ -4907,6 +4964,10 @@ msgstr "Żadne uruchomienie nie pasuje do tych filtrów."
 msgid "No runs yet"
 msgstr "Brak uruchomień"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "No skills found. A skill is a folder with a SKILL.md file; plugins keep theirs in a skills/ folder."
+msgstr "Nie znaleziono umiejętności. Umiejętność to folder z plikiem SKILL.md; wtyczki trzymają je w folderze skills/."
+
 #: src/pages/KnowledgeSection.tsx
 msgid "No skills yet"
 msgstr "Brak umiejętności"
@@ -5396,10 +5457,13 @@ msgstr "Odtwarzanie…"
 msgid "Plugin"
 msgstr "Wtyczka"
 
-#: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Plugin GitHub URL"
 msgstr "Adres GitHub wtyczki"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Plugin or skill folder URL"
+msgstr "Adres wtyczki lub folderu umiejętności"
 
 #: src/pages/AdminPluginsPage.tsx
 msgid "Plugin submissions"
@@ -5421,6 +5485,7 @@ msgstr "Recenzent PR"
 msgid "Preferences"
 msgstr "Preferencje"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Preview"
@@ -5521,6 +5586,10 @@ msgstr "Odczytane ze strony, niesprawdzone"
 #: src/pages/shell/bot-settings-sections.tsx
 msgid "Read replies aloud"
 msgstr "Czytaj odpowiedzi na głos"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Reading the repository…"
+msgstr "Odczytywanie repozytorium…"
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -6103,6 +6172,10 @@ msgstr "sobota"
 msgid "Save"
 msgstr "Zapisz"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Save marketplace"
+msgstr "Zapisz marketplace"
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "Zapisz obszar roboczy i zainstaluj aktualne oprogramowanie."
@@ -6112,11 +6185,16 @@ msgid "Save to Vault"
 msgstr "Zapisz w sejfie"
 
 #: src/components/ComputerProviderSettings.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/SecretAskCard.tsx
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Saved"
 msgstr "Zapisano"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Saved marketplaces"
+msgstr "Zapisane marketplace'y"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Saved, but list refresh failed"
@@ -6231,6 +6309,10 @@ msgstr "Szukaj uruchomień"
 #: src/components/integrations/skills-dialog.tsx
 msgid "Search skills"
 msgstr "Szukaj umiejętności"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Search this marketplace"
+msgstr "Szukaj w tym marketplace"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Search tools"
@@ -6423,9 +6505,18 @@ msgstr "Pokaż"
 msgid "Show all"
 msgstr "Pokaż wszystkie"
 
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show all {0}"
+msgstr "Pokaż wszystkie ({0})"
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "Pokaż boty"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show fewer"
+msgstr "Pokaż mniej"
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Show key"
@@ -7897,6 +7988,10 @@ msgstr "Twoje ustawienia domyślne"
 #: src/pages/Auth.tsx
 msgid "Your email address"
 msgstr "Twój adres e-mail"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Your marketplaces"
+msgstr "Twoje marketplace'y"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

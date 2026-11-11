@@ -46,7 +46,14 @@ msgstr "{0, plural, other {#か月分の無料期間}}"
 msgid "{0, plural, one {# more} other {# more}}"
 msgstr "{0, plural, other {他#件}}"
 
+#. placeholder {0}: data.plugins.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{0, plural, one {# plugin} other {# plugins}}"
+msgstr ""
+
 #. placeholder {0}: skillCount(install)
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, other {#個のスキル}}"
@@ -411,6 +418,10 @@ msgstr "今日の支出: {shown}"
 msgid "{size} B"
 msgstr "{size} B"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{skillTotal, plural, one {# skill} other {# skills}}"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "{summary} Backup models failed or were unavailable for this request."
@@ -681,6 +692,10 @@ msgstr "実行するコマンドを追加"
 msgid "Add a file or folder to watch"
 msgstr "監視するファイルまたはフォルダーを追加"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Add a marketplace"
+msgstr ""
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add a model in Settings to use this."
 msgstr "これを使用するには、設定でモデルを追加してください。"
@@ -744,6 +759,10 @@ msgstr "ヘッダーを追加"
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "項目を追加"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Add marketplace"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -985,6 +1004,10 @@ msgstr "Anthropic API"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Anthropic Messages"
 msgstr "Anthropic Messages"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Any git server: Azure DevOps, GitLab, Gitea, GitHub and others. Add @branch to read a branch, or #folder to read one folder."
+msgstr ""
 
 #: src/pages/Paywall.tsx
 msgid "Any model, with your own key"
@@ -2490,6 +2513,10 @@ msgstr "モデルサーバーに接続できませんでした。"
 msgid "Could not reach the server"
 msgstr "サーバーに接続できませんでした"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Could not read the repository"
+msgstr ""
+
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/use-agent-import-source.ts
 msgid "Could not read these files"
@@ -3582,9 +3609,18 @@ msgstr "MCP接続を完了しています…"
 msgid "Focus message"
 msgstr "メッセージ欄に移動"
 
+#. placeholder {0}: entry.name
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Forget {0}"
+msgstr ""
+
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
 msgstr "パスワードをお忘れですか？"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "found in its folders"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Free"
@@ -3616,6 +3652,9 @@ msgid "From {0}"
 msgstr "{0}から"
 
 #: src/components/integrations/skills-dialog.tsx
+msgid "From a git URL"
+msgstr ""
+
 #: src/pages/plugins/add-menu.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "From GitHub"
@@ -3665,6 +3704,10 @@ msgstr "準備中"
 #: src/pages/RoutineList.tsx
 msgid "Git event"
 msgstr "Gitイベント"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Git repository URL"
+msgstr ""
 
 #: src/components/InviteDialog.tsx
 msgid "Give a friend {weeks} weeks free"
@@ -3789,6 +3832,10 @@ msgstr "長押しで話し、離すと送信"
 msgid "Home"
 msgstr "自宅"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Hosted in another repository"
+msgstr ""
+
 #: src/lib/cron.ts
 msgid "hour"
 msgstr "時間"
@@ -3911,6 +3958,10 @@ msgstr "入力"
 #: src/components/SidebarFooter.tsx
 msgid "Install update"
 msgstr "アップデートをインストール"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Installed"
+msgstr ""
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Installing…"
@@ -4158,6 +4209,10 @@ msgstr "さらに読み込む"
 msgid "Load older runs"
 msgstr "過去の実行を読み込む"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Load skills"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "Web画像を自動で読み込む"
@@ -4192,6 +4247,7 @@ msgid "Loading voice providers…"
 msgstr "音声プロバイダーを読み込み中…"
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
@@ -4255,6 +4311,7 @@ msgstr "ボットが作成"
 msgid "Main model"
 msgstr "メインモデル"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage"
@@ -4907,6 +4964,10 @@ msgstr "このフィルターに一致する実行はありません。"
 msgid "No runs yet"
 msgstr "実行はまだありません"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "No skills found. A skill is a folder with a SKILL.md file; plugins keep theirs in a skills/ folder."
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 msgid "No skills yet"
 msgstr "スキルはまだありません"
@@ -5396,10 +5457,13 @@ msgstr "再生中…"
 msgid "Plugin"
 msgstr "プラグイン"
 
-#: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Plugin GitHub URL"
 msgstr "プラグインのGitHub URL"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Plugin or skill folder URL"
+msgstr ""
 
 #: src/pages/AdminPluginsPage.tsx
 msgid "Plugin submissions"
@@ -5421,6 +5485,7 @@ msgstr "PRレビュアー"
 msgid "Preferences"
 msgstr "環境設定"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Preview"
@@ -5521,6 +5586,10 @@ msgstr "ページから読み取り、未確認"
 #: src/pages/shell/bot-settings-sections.tsx
 msgid "Read replies aloud"
 msgstr "返信を読み上げる"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Reading the repository…"
+msgstr ""
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -6103,6 +6172,10 @@ msgstr "土曜日"
 msgid "Save"
 msgstr "保存"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Save marketplace"
+msgstr ""
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "ワークスペースを保存して、最新のソフトウェアをインストールします。"
@@ -6112,11 +6185,16 @@ msgid "Save to Vault"
 msgstr "保管庫に保存"
 
 #: src/components/ComputerProviderSettings.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/SecretAskCard.tsx
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Saved"
 msgstr "保存しました"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Saved marketplaces"
+msgstr ""
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Saved, but list refresh failed"
@@ -6231,6 +6309,10 @@ msgstr "実行を検索"
 #: src/components/integrations/skills-dialog.tsx
 msgid "Search skills"
 msgstr "スキルを検索"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Search this marketplace"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Search tools"
@@ -6423,9 +6505,18 @@ msgstr "表示"
 msgid "Show all"
 msgstr "すべて表示"
 
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show all {0}"
+msgstr ""
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "ボットを表示"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show fewer"
+msgstr ""
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Show key"
@@ -7897,6 +7988,10 @@ msgstr "デフォルト設定"
 #: src/pages/Auth.tsx
 msgid "Your email address"
 msgstr "メールアドレス"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Your marketplaces"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

@@ -4,6 +4,7 @@ import {
   applyMcpSourcePreset,
   createPluginMarketplace,
   gitHostsFromConfig,
+  inspectPluginRepository,
   isTransientFetchError,
   MCP_SOURCE_PRESETS,
   pluginPreviewDto,
@@ -85,6 +86,18 @@ export function capabilitiesRoutes(ctx: RouterContext) {
   };
   return {
     marketplace: {
+      inspect: authed.marketplace.inspect.handler(async ({ input, context }) => {
+        try {
+          return await inspectPluginRepository(input.url, {
+            hosts: gitHostsFromConfig(config ?? null),
+            signal: context.signal,
+          });
+        } catch (error) {
+          throw new ORPCError("BAD_REQUEST", {
+            message: error instanceof Error ? error.message : "Could not read the repository",
+          });
+        }
+      }),
       catalog: authed.marketplace.catalog.handler(async ({ input }) => {
         const [catalog, approved] = await Promise.all([
           pluginMarketplace.catalog(input.query),

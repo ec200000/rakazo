@@ -46,7 +46,14 @@ msgstr "{0, plural, other {#개월 무료}}"
 msgid "{0, plural, one {# more} other {# more}}"
 msgstr "{0, plural, other {#개 더}}"
 
+#. placeholder {0}: data.plugins.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{0, plural, one {# plugin} other {# plugins}}"
+msgstr ""
+
 #. placeholder {0}: skillCount(install)
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, other {스킬 #개}}"
@@ -411,6 +418,10 @@ msgstr "오늘 {shown} 지출"
 msgid "{size} B"
 msgstr "{size} B"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{skillTotal, plural, one {# skill} other {# skills}}"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "{summary} Backup models failed or were unavailable for this request."
@@ -681,6 +692,10 @@ msgstr "실행할 명령 추가"
 msgid "Add a file or folder to watch"
 msgstr "감시할 파일 또는 폴더 추가"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Add a marketplace"
+msgstr ""
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add a model in Settings to use this."
 msgstr "이 기능을 사용하려면 설정에서 모델을 추가하세요."
@@ -744,6 +759,10 @@ msgstr "헤더 추가"
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "항목 추가"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Add marketplace"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -985,6 +1004,10 @@ msgstr "Anthropic API"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Anthropic Messages"
 msgstr "Anthropic Messages"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Any git server: Azure DevOps, GitLab, Gitea, GitHub and others. Add @branch to read a branch, or #folder to read one folder."
+msgstr ""
 
 #: src/pages/Paywall.tsx
 msgid "Any model, with your own key"
@@ -2490,6 +2513,10 @@ msgstr "모델 서버에 연결하지 못했습니다."
 msgid "Could not reach the server"
 msgstr "서버에 연결할 수 없습니다"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Could not read the repository"
+msgstr ""
+
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/use-agent-import-source.ts
 msgid "Could not read these files"
@@ -3582,9 +3609,18 @@ msgstr "MCP 연결을 마무리하는 중…"
 msgid "Focus message"
 msgstr "메시지 입력란으로 이동"
 
+#. placeholder {0}: entry.name
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Forget {0}"
+msgstr ""
+
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
 msgstr "비밀번호를 잊으셨나요?"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "found in its folders"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Free"
@@ -3616,6 +3652,9 @@ msgid "From {0}"
 msgstr "{0}부터"
 
 #: src/components/integrations/skills-dialog.tsx
+msgid "From a git URL"
+msgstr ""
+
 #: src/pages/plugins/add-menu.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "From GitHub"
@@ -3665,6 +3704,10 @@ msgstr "준비 중"
 #: src/pages/RoutineList.tsx
 msgid "Git event"
 msgstr "Git 이벤트"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Git repository URL"
+msgstr ""
 
 #: src/components/InviteDialog.tsx
 msgid "Give a friend {weeks} weeks free"
@@ -3789,6 +3832,10 @@ msgstr "누른 채 말하고 놓으면 전송"
 msgid "Home"
 msgstr "집"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Hosted in another repository"
+msgstr ""
+
 #: src/lib/cron.ts
 msgid "hour"
 msgstr "시간"
@@ -3911,6 +3958,10 @@ msgstr "입력값"
 #: src/components/SidebarFooter.tsx
 msgid "Install update"
 msgstr "업데이트 설치"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Installed"
+msgstr ""
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Installing…"
@@ -4158,6 +4209,10 @@ msgstr "더 불러오기"
 msgid "Load older runs"
 msgstr "이전 실행 불러오기"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Load skills"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "웹 이미지 자동으로 불러오기"
@@ -4192,6 +4247,7 @@ msgid "Loading voice providers…"
 msgstr "음성 서비스를 불러오는 중…"
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
@@ -4255,6 +4311,7 @@ msgstr "봇이 만든 파일"
 msgid "Main model"
 msgstr "기본 모델"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage"
@@ -4907,6 +4964,10 @@ msgstr "이 필터와 일치하는 실행이 없습니다."
 msgid "No runs yet"
 msgstr "아직 실행 기록이 없습니다"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "No skills found. A skill is a folder with a SKILL.md file; plugins keep theirs in a skills/ folder."
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 msgid "No skills yet"
 msgstr "아직 스킬이 없습니다"
@@ -5396,10 +5457,13 @@ msgstr "재생 중…"
 msgid "Plugin"
 msgstr "플러그인"
 
-#: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Plugin GitHub URL"
 msgstr "플러그인 GitHub URL"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Plugin or skill folder URL"
+msgstr ""
 
 #: src/pages/AdminPluginsPage.tsx
 msgid "Plugin submissions"
@@ -5421,6 +5485,7 @@ msgstr "PR 리뷰어"
 msgid "Preferences"
 msgstr "환경설정"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Preview"
@@ -5521,6 +5586,10 @@ msgstr "페이지에서 읽음, 확인 안 됨"
 #: src/pages/shell/bot-settings-sections.tsx
 msgid "Read replies aloud"
 msgstr "답변을 자동으로 읽기"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Reading the repository…"
+msgstr ""
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -6103,6 +6172,10 @@ msgstr "토요일"
 msgid "Save"
 msgstr "저장"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Save marketplace"
+msgstr ""
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "작업 공간을 저장하고 최신 소프트웨어를 설치합니다."
@@ -6112,11 +6185,16 @@ msgid "Save to Vault"
 msgstr "보관함에 저장"
 
 #: src/components/ComputerProviderSettings.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/SecretAskCard.tsx
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Saved"
 msgstr "저장됨"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Saved marketplaces"
+msgstr ""
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Saved, but list refresh failed"
@@ -6231,6 +6309,10 @@ msgstr "실행 검색"
 #: src/components/integrations/skills-dialog.tsx
 msgid "Search skills"
 msgstr "스킬 검색"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Search this marketplace"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Search tools"
@@ -6423,9 +6505,18 @@ msgstr "보기"
 msgid "Show all"
 msgstr "모두 보기"
 
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show all {0}"
+msgstr ""
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "봇 표시"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show fewer"
+msgstr ""
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Show key"
@@ -7897,6 +7988,10 @@ msgstr "내 기본값"
 #: src/pages/Auth.tsx
 msgid "Your email address"
 msgstr "이메일 주소"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Your marketplaces"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

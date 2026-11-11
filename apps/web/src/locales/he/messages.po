@@ -46,7 +46,14 @@ msgstr "{0, plural, one {חודש חינם אחד} two {# חודשים חינם}
 msgid "{0, plural, one {# more} other {# more}}"
 msgstr "{0, plural, one {עוד אחד} two {עוד #} other {עוד #}}"
 
+#. placeholder {0}: data.plugins.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{0, plural, one {# plugin} other {# plugins}}"
+msgstr "{0, plural, one {תוסף אחד} two {# תוספים} other {# תוספים}}"
+
 #. placeholder {0}: skillCount(install)
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, one {מיומנות אחת} two {# מיומנויות} other {# מיומנויות}}"
@@ -411,6 +418,10 @@ msgstr "{shown} הוצאו היום"
 msgid "{size} B"
 msgstr "{size} B"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "{skillTotal, plural, one {# skill} other {# skills}}"
+msgstr "{skillTotal, plural, one {מיומנות אחת} two {# מיומנויות} other {# מיומנויות}}"
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "{summary} Backup models failed or were unavailable for this request."
@@ -681,6 +692,10 @@ msgstr "יש להוסיף פקודה להרצה"
 msgid "Add a file or folder to watch"
 msgstr "יש להוסיף קובץ או תיקייה למעקב"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Add a marketplace"
+msgstr "הוספת מרקטפלייס"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add a model in Settings to use this."
 msgstr "כדי להשתמש בזה יש להוסיף מודל בהגדרות."
@@ -744,6 +759,10 @@ msgstr "הוספת header"
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "הוספת פריט"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Add marketplace"
+msgstr "הוספת מרקטפלייס"
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -985,6 +1004,10 @@ msgstr "Anthropic API"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Anthropic Messages"
 msgstr "Anthropic Messages"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Any git server: Azure DevOps, GitLab, Gitea, GitHub and others. Add @branch to read a branch, or #folder to read one folder."
+msgstr "כל שרת git: ‏Azure DevOps, ‏GitLab, ‏Gitea, ‏GitHub ועוד. הוסיפו @branch כדי לקרוא ענף, או #folder כדי לקרוא תיקייה אחת."
 
 #: src/pages/Paywall.tsx
 msgid "Any model, with your own key"
@@ -2490,6 +2513,10 @@ msgstr "אין גישה לשרת המודל."
 msgid "Could not reach the server"
 msgstr "אין גישה לשרת"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Could not read the repository"
+msgstr "לא ניתן לקרוא את המאגר"
+
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/use-agent-import-source.ts
 msgid "Could not read these files"
@@ -3582,9 +3609,18 @@ msgstr "משלים את חיבור ה-MCP…"
 msgid "Focus message"
 msgstr "מעבר להודעה"
 
+#. placeholder {0}: entry.name
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Forget {0}"
+msgstr "שכחה של {0}"
+
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
 msgstr "שכחת סיסמה?"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "found in its folders"
+msgstr "נמצאו בתיקיות שלו"
 
 #: src/components/ModelCredits.tsx
 msgid "Free"
@@ -3616,6 +3652,9 @@ msgid "From {0}"
 msgstr "מ-{0}"
 
 #: src/components/integrations/skills-dialog.tsx
+msgid "From a git URL"
+msgstr "מכתובת git"
+
 #: src/pages/plugins/add-menu.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "From GitHub"
@@ -3665,6 +3704,10 @@ msgstr "מתכונן"
 #: src/pages/RoutineList.tsx
 msgid "Git event"
 msgstr "אירוע Git"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Git repository URL"
+msgstr "כתובת מאגר git"
 
 #: src/components/InviteDialog.tsx
 msgid "Give a friend {weeks} weeks free"
@@ -3789,6 +3832,10 @@ msgstr "לחיצה ארוכה לדיבור, שחרור לשליחה"
 msgid "Home"
 msgstr "בית"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Hosted in another repository"
+msgstr "מאוחסן במאגר אחר"
+
 #: src/lib/cron.ts
 msgid "hour"
 msgstr "שעה"
@@ -3911,6 +3958,10 @@ msgstr "קלטים"
 #: src/components/SidebarFooter.tsx
 msgid "Install update"
 msgstr "התקנת עדכון"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Installed"
+msgstr "מותקן"
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Installing…"
@@ -4158,6 +4209,10 @@ msgstr "טעינת עוד"
 msgid "Load older runs"
 msgstr "טעינת הרצות ישנות יותר"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Load skills"
+msgstr "טעינת מיומנויות"
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "טעינה אוטומטית של תמונות מהרשת"
@@ -4192,6 +4247,7 @@ msgid "Loading voice providers…"
 msgstr "טוען ספקי קול…"
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
@@ -4255,6 +4311,7 @@ msgstr "נוצרו על ידי בוטים"
 msgid "Main model"
 msgstr "מודל ראשי"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/SettingsOverlay.tsx
 msgid "Manage"
@@ -4907,6 +4964,10 @@ msgstr "אין הרצות שתואמות למסננים האלה."
 msgid "No runs yet"
 msgstr "עדיין אין הרצות"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "No skills found. A skill is a folder with a SKILL.md file; plugins keep theirs in a skills/ folder."
+msgstr "לא נמצאו מיומנויות. מיומנות היא תיקייה עם קובץ SKILL.md; תוספים שומרים אותן בתיקייה skills/."
+
 #: src/pages/KnowledgeSection.tsx
 msgid "No skills yet"
 msgstr "עדיין אין מיומנויות"
@@ -5396,10 +5457,13 @@ msgstr "מתנגן…"
 msgid "Plugin"
 msgstr "תוסף"
 
-#: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Plugin GitHub URL"
 msgstr "כתובת GitHub של התוסף"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Plugin or skill folder URL"
+msgstr "כתובת תוסף או תיקיית מיומנות"
 
 #: src/pages/AdminPluginsPage.tsx
 msgid "Plugin submissions"
@@ -5421,6 +5485,7 @@ msgstr "סוקר PR"
 msgid "Preferences"
 msgstr "העדפות"
 
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
 msgid "Preview"
@@ -5521,6 +5586,10 @@ msgstr "נקרא מהדף, לא נבדק"
 #: src/pages/shell/bot-settings-sections.tsx
 msgid "Read replies aloud"
 msgstr "הקראת תשובות בקול"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Reading the repository…"
+msgstr "קורא את המאגר…"
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -6103,6 +6172,10 @@ msgstr "שבת"
 msgid "Save"
 msgstr "שמירה"
 
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Save marketplace"
+msgstr "שמירת המרקטפלייס"
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "שמירת סביבת העבודה והתקנת התוכנה העדכנית."
@@ -6112,11 +6185,16 @@ msgid "Save to Vault"
 msgstr "שמירה בכספת"
 
 #: src/components/ComputerProviderSettings.tsx
+#: src/components/integrations/marketplace-inspector.tsx
 #: src/components/SecretAskCard.tsx
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Saved"
 msgstr "נשמר"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Saved marketplaces"
+msgstr "מרקטפלייסים שמורים"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Saved, but list refresh failed"
@@ -6231,6 +6309,10 @@ msgstr "חיפוש הרצות"
 #: src/components/integrations/skills-dialog.tsx
 msgid "Search skills"
 msgstr "חיפוש מיומנויות"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Search this marketplace"
+msgstr "חיפוש במרקטפלייס הזה"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Search tools"
@@ -6423,9 +6505,18 @@ msgstr "הצגה"
 msgid "Show all"
 msgstr "הצגת הכול"
 
+#. placeholder {0}: skills.length
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show all {0}"
+msgstr "הצגת כל ה-{0}"
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "הצגת בוטים"
+
+#: src/components/integrations/marketplace-inspector.tsx
+msgid "Show fewer"
+msgstr "הצגת פחות"
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Show key"
@@ -7897,6 +7988,10 @@ msgstr "ברירות המחדל שלך"
 #: src/pages/Auth.tsx
 msgid "Your email address"
 msgstr "כתובת האימייל"
+
+#: src/components/integrations/skills-dialog.tsx
+msgid "Your marketplaces"
+msgstr "המרקטפלייסים שלך"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

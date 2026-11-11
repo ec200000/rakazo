@@ -926,7 +926,8 @@ export const PluginPreviewSkippedSchema = z.object({
   reason: z.string(),
 });
 export const PluginPreviewSchema = z.object({
-  format: z.enum(["agent-plugins", "cursor", "grok"]),
+  /** "folder": skills without a plugin manifest, named after their folder. */
+  format: z.enum(["agent-plugins", "cursor", "grok", "claude", "folder"]),
   name: z.string(),
   version: z.string().nullable(),
   description: z.string(),
@@ -978,6 +979,33 @@ export const PluginMarketplaceCatalogSchema = z.object({
   skippedEntries: z.number().int().nonnegative(),
 });
 export type PluginMarketplaceCatalog = z.infer<typeof PluginMarketplaceCatalogSchema>;
+
+/** A skill found in a git repository, before anything is installed. */
+export const PluginMarketplaceSkillSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  /** Why the skill would not install, when its SKILL.md cannot be read. */
+  problem: z.string().optional(),
+});
+
+/** Everything installable one git repository offers: its catalog's plugins, or its skill folders. */
+export const PluginMarketplaceInspectionSchema = z.object({
+  /** The repository, as later inspections and installs name it. */
+  url: z.string(),
+  name: z.string(),
+  /** The commit that was read. */
+  sha: z.string(),
+  /** True when the repository has a catalog index; false when its folders were searched. */
+  indexed: z.boolean(),
+  plugins: z.array(
+    PluginMarketplaceEntrySchema.extend({
+      /** Skills inside this repository; null for a plugin hosted in another one. */
+      skills: z.array(PluginMarketplaceSkillSchema).nullable(),
+    }),
+  ),
+  skipped: z.number().int().nonnegative(),
+});
+export type PluginMarketplaceInspection = z.infer<typeof PluginMarketplaceInspectionSchema>;
 
 export const PLUGIN_SUBMISSIONS_PATH = "/api/v1/plugin-submissions";
 /** Approved claims, public so the marketing site can show each owner's page at build time. */
