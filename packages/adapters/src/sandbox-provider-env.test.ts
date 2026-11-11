@@ -166,6 +166,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
         KUBERNETES_SANDBOX_POD_LABELS: '{"team":"bots"}',
         KUBERNETES_SANDBOX_POD_ANNOTATIONS: '{"example.test/owner":"rakazo"}',
         KUBERNETES_SANDBOX_READY_TIMEOUT_MS: "90000",
+        KUBERNETES_SANDBOX_RUN_AS_USER: "1000",
       }),
     ).toMatchObject({
       kubernetesNamespace: "rakazo-computers",
@@ -176,6 +177,7 @@ describe("sandboxProviderOptionsFromEnv", () => {
       kubernetesPodLabels: { team: "bots" },
       kubernetesPodAnnotations: { "example.test/owner": "rakazo" },
       kubernetesReadyTimeoutMs: 90_000,
+      kubernetesRunAsUser: 1000,
     });
     expect(sandboxProviderOptionsFromEnv({}).kubernetesNamespace).toBeUndefined();
   });

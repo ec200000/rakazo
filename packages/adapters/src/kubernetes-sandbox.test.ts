@@ -428,6 +428,53 @@ describe("KubernetesSandboxProvider", () => {
     });
   });
 
+  describe("run-as user", () => {
+    const created = async (options: Record<string, unknown>) => {
+      const create = vi.fn().mockResolvedValue(readyPod);
+      const provider = providerFor(
+        {
+          readNamespacedPod: vi
+            .fn()
+            .mockRejectedValueOnce(Object.assign(new Error("missing"), { code: 404 }))
+            .mockResolvedValue(readyPod),
+          createNamespacedPod: create,
+        },
+        vi.fn(),
+        options,
+      );
+      await provider.provision({ botId: "team-ab12", homePath: "/data/homes/team-ab12" }, context);
+      return create.mock.calls[0]?.[0]?.body.spec;
+    };
+
+    it("asks for the configured uid and gid instead of a cluster-assigned one", async () => {
+      expect((await created({ runAsUser: 1000 })).securityContext).toEqual({
+        runAsUser: 1000,
+        runAsGroup: 1000,
+        runAsNonRoot: true,
+      });
+    });
+
+    it("keeps the mounted home's fsGroup alongside it", async () => {
+      const spec = await created({
+        runAsUser: 1000,
+        homeClaim: "data-claim",
+        homeColocateNamespace: "rakazo",
+        homeColocateLabels: { app: "rakazo-api" },
+      });
+      expect(spec.securityContext).toEqual({
+        fsGroup: 1000,
+        fsGroupChangePolicy: "OnRootMismatch",
+        runAsUser: 1000,
+        runAsGroup: 1000,
+        runAsNonRoot: true,
+      });
+    });
+
+    it("leaves the uid to the cluster when unset", async () => {
+      expect((await created({})).securityContext).toBeUndefined();
+    });
+  });
+
   describe("mounted home", () => {
     const home = {
       homeClaim: "data-claim",

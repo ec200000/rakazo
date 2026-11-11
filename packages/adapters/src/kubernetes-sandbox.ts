@@ -90,6 +90,12 @@ export interface KubernetesSandboxOptions {
    * public, so they travel in the pod spec rather than a Secret in the Computer namespace.
    */
   caBundle?: string;
+  /**
+   * User (and group) every Computer runs as. Unset leaves it to the cluster, which on OpenShift
+   * gives a namespace-assigned uid that cannot write the image's home. Set it to the image user
+   * (1000) where a security policy lets the creating account run pods as that uid.
+   */
+  runAsUser?: number;
 }
 
 export interface KubernetesSandboxSdk {
@@ -100,6 +106,7 @@ export interface KubernetesSandboxSdk {
 export class KubernetesSandboxProvider implements SandboxProvider {
   private readonly namespace: string;
   private readonly runtimeClassName: string | undefined;
+  private readonly runAsUser: number | undefined;
   private readonly computerImage: string;
   private readonly cpuLimit: string | undefined;
   private readonly memoryLimit: string | undefined;
@@ -146,6 +153,8 @@ export class KubernetesSandboxProvider implements SandboxProvider {
   constructor(options: KubernetesSandboxOptions = {}, clients?: KubernetesSandboxSdk) {
     this.namespace = options.namespace?.trim() || DEFAULT_NAMESPACE;
     this.runtimeClassName = options.runtimeClassName?.trim() || undefined;
+    this.runAsUser =
+      Number.isSafeInteger(options.runAsUser) && options.runAsUser! > 0 ? options.runAsUser : undefined;
     this.computerImage = options.computerImage?.trim() || DEFAULT_COMPUTER_IMAGE;
     this.cpuLimit = options.cpuLimit?.trim() || undefined;
     this.memoryLimit = options.memoryLimit?.trim() || undefined;
@@ -433,7 +442,17 @@ export class KubernetesSandboxProvider implements SandboxProvider {
         enableServiceLinks: false,
         restartPolicy: "Never",
         terminationGracePeriodSeconds: 10,
-        ...(home ? { securityContext: home.securityContext, affinity: home.affinity } : {}),
+        ...(home ? { affinity: home.affinity } : {}),
+        ...(home || this.runAsUser
+          ? {
+              securityContext: {
+                ...home?.securityContext,
+                ...(this.runAsUser
+                  ? { runAsUser: this.runAsUser, runAsGroup: this.runAsUser, runAsNonRoot: true }
+                  : {}),
+              },
+            }
+          : {}),
         ...(volumes.length ? { volumes } : {}),
         ...(this.runtimeClassName ? { runtimeClassName: this.runtimeClassName } : {}),
         ...(trust
