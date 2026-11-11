@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr " (읽지 않음)"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "(empty)"
+msgstr ""
+
 #. placeholder {0}: servers.length
 #: src/pages/plugins/manage-view.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -2002,6 +2006,10 @@ msgstr "연결 중…"
 msgid "Connection"
 msgstr "연결"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection failed."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Connection test failed."
 msgstr "연결 테스트에 실패했습니다."
@@ -2010,6 +2018,10 @@ msgstr "연결 테스트에 실패했습니다."
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "{0} 연결이 아직 진행 중입니다. 이 창을 닫고 나중에 다시 확인할 수 있습니다."
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection works."
+msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
@@ -2555,6 +2567,10 @@ msgstr "권한을 취소하지 못했습니다"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "루틴을 실행할 수 없습니다"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Could not run the test"
+msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -3452,6 +3468,7 @@ msgstr "실패"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "실패"
 
@@ -4113,6 +4130,10 @@ msgstr "DM 연결"
 msgid "Link SSO"
 msgstr "SSO 연결"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "List models"
+msgstr ""
+
 #: src/pages/Artifacts.tsx
 msgid "List view"
 msgstr "목록 보기"
@@ -4503,6 +4524,10 @@ msgstr "모델 ID"
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "모델 선택지"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Model reply"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -5224,6 +5249,10 @@ msgstr "이 봇이 만든 페이지가 여기에 표시됩니다. 대시보드, 
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "이 그룹이 만든 페이지가 여기에 표시됩니다. 대시보드, 트래커 또는 계획을 요청해 만들어 보세요."
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Passed"
+msgstr ""
+
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
 msgstr "패스키"
@@ -5817,6 +5846,10 @@ msgstr "답장"
 #: src/pages/shell/composer.tsx
 msgid "Reply cancelled"
 msgstr "답장이 취소되었습니다"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Reply:"
+msgstr ""
 
 #. placeholder {0}: replyNameRef.current
 #: src/pages/shell/composer.tsx
@@ -6519,6 +6552,7 @@ msgstr "건너뛰기"
 msgid "Skip or deploy key"
 msgstr "건너뛰거나 배포 키"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr "건너뜀"
@@ -6869,6 +6903,7 @@ msgstr "API 키 테스트"
 
 #: src/components/ModelConnectionPreflightNotice.tsx
 #: src/pages/McpServersOverlay.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Test connection"
 msgstr "연결 테스트"
 
@@ -6879,6 +6914,10 @@ msgstr "테스트"
 #: src/components/ModelConnectionPreflightNotice.tsx
 msgid "Testing…"
 msgstr "테스트 중…"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Testing… (a slow model can take a minute)"
+msgstr ""
 
 #: src/components/BotEmailAddressField.tsx
 msgid "That address isn't available"

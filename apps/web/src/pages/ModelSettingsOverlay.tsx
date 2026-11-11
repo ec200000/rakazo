@@ -26,6 +26,7 @@ import type { ModelCredential } from "../lib/model-auth";
 import { useSpaceQueries } from "../lib/query";
 import type { ModelRoleConnectIntent } from "./ModelRoleSettings";
 import { ModelRoleSettings, useModelRole } from "./ModelRoleSettings";
+import { CompatibleConnectionTest } from "./model-settings/compatible-connection-test";
 import { CompatibleModelFields } from "./model-settings/compatible-model-fields";
 import { CompatibleKeyControls, ConnectionControls } from "./model-settings/connection-controls";
 import { ConnectionNameField, ProvidersSection } from "./model-settings/providers-section";
@@ -194,6 +195,7 @@ export function ModelSettingsOverlay({
       <>
         <CompatibleModelFields {...model} />
         <CompatibleKeyControls {...model} />
+        <CompatibleConnectionTest {...model} />
         {disconnectButton}
       </>
     ) : credential ? (

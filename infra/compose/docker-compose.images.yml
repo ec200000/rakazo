@@ -111,6 +111,14 @@ x-app-environment: &app-environment # Runtime
   MODEL_STREAM_TIMEOUT_MS:
   MODEL_CONNECT_TIMEOUT_MS:
   MODEL_STREAM_IDLE_TIMEOUT_MS:
+  # How hard a model call retries a slow or flaky server (see pi-runtime-limits.ts).
+  MODEL_RETRY_ATTEMPTS:
+  MODEL_RETRY_WINDOW_MS:
+  MODEL_RETRY_MAX_DELAY_MS:
+  MODEL_REPLY_RECOVERIES:
+  # The deployment file (MCP servers, skills, plugins for every account) and extra trusted CAs.
+  RAKAZO_CONFIG_FILE:
+  NODE_EXTRA_CA_CERTS:
   RAKAZO_LOCAL_MODELS:
   RAKAZO_LOCAL_MODELS_URL:
   RAKAZO_LOCAL_MODELS_API_KEY:

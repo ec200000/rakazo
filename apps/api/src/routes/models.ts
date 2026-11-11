@@ -9,6 +9,7 @@ import {
   prepareStoredModelAuth,
   probeCatalogProviderModels,
   probeOpenAiCompatibleModels,
+  testOpenAiCompatibleConnection,
   providerCatalogCache,
   resolveMemberMainModel,
   selectDefaultCredentialId,
@@ -17,7 +18,7 @@ import {
   storedOpenAiCompatibleProbeKey,
   UNAVAILABLE_MODEL_FOR_AUTH_MESSAGE,
 } from "@rakazo/adapters";
-import type { ThinkingLevel } from "@rakazo/contracts";
+import type { Actor, ThinkingLevel } from "@rakazo/contracts";
 import {
   backupChoiceKey,
   canonicalPiProviderId,
@@ -69,6 +70,71 @@ export function modelsRoutes(ctx: RouterContext) {
     validateRoleChoices,
     authed,
   } = ctx;
+
+  /**
+   * The key and routing headers a compatible-server check sends: the typed ones, else the saved
+   * connection's, which are only used for the URL they were saved with.
+   */
+  async function compatibleProbeAuth(
+    actor: Actor,
+    input: {
+      baseUrl: string;
+      apiKey?: string;
+      headers?: Record<string, string>;
+      credentialId?: string;
+    },
+  ) {
+    let apiKey = input.apiKey;
+    let headers = input.headers;
+    if (!apiKey?.trim() || headers === undefined) {
+      try {
+        const preferred = await findModelCredential(
+          deps.prisma,
+          actor,
+          OPENAI_COMPATIBLE_PROVIDER_ID,
+        );
+        const credentials = await deps.prisma.userModelCredential.findMany({
+          where: { userId: actor.userId, provider: OPENAI_COMPATIBLE_PROVIDER_ID },
+          orderBy: [{ updatedAt: "desc" }, { id: "desc" }],
+        });
+        const candidates = input.credentialId
+          ? credentials.filter((credential) => credential.id === input.credentialId)
+          : preferred
+            ? [preferred, ...credentials.filter((credential) => credential.id !== preferred.id)]
+            : credentials;
+        const secrets = await deps.prisma.secret.findMany({
+          where: {
+            id: { in: candidates.map((credential) => credential.secretId) },
+            userId: actor.userId,
+            spaceId: null,
+          },
+          select: { id: true, ciphertext: true },
+        });
+        const ciphertexts = new Map(secrets.map((secret) => [secret.id, secret.ciphertext]));
+        for (const credential of candidates) {
+          const ciphertext = ciphertexts.get(credential.secretId);
+          if (!ciphertext) continue;
+          try {
+            const plaintext = await deps.secrets.load(ciphertext, credential.secretId);
+            const savedKey = storedOpenAiCompatibleProbeKey(input.baseUrl, plaintext);
+            const savedHeaders = storedOpenAiCompatibleProbeHeaders(input.baseUrl, plaintext);
+            if (!savedKey && savedHeaders === undefined) continue;
+            // A saved key and its routing headers are one credential. Explicit
+            // replacements may override either field, but never borrow from another row.
+            if (!apiKey?.trim()) apiKey = savedKey;
+            headers ??= savedHeaders;
+            break;
+          } catch {
+            // An unreadable secret must not prevent trying the remaining credentials.
+          }
+        }
+      } catch {
+        // An unavailable saved key must not prevent a keyless probe.
+      }
+    }
+    return { apiKey, headers };
+  }
+
   return {
     models: {
       list: authed.models.list.handler(async ({ context }) => chatCatalog(context.actor)),
@@ -218,57 +284,7 @@ export function modelsRoutes(ctx: RouterContext) {
       }),
       probeOpenAiCompatible: authed.models.probeOpenAiCompatible.handler(
         async ({ context, input }) => {
-          let apiKey = input.apiKey;
-          let headers = input.headers;
-          if (!apiKey?.trim() || headers === undefined) {
-            try {
-              const preferred = await findModelCredential(
-                deps.prisma,
-                context.actor,
-                OPENAI_COMPATIBLE_PROVIDER_ID,
-              );
-              const credentials = await deps.prisma.userModelCredential.findMany({
-                where: { userId: context.actor.userId, provider: OPENAI_COMPATIBLE_PROVIDER_ID },
-                orderBy: [{ updatedAt: "desc" }, { id: "desc" }],
-              });
-              const candidates = input.credentialId
-                ? credentials.filter((credential) => credential.id === input.credentialId)
-                : preferred
-                  ? [
-                      preferred,
-                      ...credentials.filter((credential) => credential.id !== preferred.id),
-                    ]
-                  : credentials;
-              const secrets = await deps.prisma.secret.findMany({
-                where: {
-                  id: { in: candidates.map((credential) => credential.secretId) },
-                  userId: context.actor.userId,
-                  spaceId: null,
-                },
-                select: { id: true, ciphertext: true },
-              });
-              const ciphertexts = new Map(secrets.map((secret) => [secret.id, secret.ciphertext]));
-              for (const credential of candidates) {
-                const ciphertext = ciphertexts.get(credential.secretId);
-                if (!ciphertext) continue;
-                try {
-                  const plaintext = await deps.secrets.load(ciphertext, credential.secretId);
-                  const savedKey = storedOpenAiCompatibleProbeKey(input.baseUrl, plaintext);
-                  const savedHeaders = storedOpenAiCompatibleProbeHeaders(input.baseUrl, plaintext);
-                  if (!savedKey && savedHeaders === undefined) continue;
-                  // A saved key and its routing headers are one credential. Explicit
-                  // replacements may override either field, but never borrow from another row.
-                  if (!apiKey?.trim()) apiKey = savedKey;
-                  headers ??= savedHeaders;
-                  break;
-                } catch {
-                  // An unreadable secret must not prevent trying the remaining credentials.
-                }
-              }
-            } catch {
-              // An unavailable saved key must not prevent a keyless probe.
-            }
-          }
+          const { apiKey, headers } = await compatibleProbeAuth(context.actor, input);
           try {
             const models = await probeOpenAiCompatibleModels(
               { ...input, apiKey, headers },
@@ -282,6 +298,21 @@ export function modelsRoutes(ctx: RouterContext) {
               message: error instanceof Error ? error.message : "Could not list models",
             });
           }
+        },
+      ),
+      testOpenAiCompatible: authed.models.testOpenAiCompatible.handler(
+        async ({ context, input }) => {
+          const { apiKey, headers } = await compatibleProbeAuth(context.actor, input);
+          return testOpenAiCompatibleConnection(
+            { ...input, apiKey, headers },
+            {
+              fetch: compatibleEndpointPreset(input.baseUrl)
+                ? deps.modelConnectionFetch
+                : undefined,
+              signal: context.signal,
+              allowPrivate: mayUsePrivateEndpoint(deps),
+            },
+          );
         },
       ),
       probeCatalog: authed.models.probeCatalog.handler(async ({ context, input }) => {

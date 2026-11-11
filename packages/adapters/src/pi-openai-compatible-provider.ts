@@ -66,7 +66,7 @@ function modelsProbeLimits(catalogProbe?: boolean): { maxBytes: number; maxModel
 
 const OPENAI_COMPAT_BASE = "http://127.0.0.1:1/v1";
 /** The version the Anthropic SDK pins; mirrored by the keyless-server probe. */
-const ANTHROPIC_MESSAGES_VERSION = "2023-06-01";
+export const ANTHROPIC_MESSAGES_VERSION = "2023-06-01";
 const resolveHostname: ResolveHostname = (hostname) =>
   lookup(hostname, { all: true, verbatim: true });
 

@@ -195,6 +195,35 @@ export function modelRoutingForm(
   };
 }
 
+/** What the settings page asks the server to test: a compatible server, unsaved fields included. */
+export const ModelConnectionTestInputSchema = z.object({
+  baseUrl: z.string(),
+  /** The saved connection whose key and headers fill in fields left blank. */
+  credentialId: z.string().optional(),
+  headers: ModelHeadersSchema.optional(),
+  apiKey: z.string().optional(),
+  apiProtocol: ModelApiProtocolSchema.optional(),
+  modelId: z.string().trim().max(512).optional(),
+});
+
+/** One step of a connection test: listing the server's models, then a one-line reply. */
+export const ModelConnectionTestStepSchema = z.object({
+  step: z.enum(["models", "chat"]),
+  ok: z.boolean(),
+  /** Not run, because no model was chosen or the server cannot be reached. */
+  skipped: z.boolean().optional(),
+  durationMs: z.number().int().nonnegative(),
+  message: z.string(),
+});
+
+export const ModelConnectionTestResultSchema = z.object({
+  ok: z.boolean(),
+  steps: z.array(ModelConnectionTestStepSchema),
+  /** The start of the model's reply, when the chat step ran. */
+  reply: z.string().optional(),
+});
+export type ModelConnectionTestResult = z.infer<typeof ModelConnectionTestResultSchema>;
+
 export const ModelConnectInputSchema = z
   .object({
     ...ModelContextLimitsSchema.shape,

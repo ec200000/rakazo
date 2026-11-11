@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr " (sin leer)"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "(empty)"
+msgstr ""
+
 #. placeholder {0}: servers.length
 #: src/pages/plugins/manage-view.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -2002,6 +2006,10 @@ msgstr "Conectando…"
 msgid "Connection"
 msgstr "Conexión"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection failed."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Connection test failed."
 msgstr "La prueba de conexión falló."
@@ -2010,6 +2018,10 @@ msgstr "La prueba de conexión falló."
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "La conexión con {0} sigue pendiente. Puedes cerrar esto y volver a comprobar."
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection works."
+msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
@@ -2555,6 +2567,10 @@ msgstr "No se pudo revocar la concesión"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "No se pudo ejecutar la rutina"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Could not run the test"
+msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -3452,6 +3468,7 @@ msgstr "fallido"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "Falló"
 
@@ -4113,6 +4130,10 @@ msgstr "Vincular mensajes privados"
 msgid "Link SSO"
 msgstr "Vincular SSO"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "List models"
+msgstr ""
+
 #: src/pages/Artifacts.tsx
 msgid "List view"
 msgstr "Vista de lista"
@@ -4503,6 +4524,10 @@ msgstr "ID del modelo"
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "Opciones del modelo"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Model reply"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -5224,6 +5249,10 @@ msgstr "Las páginas que este bot crea para ti aparecen aquí. Pide un panel, un
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "Las páginas que este grupo crea para ti aparecen aquí. Pide un panel, un seguimiento o un plan para crear una."
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Passed"
+msgstr ""
+
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
 msgstr "Llave de acceso"
@@ -5817,6 +5846,10 @@ msgstr "Responder"
 #: src/pages/shell/composer.tsx
 msgid "Reply cancelled"
 msgstr "Respuesta cancelada"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Reply:"
+msgstr ""
 
 #. placeholder {0}: replyNameRef.current
 #: src/pages/shell/composer.tsx
@@ -6519,6 +6552,7 @@ msgstr "Omitir"
 msgid "Skip or deploy key"
 msgstr "Omitir o desplegar clave"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr "Omitido"
@@ -6869,6 +6903,7 @@ msgstr "Probar clave de API"
 
 #: src/components/ModelConnectionPreflightNotice.tsx
 #: src/pages/McpServersOverlay.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Test connection"
 msgstr "Probar conexión"
 
@@ -6879,6 +6914,10 @@ msgstr "Pruebas"
 #: src/components/ModelConnectionPreflightNotice.tsx
 msgid "Testing…"
 msgstr "Probando…"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Testing… (a slow model can take a minute)"
+msgstr ""
 
 #: src/components/BotEmailAddressField.tsx
 msgid "That address isn't available"

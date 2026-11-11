@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Builds the app image with this checkout's API and worker on top of the published image of the
-# same release, so only the server code changes.
+# Builds the app image with this checkout's API, worker and web app on top of the published image
+# of the same release, so only the code changes.
 # Usage: infra/overlay/build.sh <image:tag> [platform]   (platform default: linux/amd64)
 #   BASE  published image to start from (default ghcr.io/elie222/rakazo/app:v0.9.0)
 set -euo pipefail
@@ -16,13 +16,15 @@ cd "$ROOT"
 "${PNPM[@]}" --filter @rakazo/db generate
 (cd apps/api && "${PNPM[@]}" run build)
 (cd apps/worker && "${PNPM[@]}" run build)
+(cd apps/web && RAKAZO_ALLOW_DEV_SECRETS=1 "${PNPM[@]}" run build)
 
 # The repository's .dockerignore leaves out dist, so build from a context holding only it.
 context=$(mktemp -d)
 trap 'rm -rf "$context"' EXIT
-mkdir -p "$context/apps/api" "$context/apps/worker"
+mkdir -p "$context/apps/api" "$context/apps/worker" "$context/apps/web"
 cp -R apps/api/dist "$context/apps/api/dist"
 cp -R apps/worker/dist "$context/apps/worker/dist"
+cp -R apps/web/dist "$context/apps/web/dist"
 cp infra/overlay/Dockerfile "$context/"
 
 # A tag names every platform's image. With the containerd image store, the classic builder can

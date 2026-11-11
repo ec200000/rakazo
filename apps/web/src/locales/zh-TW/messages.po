@@ -18,6 +18,10 @@ msgstr ""
 msgid " (unread)"
 msgstr "（未讀）"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "(empty)"
+msgstr "（空）"
+
 #. placeholder {0}: servers.length
 #: src/pages/plugins/manage-view.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -2003,6 +2007,10 @@ msgstr "正在連線…"
 msgid "Connection"
 msgstr "連線"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection failed."
+msgstr "連線失敗。"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Connection test failed."
 msgstr "連線測試失敗。"
@@ -2011,6 +2019,10 @@ msgstr "連線測試失敗。"
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "與 {0} 的連線仍在等待。可以關閉此視窗稍後再看。"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection works."
+msgstr "連線正常。"
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
@@ -2556,6 +2568,10 @@ msgstr "無法撤銷授權"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "無法執行例行任務"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Could not run the test"
+msgstr "無法執行測試"
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -3453,6 +3469,7 @@ msgstr "失敗"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "失敗"
 
@@ -4114,6 +4131,10 @@ msgstr "連結私訊"
 msgid "Link SSO"
 msgstr "關聯 SSO"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "List models"
+msgstr "列出模型"
+
 #: src/pages/Artifacts.tsx
 msgid "List view"
 msgstr "清單檢視"
@@ -4504,6 +4525,10 @@ msgstr "模型 ID"
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "模型選項"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Model reply"
+msgstr "模型回覆"
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -5225,6 +5250,10 @@ msgstr "此機器人為你建立的頁面會顯示在這裡。請它做一個儀
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "此群組為你建立的頁面會顯示在這裡。請它做一個儀表板、追蹤表或計畫即可建立。"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Passed"
+msgstr "通過"
+
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
 msgstr "通行金鑰"
@@ -5818,6 +5847,10 @@ msgstr "回覆"
 #: src/pages/shell/composer.tsx
 msgid "Reply cancelled"
 msgstr "已取消回覆"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Reply:"
+msgstr "回覆："
 
 #. placeholder {0}: replyNameRef.current
 #: src/pages/shell/composer.tsx
@@ -6520,6 +6553,7 @@ msgstr "跳過"
 msgid "Skip or deploy key"
 msgstr "跳過或使用部署金鑰"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr "已略過"
@@ -6870,6 +6904,7 @@ msgstr "測試 API 金鑰"
 
 #: src/components/ModelConnectionPreflightNotice.tsx
 #: src/pages/McpServersOverlay.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Test connection"
 msgstr "測試連線"
 
@@ -6880,6 +6915,10 @@ msgstr "測試"
 #: src/components/ModelConnectionPreflightNotice.tsx
 msgid "Testing…"
 msgstr "正在測試…"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Testing… (a slow model can take a minute)"
+msgstr "測試中…（較慢的模型可能需要一分鐘）"
 
 #: src/components/BotEmailAddressField.tsx
 msgid "That address isn't available"

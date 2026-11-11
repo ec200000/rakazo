@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr " (okunmadı)"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "(empty)"
+msgstr ""
+
 #. placeholder {0}: servers.length
 #: src/pages/plugins/manage-view.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -2002,6 +2006,10 @@ msgstr "Bağlanıyor…"
 msgid "Connection"
 msgstr "Bağlantı"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection failed."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Connection test failed."
 msgstr "Bağlantı testi başarısız."
@@ -2010,6 +2018,10 @@ msgstr "Bağlantı testi başarısız."
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "{0} bağlantısı hâlâ beklemede. Bunu kapatıp daha sonra tekrar kontrol edebilirsin."
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Connection works."
+msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
@@ -2555,6 +2567,10 @@ msgstr "Yetki iptal edilemedi"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "Rutin çalıştırılamadı"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Could not run the test"
+msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -3452,6 +3468,7 @@ msgstr "başarısız"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "Başarısız"
 
@@ -4113,6 +4130,10 @@ msgstr "Özel mesajları bağla"
 msgid "Link SSO"
 msgstr "SSO bağla"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "List models"
+msgstr ""
+
 #: src/pages/Artifacts.tsx
 msgid "List view"
 msgstr "Liste görünümü"
@@ -4503,6 +4524,10 @@ msgstr "Model kimliği"
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "Model seçenekleri"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Model reply"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -5224,6 +5249,10 @@ msgstr "Bu botun sizin için oluşturduğu sayfalar burada görünür. Bir pano,
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "Bu grubun sizin için oluşturduğu sayfalar burada görünür. Bir pano, takip listesi veya plan isteyerek oluşturun."
 
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Passed"
+msgstr ""
+
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
 msgstr "Geçiş anahtarı"
@@ -5817,6 +5846,10 @@ msgstr "Yanıtla"
 #: src/pages/shell/composer.tsx
 msgid "Reply cancelled"
 msgstr "Yanıt iptal edildi"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Reply:"
+msgstr ""
 
 #. placeholder {0}: replyNameRef.current
 #: src/pages/shell/composer.tsx
@@ -6519,6 +6552,7 @@ msgstr "Atla"
 msgid "Skip or deploy key"
 msgstr "Atla veya dağıtım anahtarı kullan"
 
+#: src/pages/model-settings/compatible-connection-test.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr "Atlandı"
@@ -6869,6 +6903,7 @@ msgstr "API anahtarını test et"
 
 #: src/components/ModelConnectionPreflightNotice.tsx
 #: src/pages/McpServersOverlay.tsx
+#: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Test connection"
 msgstr "Bağlantıyı test et"
 
@@ -6879,6 +6914,10 @@ msgstr "Test ediliyor"
 #: src/components/ModelConnectionPreflightNotice.tsx
 msgid "Testing…"
 msgstr "Test ediliyor…"
+
+#: src/pages/model-settings/compatible-connection-test.tsx
+msgid "Testing… (a slow model can take a minute)"
+msgstr ""
 
 #: src/components/BotEmailAddressField.tsx
 msgid "That address isn't available"

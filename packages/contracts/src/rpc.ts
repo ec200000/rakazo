@@ -176,6 +176,8 @@ import {
   ModelConnectInputSchema,
   ModelConnectionLabelSchema,
   ModelConnectionTargetSchema,
+  ModelConnectionTestInputSchema,
+  ModelConnectionTestResultSchema,
   ModelCredentialSchema,
   ModelOAuthBeginSchema,
   OPENAI_COMPATIBLE_PROVIDER_ID,
@@ -531,6 +533,9 @@ export const appContract = {
         }),
       )
       .output(z.object({ models: z.array(z.string()) })),
+    testOpenAiCompatible: oc
+      .input(ModelConnectionTestInputSchema)
+      .output(ModelConnectionTestResultSchema),
     probeCatalog: oc
       .input(
         z.object({
