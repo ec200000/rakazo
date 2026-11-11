@@ -25,6 +25,22 @@ cp -R apps/api/dist "$context/apps/api/dist"
 cp -R apps/worker/dist "$context/apps/worker/dist"
 cp infra/overlay/Dockerfile "$context/"
 
+# A tag names every platform's image. With the containerd image store, the classic builder can
+# take the host's layers for it while writing the requested platform's config, which makes an
+# image that fails to load ("wrong diff id"). Pin the base to the requested platform's manifest.
+if [[ "$BASE" != *@sha256:* ]]; then
+  digest=$(docker manifest inspect "$BASE" | node -e '
+    const [os, arch] = process.argv[1].split("/");
+    const index = JSON.parse(require("fs").readFileSync(0, "utf8"));
+    const match = (index.manifests ?? []).find(
+      (m) => m.platform?.os === os && m.platform?.architecture === arch,
+    );
+    if (!match) process.exit(1);
+    console.log(match.digest);
+  ' "$PLATFORM") || { echo "No $PLATFORM image for $BASE" >&2; exit 1; }
+  BASE="${BASE%:*}@$digest"
+fi
+
 # Another platform's RUN step needs emulation (Docker Desktop and colima provide it).
 if docker buildx version >/dev/null 2>&1; then
   docker buildx build --platform "$PLATFORM" --build-arg BASE="$BASE" -t "$IMAGE" --load "$context"
