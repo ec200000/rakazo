@@ -83,6 +83,9 @@ function mapBot(
     name: string;
     description: string;
     instructions: string;
+    repoUrl?: string | null;
+    repoBaseBranch?: string | null;
+    repoBranch?: string | null;
     instructionHistory?: unknown;
     color: string;
     avatarSet?: string;
@@ -127,6 +130,9 @@ function mapBot(
     title: "",
     description: bot.description,
     instructions: bot.instructions,
+    repoUrl: bot.repoUrl ?? null,
+    repoBaseBranch: bot.repoBaseBranch ?? null,
+    repoBranch: bot.repoBranch ?? null,
     instructionHistory: InstructionVersionSchema.array().parse(bot.instructionHistory ?? []),
     color: bot.color,
     avatarSet: resolveBotAvatarSet(bot.avatarSet),

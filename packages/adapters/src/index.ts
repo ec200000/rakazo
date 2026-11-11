@@ -15,11 +15,13 @@ export * from "./audit-forwarding.js";
 export * from "./auto-review.js";
 export * from "./auto-review-factory.js";
 export * from "./aws-kms-key-provider.js";
+export * from "./azure-devops-preset.js";
 export { returnHelperOutcome, startBackgroundHelper } from "./background-helpers.js";
 export * from "./background-job-handlers.js";
 export * from "./billing-emulator.js";
 export * from "./bot-avatar.js";
 export * from "./bot-messages.js";
+export * from "./bot-repository.js";
 export {
   defaultVaultItemTitle,
   forgetBotSecret,
@@ -146,8 +148,6 @@ export * from "./none-sandbox.js";
 export * from "./novita-sandbox.js";
 export * from "./novita-template.js";
 export * from "./openai-compatible-connection-test.js";
-export * from "./plugin-inspect.js";
-export * from "./azure-devops-preset.js";
 export * from "./openai-compatible-url.js";
 export * from "./openai-compatible-voice.js";
 export * from "./openai-voice.js";
@@ -174,6 +174,7 @@ export { shutdownPiTelemetry } from "./pi-telemetry.js";
 export * from "./pipedream-connector.js";
 export * from "./plugin-connectors.js";
 export * from "./plugin-git.js";
+export * from "./plugin-inspect.js";
 export * from "./plugin-marketplace.js";
 export * from "./product-analytics.js";
 export * from "./purchase-poll.js";

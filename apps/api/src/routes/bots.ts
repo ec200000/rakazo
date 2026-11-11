@@ -9,11 +9,13 @@ import {
   forgetPageShareSecrets,
   hasActiveComputerControl,
   isSecretAlreadySaved,
+  listRemoteBranches,
   listVaultItems,
   newVaultItemName,
   normalizeSecretDestination,
   pageUrlOrigin,
   relabelVaultItem,
+  repositoryCredential,
   revealBotSecret,
   SPACE_VAULT_NOT_IN_USE,
   stopCancelledGroupRuns,
@@ -401,6 +403,31 @@ export function botsRoutes(ctx: RouterContext) {
         await repos.reorderBots(context.actor, input.botIds);
         return { ok: true as const };
       }),
+      repositoryBranches: authed.bots.repositoryBranches.handler(async ({ context, input }) => {
+        const bot = await deps.prisma.bot.findFirst({
+          where: { id: input.botId, spaceId: context.actor.spaceId },
+          select: { repoUrl: true },
+        });
+        if (!bot) throw new IsolationError();
+        if (!bot.repoUrl) return { branches: [] };
+        try {
+          return {
+            branches: await listRemoteBranches(
+              bot.repoUrl,
+              await repositoryCredential(
+                { prisma: deps.prisma, secretStore: deps.secrets },
+                context.actor,
+                bot.repoUrl,
+              ),
+            ),
+          };
+        } catch (error) {
+          return {
+            branches: [],
+            error: error instanceof Error ? error.message : "Could not list branches",
+          };
+        }
+      }),
       update: authed.bots.update.handler(async ({ context, input }) => {
         const existing = await repos.getBot(context.actor, input.botId);
         if (input.sectionId) {
@@ -477,6 +504,15 @@ export function botsRoutes(ctx: RouterContext) {
               ? { fleetManagement: input.fleetManagement }
               : {}),
             ...(input.replyMode !== undefined ? { replyMode: input.replyMode } : {}),
+            ...(input.repoUrl !== undefined
+              ? {
+                  repoUrl: input.repoUrl,
+                  // Another repository's branches do not carry over.
+                  ...(input.repoUrl === null ? { repoBaseBranch: null, repoBranch: null } : {}),
+                }
+              : {}),
+            ...(input.repoBaseBranch !== undefined ? { repoBaseBranch: input.repoBaseBranch } : {}),
+            ...(input.repoBranch !== undefined ? { repoBranch: input.repoBranch } : {}),
             ...(input.disabledBuiltinTools !== undefined
               ? { disabledBuiltinTools: input.disabledBuiltinTools }
               : {}),

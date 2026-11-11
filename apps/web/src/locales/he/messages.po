@@ -1251,6 +1251,10 @@ msgstr "חזרה לצ'אט"
 msgid "Back to sign in"
 msgstr "חזרה להתחברות"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Base branch"
+msgstr "ענף בסיס"
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "Base URL"
@@ -1373,6 +1377,10 @@ msgstr "בוטים עם מודל משלהם"
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "תווית Brain"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Branch name"
+msgstr "שם ענף"
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Browse"
@@ -1647,6 +1655,10 @@ msgstr "בחירת ספק"
 msgid "Choose backup"
 msgstr "בחירת גיבוי"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Choose branch"
+msgstr "בחירת ענף"
+
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose file"
@@ -1703,6 +1715,10 @@ msgstr "ניקוי מסננים"
 #: src/pages/shell/dialogs.tsx
 msgid "Clearing…"
 msgstr "מנקה…"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Clone URL"
+msgstr "כתובת שכפול"
 
 #: src/components/ErrorBoundary.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -2658,6 +2674,10 @@ msgstr "לא ניתן לשמור את הקול"
 msgid "Could not save the credential"
 msgstr "לא ניתן לשמור את פרטי הגישה"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Could not save the repository"
+msgstr "לא ניתן לשמור את המאגר"
+
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
 msgstr "לא ניתן לשמור את הבחירה הזו"
@@ -2674,6 +2694,10 @@ msgstr "לא ניתן לשלוח אימייל לאיפוס"
 #: src/lib/call-session.ts
 msgid "Could not send that"
 msgstr "לא ניתן לשלוח את זה"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Could not set the branch"
+msgstr "לא ניתן להגדיר את הענף"
 
 #: src/components/VaultSettings.tsx
 msgid "Could not show the credential"
@@ -4269,6 +4293,7 @@ msgstr "טוען ספקי קול…"
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
+#: src/pages/shell/branch-box.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "טוען…"
@@ -4784,6 +4809,10 @@ msgstr "מפתח API חדש"
 #: src/pages/shell/use-palette-actions.ts
 msgid "New bot"
 msgstr "בוט חדש"
+
+#: src/pages/shell/branch-box.tsx
+msgid "New branch \"{typed}\""
+msgstr "ענף חדש \"{typed}\""
 
 #: src/components/VaultSettings.tsx
 msgid "New card"
@@ -5429,6 +5458,11 @@ msgstr "תמונה"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "יש לבחור {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 
+#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#: src/pages/shell/branch-box.tsx
+msgid "Pick a branch, or type a new name to create it from {0}."
+msgstr "בחרו ענף, או הקלידו שם חדש כדי ליצור אותו מתוך {0}."
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "יש לבחור מודל מהקטלוג."
@@ -5935,6 +5969,10 @@ msgstr "תשובה:"
 msgid "Replying to {0}"
 msgstr "תשובה ל-{0}"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Repository"
+msgstr "מאגר"
+
 #: src/lib/user-error.ts
 msgid "Request a new code"
 msgstr "יש לבקש קוד חדש"
@@ -6186,6 +6224,10 @@ msgstr "שמירה"
 msgid "Save marketplace"
 msgstr "שמירת המרקטפלייס"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Save repository"
+msgstr "שמירת המאגר"
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "שמירת סביבת העבודה והתקנת התוכנה העדכנית."
@@ -6232,6 +6274,7 @@ msgstr "שומר..."
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/dialogs.tsx
+#: src/pages/shell/repository-settings.tsx
 msgid "Saving…"
 msgstr "שומר…"
 
@@ -7019,6 +7062,11 @@ msgstr "בודק… (מודל איטי עשוי לקחת דקה)"
 msgid "That address isn't available"
 msgstr "הכתובת הזו לא זמינה"
 
+#: src/pages/shell/branch-box.tsx
+#: src/pages/shell/repository-settings.tsx
+msgid "That is not a valid branch name."
+msgstr "זה לא שם ענף תקין."
+
 #: src/pages/shell/composer-error.tsx
 msgid "The bot can use the file but won't see the picture."
 msgstr "הבוט יוכל להשתמש בקובץ, אבל לא יראה את התמונה."
@@ -7038,6 +7086,10 @@ msgstr "המחשב שעליו הבוטים שלך עובדים."
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "תם הזמן הקצוב לחיבור."
+
+#: src/pages/shell/repository-settings.tsx
+msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgstr "מאגר ה-git שהבוט הזה עובד עליו. את הענף בוחרים מעל הצ'אט; git מתחבר עם חיבור ה-Azure DevOps שלכם מהאינטגרציות."
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -7446,6 +7498,10 @@ msgstr "סוג"
 msgid "Type {name} to confirm"
 msgstr "יש להקליד {name} לאישור"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Type to find more branches."
+msgstr "הקלידו כדי למצוא עוד ענפים."
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Type without recording"
 msgstr "הקלדה בלי הקלטה"
@@ -7636,6 +7692,10 @@ msgstr "לסיסמאות יש להשתמש בקלט מוגן."
 #: src/components/ModelCredits.tsx
 msgid "Use Rakazo credits"
 msgstr "שימוש בקרדיטים של Rakazo"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Use the repository's https clone URL, without a user name or token."
+msgstr "השתמשו בכתובת ה-https לשכפול המאגר, בלי שם משתמש או טוקן."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
@@ -7891,6 +7951,10 @@ msgstr "עבודה"
 #: src/pages/ActivityList.tsx
 msgid "Working"
 msgstr "בעבודה"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Working branch"
+msgstr "ענף עבודה"
 
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Working instructions"

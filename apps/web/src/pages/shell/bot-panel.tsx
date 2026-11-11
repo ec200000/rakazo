@@ -42,6 +42,7 @@ import {
   ToolsGroup,
   VoiceGroup,
 } from "./bot-settings-sections";
+import { RepositoryGroup } from "./repository-settings";
 
 const ScratchpadSection = lazyComponent(() =>
   import("../ScratchpadSection").then((module) => module.ScratchpadSection),
@@ -108,6 +109,9 @@ export function BotSettings({
     modelId?: string | null;
     thinkingLevel?: ThinkingLevel | null;
     disabledBuiltinTools?: string[];
+    repoUrl?: string | null;
+    repoBaseBranch?: string | null;
+    repoBranch?: string | null;
   }) => Promise<void>;
   onExport: () => Promise<void>;
   onClear: () => void;
@@ -594,6 +598,7 @@ export function BotSettings({
               memoryScope={memoryScope}
               onMemoryScopeChange={setMemoryScope}
             />
+            <RepositoryGroup ids={ids} bot={bot} onSave={onSave} />
             <VoiceGroup
               ids={ids}
               autoSpeak={autoSpeak}

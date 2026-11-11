@@ -21,10 +21,12 @@ cd "$ROOT"
 # The repository's .dockerignore leaves out dist, so build from a context holding only it.
 context=$(mktemp -d)
 trap 'rm -rf "$context"' EXIT
-mkdir -p "$context/apps/api" "$context/apps/worker" "$context/apps/web"
+mkdir -p "$context/apps/api" "$context/apps/worker" "$context/apps/web" "$context/packages/db"
 cp -R apps/api/dist "$context/apps/api/dist"
 cp -R apps/worker/dist "$context/apps/worker/dist"
 cp -R apps/web/dist "$context/apps/web/dist"
+# The schema and migrations the bundled database client was generated from.
+cp -R packages/db/prisma "$context/packages/db/prisma"
 cp infra/overlay/Dockerfile "$context/"
 
 # A tag names every platform's image. With the containerd image store, the classic builder can

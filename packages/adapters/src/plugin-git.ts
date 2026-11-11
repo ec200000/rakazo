@@ -80,7 +80,7 @@ export function gitHostsFromConfig(
 let caBundle: Promise<string | undefined> | undefined;
 
 /** System CAs plus NODE_EXTRA_CA_CERTS, as git replaces rather than extends its CA list. */
-function extraCaBundle(): Promise<string | undefined> {
+export function extraCaBundle(): Promise<string | undefined> {
   caBundle ??= (async () => {
     const extra = process.env.NODE_EXTRA_CA_CERTS;
     if (!extra) return undefined;

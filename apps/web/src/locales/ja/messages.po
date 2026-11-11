@@ -1251,6 +1251,10 @@ msgstr "チャットに戻る"
 msgid "Back to sign in"
 msgstr "ログインに戻る"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Base branch"
+msgstr ""
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "ベースURL"
@@ -1373,6 +1377,10 @@ msgstr "独自のモデルを使うボット"
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "Brainラベル"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Branch name"
+msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Browse"
@@ -1647,6 +1655,10 @@ msgstr "プロバイダーを選択"
 msgid "Choose backup"
 msgstr "バックアップを選択"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Choose branch"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose file"
@@ -1703,6 +1715,10 @@ msgstr "フィルターをクリア"
 #: src/pages/shell/dialogs.tsx
 msgid "Clearing…"
 msgstr "クリア中…"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Clone URL"
+msgstr ""
 
 #: src/components/ErrorBoundary.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -2658,6 +2674,10 @@ msgstr "そのボイスを保存できませんでした"
 msgid "Could not save the credential"
 msgstr "認証情報を保存できませんでした"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Could not save the repository"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
 msgstr "この選択を保存できませんでした"
@@ -2674,6 +2694,10 @@ msgstr "リセット用メールを送信できませんでした"
 #: src/lib/call-session.ts
 msgid "Could not send that"
 msgstr "送信できませんでした"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Could not set the branch"
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Could not show the credential"
@@ -4269,6 +4293,7 @@ msgstr "音声プロバイダーを読み込み中…"
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
+#: src/pages/shell/branch-box.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "読み込み中…"
@@ -4784,6 +4809,10 @@ msgstr "新しいAPIキー"
 #: src/pages/shell/use-palette-actions.ts
 msgid "New bot"
 msgstr "新しいボット"
+
+#: src/pages/shell/branch-box.tsx
+msgid "New branch \"{typed}\""
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "New card"
@@ -5429,6 +5458,11 @@ msgstr "写真"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "{GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}人を選択"
 
+#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#: src/pages/shell/branch-box.tsx
+msgid "Pick a branch, or type a new name to create it from {0}."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "カタログからモデルを選択してください。"
@@ -5935,6 +5969,10 @@ msgstr ""
 msgid "Replying to {0}"
 msgstr "{0}に返信中"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Repository"
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "Request a new code"
 msgstr "新しいコードをリクエスト"
@@ -6186,6 +6224,10 @@ msgstr "保存"
 msgid "Save marketplace"
 msgstr ""
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Save repository"
+msgstr ""
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "ワークスペースを保存して、最新のソフトウェアをインストールします。"
@@ -6232,6 +6274,7 @@ msgstr "保存中..."
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/dialogs.tsx
+#: src/pages/shell/repository-settings.tsx
 msgid "Saving…"
 msgstr "保存中…"
 
@@ -7019,6 +7062,11 @@ msgstr ""
 msgid "That address isn't available"
 msgstr "そのアドレスは使用できません"
 
+#: src/pages/shell/branch-box.tsx
+#: src/pages/shell/repository-settings.tsx
+msgid "That is not a valid branch name."
+msgstr ""
+
 #: src/pages/shell/composer-error.tsx
 msgid "The bot can use the file but won't see the picture."
 msgstr "ボットはファイルを利用できますが、画像の内容は見えません。"
@@ -7038,6 +7086,10 @@ msgstr "ボットが作業するコンピューター。"
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "接続がタイムアウトしました。"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -7446,6 +7498,10 @@ msgstr "種類"
 msgid "Type {name} to confirm"
 msgstr "確認のため{name}と入力してください"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Type to find more branches."
+msgstr ""
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Type without recording"
 msgstr "録画せずに入力"
@@ -7636,6 +7692,10 @@ msgstr "パスワードには保護された入力を使用してください。
 #: src/components/ModelCredits.tsx
 msgid "Use Rakazo credits"
 msgstr "Rakazoクレジットを使用"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Use the repository's https clone URL, without a user name or token."
+msgstr ""
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
@@ -7891,6 +7951,10 @@ msgstr "仕事"
 #: src/pages/ActivityList.tsx
 msgid "Working"
 msgstr "作業中"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Working branch"
+msgstr ""
 
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Working instructions"

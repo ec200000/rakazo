@@ -1251,6 +1251,10 @@ msgstr "Terug naar chat"
 msgid "Back to sign in"
 msgstr "Terug naar aanmelden"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Base branch"
+msgstr ""
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "Basis-URL"
@@ -1373,6 +1377,10 @@ msgstr "Bots met een eigen model"
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "Breinlabel"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Branch name"
+msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Browse"
@@ -1647,6 +1655,10 @@ msgstr "Kies een aanbieder"
 msgid "Choose backup"
 msgstr "Back-up kiezen"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Choose branch"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose file"
@@ -1703,6 +1715,10 @@ msgstr "Filters wissen"
 #: src/pages/shell/dialogs.tsx
 msgid "Clearing…"
 msgstr "Bezig met wissen…"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Clone URL"
+msgstr ""
 
 #: src/components/ErrorBoundary.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -2658,6 +2674,10 @@ msgstr "Die stem opslaan mislukt"
 msgid "Could not save the credential"
 msgstr "De gegevens opslaan mislukt"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Could not save the repository"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
 msgstr "Deze keuze opslaan mislukt"
@@ -2674,6 +2694,10 @@ msgstr "Herstellingsmail versturen mislukt"
 #: src/lib/call-session.ts
 msgid "Could not send that"
 msgstr "Versturen mislukt"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Could not set the branch"
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Could not show the credential"
@@ -4269,6 +4293,7 @@ msgstr "Spraakanbieders laden…"
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
+#: src/pages/shell/branch-box.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "Bezig met laden…"
@@ -4784,6 +4809,10 @@ msgstr "Nieuwe API-sleutel"
 #: src/pages/shell/use-palette-actions.ts
 msgid "New bot"
 msgstr "Nieuwe bot"
+
+#: src/pages/shell/branch-box.tsx
+msgid "New branch \"{typed}\""
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "New card"
@@ -5429,6 +5458,11 @@ msgstr "Foto"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "Kies {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 
+#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#: src/pages/shell/branch-box.tsx
+msgid "Pick a branch, or type a new name to create it from {0}."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "Kies een model uit de catalogus."
@@ -5935,6 +5969,10 @@ msgstr ""
 msgid "Replying to {0}"
 msgstr "Antwoordt op {0}"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Repository"
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "Request a new code"
 msgstr "Vraag een nieuwe code aan"
@@ -6186,6 +6224,10 @@ msgstr "Opslaan"
 msgid "Save marketplace"
 msgstr ""
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Save repository"
+msgstr ""
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "Sla de werkruimte op en installeer de huidige software."
@@ -6232,6 +6274,7 @@ msgstr "Bezig met opslaan..."
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/dialogs.tsx
+#: src/pages/shell/repository-settings.tsx
 msgid "Saving…"
 msgstr "Bezig met opslaan…"
 
@@ -7019,6 +7062,11 @@ msgstr ""
 msgid "That address isn't available"
 msgstr "Dat adres is niet beschikbaar"
 
+#: src/pages/shell/branch-box.tsx
+#: src/pages/shell/repository-settings.tsx
+msgid "That is not a valid branch name."
+msgstr ""
+
 #: src/pages/shell/composer-error.tsx
 msgid "The bot can use the file but won't see the picture."
 msgstr "De bot kan het bestand gebruiken, maar ziet de afbeelding niet."
@@ -7038,6 +7086,10 @@ msgstr "De computer waarop je bots werken."
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "De verbinding is verlopen."
+
+#: src/pages/shell/repository-settings.tsx
+msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -7446,6 +7498,10 @@ msgstr "Type"
 msgid "Type {name} to confirm"
 msgstr "Typ {name} om te bevestigen"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Type to find more branches."
+msgstr ""
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Type without recording"
 msgstr "Typen zonder opname"
@@ -7636,6 +7692,10 @@ msgstr "Gebruik Beveiligde invoer voor wachtwoorden."
 #: src/components/ModelCredits.tsx
 msgid "Use Rakazo credits"
 msgstr "Rakazo-tegoed gebruiken"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Use the repository's https clone URL, without a user name or token."
+msgstr ""
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
@@ -7891,6 +7951,10 @@ msgstr "Werk"
 #: src/pages/ActivityList.tsx
 msgid "Working"
 msgstr "Bezig"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Working branch"
+msgstr ""
 
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Working instructions"

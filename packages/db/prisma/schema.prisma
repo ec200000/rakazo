@@ -994,6 +994,11 @@ model Bot {
   dailyCheckIns Boolean @default(true)
   fleetManagement        Boolean @default(true)
   replyMode              String  @default("chat")
+  /// The git repository this bot works on (https), its base branch, and the branch its person
+  /// chose to work on now. Branch names come from the person; the bot never picks them.
+  repoUrl                String?
+  repoBaseBranch         String?
+  repoBranch             String?
   routines          Routine[]
   scratchpadItems   ScratchpadItem[]
   taughtSkills      TaughtSkill[]

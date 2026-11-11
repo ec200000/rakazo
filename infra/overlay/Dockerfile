@@ -8,6 +8,7 @@ FROM ${BASE}
 COPY apps/api/dist /app/apps/api/dist
 COPY apps/worker/dist /app/apps/worker/dist
 COPY apps/web/dist /app/apps/web/dist
+COPY packages/db/prisma /app/packages/db/prisma
 USER root
 RUN apt-get update \
   && apt-get install -y --no-install-recommends git ca-certificates \

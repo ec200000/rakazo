@@ -1252,6 +1252,10 @@ msgstr "返回聊天"
 msgid "Back to sign in"
 msgstr "返回登入"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Base branch"
+msgstr "基礎分支"
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "基底網址"
@@ -1374,6 +1378,10 @@ msgstr "使用自己模型的機器人"
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "大腦標籤"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Branch name"
+msgstr "分支名稱"
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Browse"
@@ -1648,6 +1656,10 @@ msgstr "選擇供應商"
 msgid "Choose backup"
 msgstr "選擇備份"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Choose branch"
+msgstr "選擇分支"
+
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose file"
@@ -1704,6 +1716,10 @@ msgstr "清除篩選"
 #: src/pages/shell/dialogs.tsx
 msgid "Clearing…"
 msgstr "正在清空…"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Clone URL"
+msgstr "複製 URL"
 
 #: src/components/ErrorBoundary.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -2659,6 +2675,10 @@ msgstr "無法儲存該語音"
 msgid "Could not save the credential"
 msgstr "無法儲存憑證"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Could not save the repository"
+msgstr "無法儲存儲存庫"
+
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
 msgstr "無法儲存此選擇"
@@ -2675,6 +2695,10 @@ msgstr "無法傳送重設郵件"
 #: src/lib/call-session.ts
 msgid "Could not send that"
 msgstr "無法傳送"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Could not set the branch"
+msgstr "無法設定分支"
 
 #: src/components/VaultSettings.tsx
 msgid "Could not show the credential"
@@ -4270,6 +4294,7 @@ msgstr "正在載入語音供應商…"
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
+#: src/pages/shell/branch-box.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "載入中…"
@@ -4785,6 +4810,10 @@ msgstr "新增 API 金鑰"
 #: src/pages/shell/use-palette-actions.ts
 msgid "New bot"
 msgstr "新增機器人"
+
+#: src/pages/shell/branch-box.tsx
+msgid "New branch \"{typed}\""
+msgstr "新分支「{typed}」"
 
 #: src/components/VaultSettings.tsx
 msgid "New card"
@@ -5430,6 +5459,11 @@ msgstr "照片"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "選擇 {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX} 個"
 
+#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#: src/pages/shell/branch-box.tsx
+msgid "Pick a branch, or type a new name to create it from {0}."
+msgstr "選擇一個分支，或輸入新名稱以從 {0} 建立。"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "請從目錄中選擇模型。"
@@ -5936,6 +5970,10 @@ msgstr "回覆："
 msgid "Replying to {0}"
 msgstr "正在回覆 {0}"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Repository"
+msgstr "儲存庫"
+
 #: src/lib/user-error.ts
 msgid "Request a new code"
 msgstr "請重新獲取驗證碼"
@@ -6187,6 +6225,10 @@ msgstr "儲存"
 msgid "Save marketplace"
 msgstr "儲存市集"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Save repository"
+msgstr "儲存儲存庫"
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "儲存工作空間並安裝最新軟體。"
@@ -6233,6 +6275,7 @@ msgstr "儲存中…"
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/dialogs.tsx
+#: src/pages/shell/repository-settings.tsx
 msgid "Saving…"
 msgstr "正在儲存…"
 
@@ -7020,6 +7063,11 @@ msgstr "測試中…（較慢的模型可能需要一分鐘）"
 msgid "That address isn't available"
 msgstr "此地址無法使用"
 
+#: src/pages/shell/branch-box.tsx
+#: src/pages/shell/repository-settings.tsx
+msgid "That is not a valid branch name."
+msgstr "這不是有效的分支名稱。"
+
 #: src/pages/shell/composer-error.tsx
 msgid "The bot can use the file but won't see the picture."
 msgstr "機器人可以使用這個檔案，但看不到圖片內容。"
@@ -7039,6 +7087,10 @@ msgstr "你的機器人工作用的電腦。"
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "連線超時。"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgstr "此機器人工作的 git 儲存庫。在聊天上方選擇分支；git 會使用你在整合中的 Azure DevOps 連線登入。"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -7447,6 +7499,10 @@ msgstr "類型"
 msgid "Type {name} to confirm"
 msgstr "輸入 {name} 以確認"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Type to find more branches."
+msgstr "輸入以尋找更多分支。"
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Type without recording"
 msgstr "輸入文字但不記錄內容"
@@ -7637,6 +7693,10 @@ msgstr "輸入密碼時，請使用受保護的輸入。"
 #: src/components/ModelCredits.tsx
 msgid "Use Rakazo credits"
 msgstr "使用 Rakazo 額度"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Use the repository's https clone URL, without a user name or token."
+msgstr "請使用儲存庫的 https 複製 URL，不要包含使用者名稱或權杖。"
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
@@ -7892,6 +7952,10 @@ msgstr "工作"
 #: src/pages/ActivityList.tsx
 msgid "Working"
 msgstr "工作中"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Working branch"
+msgstr "工作分支"
 
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Working instructions"

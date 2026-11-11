@@ -450,6 +450,27 @@ export function threadContextForRun<T extends { id?: string; role: string }>(
     : { ...context, includeSemanticRecall: true };
 }
 
+/**
+ * The bot's git repository and the branch its person chose. Branch names only ever come from
+ * the person, through the Branch box above the chat.
+ */
+export function botRepositoryInstruction(bot: {
+  repoUrl: string | null;
+  repoBaseBranch: string | null;
+  repoBranch: string | null;
+}): string {
+  if (!bot.repoUrl) return "";
+  const base = bot.repoBaseBranch || "main";
+  return [
+    `You work on the git repository ${bot.repoUrl} (base branch ${base}).`,
+    bot.repoBranch
+      ? `The person chose the working branch ${bot.repoBranch}. Run repo_sync before working on code, edit and test with the shell in the repository folder it reports, commit with git, and publish with repo_push.`
+      : "The person has not chosen a working branch yet. Before changing code, ask them to choose or type one in the Branch box above the chat.",
+    "Never create, rename or switch to a branch name of your own; only the person names branches. Never put tokens or passwords in git commands or remote URLs; repo_sync and repo_push handle credentials.",
+    "Open pull requests with the Azure DevOps tools when the person asks, from the working branch into the branch they name (the base branch if they don't).",
+  ].join(" ");
+}
+
 /** The bot's own address, which it may give out, and the inbox tools this run has. */
 export function botEmailInstruction(
   address: string,

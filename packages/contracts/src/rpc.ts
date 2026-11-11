@@ -606,6 +606,10 @@ export const appContract = {
     createFromTemplate: oc.input(CreateBotFromTemplateInput).output(CreateBotFromTemplateOutput),
     duplicate: oc.input(botId).output(BotSchema),
     reorder: oc.input(ReorderBotsInput).output(z.object({ ok: z.literal(true) })),
+    /** Branches of the bot's repository, read with its person's git credentials. */
+    repositoryBranches: oc
+      .input(z.object({ botId: Id }))
+      .output(z.object({ branches: z.array(z.string()), error: z.string().optional() })),
     update: oc.input(UpdateBotInput).output(BotSchema),
     restoreInstructions: oc
       .input(

@@ -88,6 +88,9 @@ export const BotSchema = z.object({
   title: z.string(),
   description: z.string(),
   instructions: z.string(),
+  repoUrl: z.string().nullable().optional(),
+  repoBaseBranch: z.string().nullable().optional(),
+  repoBranch: z.string().nullable().optional(),
   instructionHistory: z.array(InstructionVersionSchema).optional(),
   color: z.string(),
   avatarSet: BotAvatarSetSchema.optional(),
@@ -465,6 +468,35 @@ export const CreateBotInput = z.object({
 });
 export type CreateBotInput = z.infer<typeof CreateBotInput>;
 
+/**
+ * A git branch name as git accepts it: no spaces, "..", "@{", "//", leading "-" or "/",
+ * trailing "/", "." or ".lock". Branch names always come from the person.
+ */
+export const GitBranchNameSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(200)
+  .regex(
+    /^(?![-/])(?!.*(?:\.\.|\/\/|@\{|\.lock(?:\/|$)|\/\.))(?!.*[/.]$)[A-Za-z0-9._/-]+$/,
+    "Not a valid git branch name",
+  );
+
+/** A repository a bot works on: an https git URL without credentials. */
+export const GitRepositoryUrlSchema = z
+  .string()
+  .trim()
+  .max(2048)
+  .url()
+  .refine((value) => {
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" && !url.username && !url.password && !url.search;
+    } catch {
+      return false;
+    }
+  }, "Use the repository's https clone URL, without a user name or token");
+
 export const UpdateBotInput = z
   .object({
     botId: Id,
@@ -472,6 +504,11 @@ export const UpdateBotInput = z
     description: z.string().trim().max(BOT_DESCRIPTION_MAX_LENGTH).optional(),
     instructions: z.string().trim().max(BOT_INSTRUCTIONS_MAX_LENGTH).optional(),
     expectedInstructions: z.string().max(BOT_INSTRUCTIONS_MAX_LENGTH).optional(),
+    /** The repository this bot works on; null removes it. */
+    repoUrl: GitRepositoryUrlSchema.nullable().optional(),
+    repoBaseBranch: GitBranchNameSchema.nullable().optional(),
+    /** The branch the person chose to work on now; null clears it. */
+    repoBranch: GitBranchNameSchema.nullable().optional(),
     /** Ignored; installed mobile apps may still send it. */
     selfUpdateInstructions: z.boolean().optional(),
     notifyOnFinish: z.boolean().optional(),

@@ -135,6 +135,7 @@ import { APPROVED_EFFECT_REPLAY_ORDER, buildApprovalContinuation } from "./run-e
 import {
   BOT_DIRECTORY_LIMIT,
   botEmailInstruction,
+  botRepositoryInstruction,
   dockerComputerToolInstruction,
   persistentComputerInstruction,
   runIdentityInstruction,
@@ -1269,6 +1270,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             trigger: run.trigger,
             semanticMemoryEnabled,
             semanticMemoryForgets: Boolean(semanticMemory?.forget),
+            repository: Boolean(bot.repoUrl),
             mediaImagesEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.images),
             mediaVideoEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.video),
             paidServicesEnabled: Boolean(paidServices),
@@ -1767,6 +1769,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
               instructions: userTurnInstructions({
                 botInstructions: [
                   runIdentityInstruction(bot, run.trigger),
+                  botRepositoryInstruction(bot),
                   botEmail
                     ? botEmailInstruction(botEmail, {
                         // Only the tools this bot has: its owner may turn any of them off.

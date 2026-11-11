@@ -8,6 +8,7 @@ import { InviteDialog } from "../../components/InviteDialog";
 import { useBilling } from "../../components/SubscriptionGate";
 import { desktopBridge, windowChromeKind } from "../../lib/desktop";
 import { WindowChrome } from "../WindowChrome";
+import { BranchBox } from "./branch-box";
 
 /** The floating header over the transcript: navigation, the chat's name, call and invite. */
 export function ChatHeader({
@@ -81,6 +82,7 @@ export function ChatHeader({
         </span>
       </Button>
       <div className="flex items-center justify-self-end gap-2">
+        {!inGroup && active?.repoUrl ? <BranchBox bot={active} /> : null}
         {phoneCallsEnabled && !inGroup && active ? (
           <IconTooltip label={inCall ? t`Open call` : t`Call`}>
             <Button

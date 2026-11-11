@@ -456,6 +456,24 @@ export const builtinAgentTools: ConnectorTool[] = [
     },
   },
   {
+    name: "repo_status",
+    description:
+      "Your git repository's local state: the folder it is in, the checked-out branch, uncommitted changes and recent commits. Needs no network.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "repo_sync",
+    description:
+      "Clone your repository if needed, fetch it, and switch to the working branch the person chose (creating it from the base branch when it does not exist yet). Run this before working on code and after the person changes the branch. Git credentials are handled for you; never put tokens in commands.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "repo_push",
+    description:
+      "Push the working branch to the repository's server. Commit with git in the shell first. Only the working branch the person chose can be pushed.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
     name: "shell",
     description:
       "Run a command inside this bot's computer. cwd defaults to the bot's folder on a Team Computer and the workspace root on a Private Computer. Output can arrive while the command is still running; tell the user any one-time code or sign-in URL in that output. A command is stopped after a few minutes, so on Linux or macOS start longer work, such as a coding agent CLI, as its own statement `nohup <command> < /dev/null > <log> 2>&1 &`, never after `&&`, and read the log to follow it.",

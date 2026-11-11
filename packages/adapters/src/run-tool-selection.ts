@@ -95,6 +95,13 @@ export function offersAgentConnectionTools(options: {
   );
 }
 
+/** Tools for the bot's git repository, offered only to bots that have one. */
+export const REPO_TOOL_NAMES: ReadonlySet<string> = new Set([
+  "repo_status",
+  "repo_sync",
+  "repo_push",
+]);
+
 export function selectBuiltinToolsForRun(options: {
   ticketBoardEnabled?: boolean;
   phoneCallsEnabled?: boolean;
@@ -119,6 +126,8 @@ export function selectBuiltinToolsForRun(options: {
   voiceCall?: boolean;
   /** Built-in names this bot turned off. Unknown names are ignored. */
   disabledBuiltinTools?: readonly string[];
+  /** The bot has a git repository to work on (repo_status, repo_sync, repo_push). */
+  repository?: boolean;
   fleetManagement?: boolean;
   /** A follow-up run whose source message the user wrote. */
   followUpFromUser?: boolean;
@@ -162,6 +171,7 @@ export function selectBuiltinToolsForRun(options: {
   ).filter(
     (tool) =>
       !disabled.has(tool.name) &&
+      (Boolean(options.repository) || !REPO_TOOL_NAMES.has(tool.name)) &&
       (options.trigger !== "created" || CREATED_RUN_TOOL_NAMES.has(tool.name)) &&
       (options.trigger !== BACKGROUND_HELPER_TRIGGER ||
         BACKGROUND_HELPER_TOOL_NAMES.has(tool.name)) &&

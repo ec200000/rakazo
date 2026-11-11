@@ -1251,6 +1251,10 @@ msgstr "채팅으로 돌아가기"
 msgid "Back to sign in"
 msgstr "로그인으로 돌아가기"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Base branch"
+msgstr ""
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "서버 주소"
@@ -1373,6 +1377,10 @@ msgstr "자체 모델을 가진 봇"
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "브레인 레이블"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Branch name"
+msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Browse"
@@ -1647,6 +1655,10 @@ msgstr "서비스 선택"
 msgid "Choose backup"
 msgstr "백업 선택"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Choose branch"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose file"
@@ -1703,6 +1715,10 @@ msgstr "필터 지우기"
 #: src/pages/shell/dialogs.tsx
 msgid "Clearing…"
 msgstr "비우는 중…"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Clone URL"
+msgstr ""
 
 #: src/components/ErrorBoundary.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -2658,6 +2674,10 @@ msgstr "목소리를 저장하지 못했습니다."
 msgid "Could not save the credential"
 msgstr "자격 증명을 저장하지 못했습니다"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Could not save the repository"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
 msgstr "선택 내용을 저장하지 못했습니다."
@@ -2674,6 +2694,10 @@ msgstr "재설정 이메일을 보낼 수 없습니다"
 #: src/lib/call-session.ts
 msgid "Could not send that"
 msgstr "메시지를 보내지 못했습니다."
+
+#: src/pages/shell/branch-box.tsx
+msgid "Could not set the branch"
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Could not show the credential"
@@ -4269,6 +4293,7 @@ msgstr "음성 서비스를 불러오는 중…"
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
+#: src/pages/shell/branch-box.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "불러오는 중…"
@@ -4784,6 +4809,10 @@ msgstr "새 API 키"
 #: src/pages/shell/use-palette-actions.ts
 msgid "New bot"
 msgstr "새 Bot 만들기"
+
+#: src/pages/shell/branch-box.tsx
+msgid "New branch \"{typed}\""
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "New card"
@@ -5429,6 +5458,11 @@ msgstr "사진"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "{GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}개 선택"
 
+#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#: src/pages/shell/branch-box.tsx
+msgid "Pick a branch, or type a new name to create it from {0}."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "모델 목록에서 모델을 선택하세요."
@@ -5935,6 +5969,10 @@ msgstr ""
 msgid "Replying to {0}"
 msgstr "{0}에게 답장 중"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Repository"
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "Request a new code"
 msgstr "새 코드를 요청하세요"
@@ -6186,6 +6224,10 @@ msgstr "저장"
 msgid "Save marketplace"
 msgstr ""
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Save repository"
+msgstr ""
+
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
 msgstr "작업 공간을 저장하고 최신 소프트웨어를 설치합니다."
@@ -6232,6 +6274,7 @@ msgstr "저장 중..."
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/dialogs.tsx
+#: src/pages/shell/repository-settings.tsx
 msgid "Saving…"
 msgstr "저장 중…"
 
@@ -7019,6 +7062,11 @@ msgstr ""
 msgid "That address isn't available"
 msgstr "사용할 수 없는 주소입니다"
 
+#: src/pages/shell/branch-box.tsx
+#: src/pages/shell/repository-settings.tsx
+msgid "That is not a valid branch name."
+msgstr ""
+
 #: src/pages/shell/composer-error.tsx
 msgid "The bot can use the file but won't see the picture."
 msgstr "Bot은 파일을 사용할 수 있지만 이미지는 볼 수 없습니다."
@@ -7038,6 +7086,10 @@ msgstr "봇이 작업하는 컴퓨터."
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "연결 시간이 초과되었습니다."
+
+#: src/pages/shell/repository-settings.tsx
+msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -7446,6 +7498,10 @@ msgstr "유형"
 msgid "Type {name} to confirm"
 msgstr "확인하려면 {name}을(를) 입력하세요"
 
+#: src/pages/shell/branch-box.tsx
+msgid "Type to find more branches."
+msgstr ""
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Type without recording"
 msgstr "녹음 없이 입력"
@@ -7636,6 +7692,10 @@ msgstr "비밀번호는 보호된 입력을 사용하세요."
 #: src/components/ModelCredits.tsx
 msgid "Use Rakazo credits"
 msgstr "Rakazo 크레딧 사용"
+
+#: src/pages/shell/repository-settings.tsx
+msgid "Use the repository's https clone URL, without a user name or token."
+msgstr ""
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
@@ -7891,6 +7951,10 @@ msgstr "업무"
 #: src/pages/ActivityList.tsx
 msgid "Working"
 msgstr "작업 중"
+
+#: src/pages/shell/branch-box.tsx
+msgid "Working branch"
+msgstr ""
 
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Working instructions"
