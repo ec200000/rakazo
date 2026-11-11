@@ -3265,6 +3265,16 @@ msgstr "Duplikuj"
 msgid "Each name can be used once."
 msgstr "Każdej nazwy można użyć raz."
 
+#: src/pages/routine-editor/add-trigger-menu.tsx
+#: src/pages/routine-editor/trigger-cards.tsx
+#: src/pages/RoutineList.tsx
+msgid "Echo message"
+msgstr "Wiadomość w Echo"
+
+#: src/pages/routine-editor/add-trigger-menu.tsx
+msgid "Echo not enabled"
+msgstr "Echo nie jest włączone"
+
 #: src/components/AskCard.tsx
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemDetail.tsx
@@ -6653,15 +6663,10 @@ msgstr "Pominięto"
 msgid "Skipped {0}"
 msgstr "Pominięto {0}"
 
-#: src/pages/routine-editor/add-trigger-menu.tsx
 #: src/pages/routine-editor/trigger-cards.tsx
 #: src/pages/RoutineList.tsx
 msgid "Slack message"
 msgstr "Wiadomość Slack"
-
-#: src/pages/routine-editor/add-trigger-menu.tsx
-msgid "Slack not enabled"
-msgstr "Slack nie jest włączony"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Slide up to lock"

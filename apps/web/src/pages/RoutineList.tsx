@@ -26,7 +26,8 @@ export function routineTriggerSummary(
   // Schedules first: they say when it runs, so they matter most when the line is cut off.
   const parts: string[] = routine.crons.map((cron) => formatCron(cron, labels));
   if (routine.watch) parts.push(t`When something changes`);
-  if (routine.messageProvider === "slack") parts.push(t`Slack message`);
+  if (routine.messageProvider === "echo") parts.push(t`Echo message`);
+  else if (routine.messageProvider === "slack") parts.push(t`Slack message`);
   else if (routine.messageProvider === "teams") parts.push(t`Teams message`);
   else if (routine.messageProvider) parts.push(t`Message event`);
   if (routine.emailSenders) parts.push(t({ message: "Email", context: "routine trigger" }));

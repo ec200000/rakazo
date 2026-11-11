@@ -41,7 +41,7 @@ const FOCUS_OPTIONS: FocusOption[] = [
     id: "day",
     letter: "A",
     label: "Day-to-day work",
-    summary: "Slack, calendar, and email",
+    summary: "Echo, calendar, and email",
     apps: ["slack", "gmail", "googlecalendar"],
   },
   {
@@ -62,7 +62,7 @@ const FOCUS_OPTIONS: FocusOption[] = [
     id: "everything",
     letter: "D",
     label: "A bit of everything",
-    summary: "Slack, calendar, and email",
+    summary: "Echo, calendar, and email",
     apps: ["slack", "gmail", "googlecalendar"],
   },
 ];

@@ -3266,6 +3266,16 @@ msgstr "複製"
 msgid "Each name can be used once."
 msgstr "每個名稱只能使用一次。"
 
+#: src/pages/routine-editor/add-trigger-menu.tsx
+#: src/pages/routine-editor/trigger-cards.tsx
+#: src/pages/RoutineList.tsx
+msgid "Echo message"
+msgstr "Echo 訊息"
+
+#: src/pages/routine-editor/add-trigger-menu.tsx
+msgid "Echo not enabled"
+msgstr "未啟用 Echo"
+
 #: src/components/AskCard.tsx
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemDetail.tsx
@@ -6654,15 +6664,10 @@ msgstr "已略過"
 msgid "Skipped {0}"
 msgstr "已跳過 {0}"
 
-#: src/pages/routine-editor/add-trigger-menu.tsx
 #: src/pages/routine-editor/trigger-cards.tsx
 #: src/pages/RoutineList.tsx
 msgid "Slack message"
 msgstr "Slack 訊息"
-
-#: src/pages/routine-editor/add-trigger-menu.tsx
-msgid "Slack not enabled"
-msgstr "未啟用 Slack"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Slide up to lock"

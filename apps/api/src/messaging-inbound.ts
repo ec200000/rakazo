@@ -727,6 +727,34 @@ async function enqueueDeliverJob(deps: MessagingInboundDeps): Promise<void> {
   });
 }
 
+/**
+ * Providers whose group conversations are threads inside one channel
+ * (`<provider>:<channel>:<thread>`): approving one thread covers its channel.
+ */
+const THREADED_CHANNEL_PROVIDERS = new Set(["echo"]);
+
+async function approvedInSameChannel(
+  tx: Prisma.TransactionClient,
+  provider: string,
+  threadId: string,
+  identityId: string,
+): Promise<boolean> {
+  if (!THREADED_CHANNEL_PROVIDERS.has(provider)) return false;
+  const parent = threadId.split(":").slice(0, 2).join(":");
+  const approved = await tx.messagingChannelMember.findFirst({
+    where: {
+      identityId,
+      status: "approved",
+      channel: {
+        provider,
+        OR: [{ threadId: parent }, { threadId: { startsWith: `${parent}:` } }],
+      },
+    },
+    select: { id: true },
+  });
+  return approved !== null;
+}
+
 async function handleChannelEvent(
   deps: MessagingInboundDeps,
   event: MessagingInboundMessage,
@@ -849,6 +877,10 @@ async function handleChannelEvent(
         if (!identity) hasUnlinked = true;
         continue;
       }
+      // A new thread of a channel this person already approved needs no second approval.
+      const inherited = identity
+        ? await approvedInSameChannel(tx, event.provider, channel.threadId, identity.id)
+        : false;
       // Upsert, not create: concurrent group webhooks race on the unique key.
       await tx.messagingChannelMember.upsert({
         where: { channelId_address: { channelId: channel.id, address } },
@@ -856,12 +888,12 @@ async function handleChannelEvent(
           channelId: channel.id,
           address,
           identityId: identity?.id ?? null,
-          status: "invited",
+          status: inherited ? "approved" : "invited",
         },
         update: {},
       });
       if (identity) {
-        if (await queueInvite(tx, channel, identity)) invited.push(identity);
+        if (!inherited && (await queueInvite(tx, channel, identity))) invited.push(identity);
       } else hasUnlinked = true;
     }
 

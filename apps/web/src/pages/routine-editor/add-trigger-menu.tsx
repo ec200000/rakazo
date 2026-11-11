@@ -46,8 +46,9 @@ export function AddTriggerMenu({
   onEnsureWebhook: () => Promise<void>;
 }) {
   const { t } = useLingui();
-  const slackAvailable = messageProviders.includes("slack");
-  const slackDisabledReasonId = `${fieldId}-slack-disabled-reason`;
+  // Echo is this deployment's team chat; it takes the place Slack has upstream.
+  const echoAvailable = messageProviders.includes("echo");
+  const echoDisabledReasonId = `${fieldId}-echo-disabled-reason`;
 
   function addSchedule(freq: CronFreq) {
     const base = defaultCronPreset();
@@ -95,18 +96,18 @@ export function AddTriggerMenu({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
 
-        <span className="block" title={slackAvailable ? undefined : t`Slack not enabled`}>
+        <span className="block" title={echoAvailable ? undefined : t`Echo not enabled`}>
           <DropdownMenuItem
-            disabled={draft.messageProvider === "slack" || !slackAvailable}
-            aria-describedby={slackAvailable ? undefined : slackDisabledReasonId}
-            onClick={() => addMessageProvider("slack")}
+            disabled={draft.messageProvider === "echo" || !echoAvailable}
+            aria-describedby={echoAvailable ? undefined : echoDisabledReasonId}
+            onClick={() => addMessageProvider("echo")}
           >
             <MessageSquare />
-            <Trans>Slack message</Trans>
+            <Trans>Echo message</Trans>
           </DropdownMenuItem>
-          {!slackAvailable ? (
-            <span id={slackDisabledReasonId} className="sr-only">
-              <Trans>Slack not enabled</Trans>
+          {!echoAvailable ? (
+            <span id={echoDisabledReasonId} className="sr-only">
+              <Trans>Echo not enabled</Trans>
             </span>
           ) : null}
         </span>

@@ -20,6 +20,7 @@ import type { SendblueAdapterConfig, SendblueThreadId } from "chat-adapter-sendb
 import type { ClientOptions as SendblueClientOptions } from "sendblue";
 import type { MessagingPlatform } from "./chat-sdk-surface.js";
 import { boundInboundMarkdown } from "./chat-sdk-surface.js";
+import { EchoAdapter, echoChannelName, isPermanentEchoError } from "./echo/echo-adapter.js";
 import { LazyLarkAdapter } from "./lark/lazy-adapter.js";
 import { Domain } from "./lark/thread-id.js";
 import { lazyChatAdapter } from "./lazy-chat-adapter.js";
@@ -57,6 +58,11 @@ export interface MessagingEnvironmentValues {
   photonWebhookSecret?: string | undefined;
   /** Extra named Photon projects (PHOTON_PROJECT_ID_<NAME>), each with its own number. */
   photonProjects?: PhotonProjectCredentials[] | undefined;
+  /** Echo team chat: its origin and the bot user's API token. */
+  echoUrl?: string | undefined;
+  echoBotToken?: string | undefined;
+  /** The bot's Echo username, shown as who to message when linking. */
+  echoBotUsername?: string | undefined;
 }
 
 export function messagingEnvFromProcess(
@@ -89,6 +95,9 @@ export function messagingEnvFromProcess(
     photonProjectSecret: clean(env.PHOTON_PROJECT_SECRET),
     photonWebhookSecret: clean(env.PHOTON_WEBHOOK_SECRET),
     photonProjects: photonProjectsFromEnv(env),
+    echoUrl: clean(env.ECHO_URL),
+    echoBotToken: clean(env.ECHO_BOT_TOKEN),
+    echoBotUsername: clean(env.ECHO_BOT_USERNAME),
   };
 }
 
@@ -235,6 +244,22 @@ export function messagingPlatformsFromEnv(
       rosterAt: (raw) => sendblueRosterAt(raw),
       channelName: (raw) => sendblueGroupName(raw),
       transport: (raw) => sendblueTransport(raw),
+    });
+  }
+
+  if (env.echoUrl && env.echoBotToken) {
+    platforms.push({
+      provider: "echo",
+      capabilities: { direct: true, groups: true, receipt: "reaction", files: true },
+      adapter: new EchoAdapter({
+        url: env.echoUrl,
+        token: env.echoBotToken,
+        // One socket per deployment, held by the process that receives messages.
+        pollInboundMessages: options.pollInboundMessages ?? false,
+      }),
+      isPermanentSendError: isPermanentEchoError,
+      channelName: echoChannelName,
+      ...(env.echoBotUsername ? { address: `@${env.echoBotUsername.replace(/^@/, "")}` } : {}),
     });
   }
 

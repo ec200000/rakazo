@@ -158,6 +158,10 @@ export interface AppEnv {
   photonWebhookSecret: string | undefined;
   /** Extra named Photon projects (PHOTON_PROJECT_ID_<NAME>), each with its own number. */
   photonProjects?: PhotonProjectCredentials[];
+  /** Echo team chat: its origin and the bot user's API token. */
+  echoUrl: string | undefined;
+  echoBotToken: string | undefined;
+  echoBotUsername: string | undefined;
   /** Unknown chat senders auto-provision their own accounts when true. */
   messagingOpenSignup: boolean;
   /** Bot that owns team/external chat rooms on the messaging surface. */
@@ -343,6 +347,9 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
     photonProjectSecret: optional(source.PHOTON_PROJECT_SECRET),
     photonWebhookSecret: optional(source.PHOTON_WEBHOOK_SECRET),
     photonProjects: photonProjectsFromEnv(source),
+    echoUrl: optional(source.ECHO_URL),
+    echoBotToken: optional(source.ECHO_BOT_TOKEN),
+    echoBotUsername: optional(source.ECHO_BOT_USERNAME),
     messagingOpenSignup: source.MESSAGING_OPEN_SIGNUP === "true",
     teamChatBotId: optional(source.TEAM_CHAT_BOT_ID) ?? optional(source.SLACK_RAKAZO_BOT_ID),
     teamChatJudgeProvider: optional(source.TEAM_CHAT_JUDGE_PROVIDER),

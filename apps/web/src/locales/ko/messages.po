@@ -3265,6 +3265,16 @@ msgstr "복제"
 msgid "Each name can be used once."
 msgstr "각 이름은 한 번만 사용할 수 있습니다."
 
+#: src/pages/routine-editor/add-trigger-menu.tsx
+#: src/pages/routine-editor/trigger-cards.tsx
+#: src/pages/RoutineList.tsx
+msgid "Echo message"
+msgstr ""
+
+#: src/pages/routine-editor/add-trigger-menu.tsx
+msgid "Echo not enabled"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemDetail.tsx
@@ -6653,15 +6663,10 @@ msgstr "건너뜀"
 msgid "Skipped {0}"
 msgstr "{0} 건너뜀"
 
-#: src/pages/routine-editor/add-trigger-menu.tsx
 #: src/pages/routine-editor/trigger-cards.tsx
 #: src/pages/RoutineList.tsx
 msgid "Slack message"
 msgstr "Slack 메시지"
-
-#: src/pages/routine-editor/add-trigger-menu.tsx
-msgid "Slack not enabled"
-msgstr "Slack이 활성화되지 않음"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Slide up to lock"

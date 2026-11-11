@@ -191,9 +191,11 @@ export function MessageTriggerCard({
 }) {
   const { t } = useLingui();
   const label =
-    provider === "slack"
-      ? t`Slack message`
-      : provider === "teams"
+    provider === "echo"
+      ? t`Echo message`
+      : provider === "slack"
+        ? t`Slack message`
+        : provider === "teams"
         ? t`Teams message`
         : t`Message event`;
   return (
