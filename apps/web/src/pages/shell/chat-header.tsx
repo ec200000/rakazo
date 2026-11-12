@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import type { Bot, Group, ThreadSnapshot } from "@rakazo/contracts";
 import { BotAvatar, Button, GroupAvatar } from "@rakazo/ui-web";
-import { Gift, Menu, Phone } from "lucide-react";
+import { Code, Gift, Menu, Phone } from "lucide-react";
 import { useState } from "react";
 import { IconTooltip } from "../../components/IconTooltip";
 import { InviteDialog } from "../../components/InviteDialog";
@@ -20,8 +20,10 @@ export function ChatHeader({
   voiceReady,
   inCall,
   panelOpen,
+  codeOpen,
   onOpenNavigation,
   onTogglePanel,
+  onToggleCode,
   onCall,
 }: {
   inGroup: boolean;
@@ -33,8 +35,11 @@ export function ChatHeader({
   voiceReady: boolean;
   inCall: boolean;
   panelOpen: boolean;
+  /** The Changes, Files and Terminal panel of a bot with a repository. */
+  codeOpen: boolean;
   onOpenNavigation: () => void;
   onTogglePanel: () => void;
+  onToggleCode: () => void;
   onCall: (bot: Bot) => void;
 }) {
   const { t } = useLingui();
@@ -83,6 +88,22 @@ export function ChatHeader({
       </Button>
       <div className="flex items-center justify-self-end gap-2">
         {!inGroup && active?.repoUrl ? <BranchBox bot={active} /> : null}
+        {!inGroup && active?.repoUrl ? (
+          <IconTooltip label={codeOpen ? t`Hide code` : t`Show code`}>
+            <Button
+              variant="floating"
+              size="icon-lg"
+              data-testid="code-button"
+              aria-label={codeOpen ? t`Hide code` : t`Show code`}
+              aria-pressed={codeOpen}
+              data-active={codeOpen ? "" : undefined}
+              onClick={onToggleCode}
+              className="app-no-drag"
+            >
+              <Code strokeWidth={1.7} className="size-[17px]" />
+            </Button>
+          </IconTooltip>
+        ) : null}
         {phoneCallsEnabled && !inGroup && active ? (
           <IconTooltip label={inCall ? t`Open call` : t`Call`}>
             <Button

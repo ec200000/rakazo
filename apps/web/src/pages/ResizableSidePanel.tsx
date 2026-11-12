@@ -4,8 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { useBotsSidebarWidth } from "./shell/sidebar-layout";
 
 const STORAGE_KEY = "rakazo:right-panel-width";
+/** The code panel (diffs, files, terminal) keeps its own, wider, width. */
+const CODE_STORAGE_KEY = "rakazo:right-panel-width:code";
 const MIN_WIDTH = 320;
 const DEFAULT_WIDTH = 384;
+const CODE_DEFAULT_WIDTH = 680;
 const ABSOLUTE_MAX = 1000;
 const MIN_CHAT_WIDTH = 320;
 
@@ -16,14 +19,14 @@ function maximumWidth(reservedLeadingPx: number, viewportWidth = window.innerWid
   );
 }
 
-function readPreferredWidth() {
+function readPreferredWidth(key: string, fallback: number) {
   try {
-    const saved = Number(localStorage.getItem(STORAGE_KEY));
+    const saved = Number(localStorage.getItem(key));
     if (saved >= MIN_WIDTH) return Math.min(ABSOLUTE_MAX, saved);
   } catch {
     /* Storage may be disabled. */
   }
-  return DEFAULT_WIDTH;
+  return fallback;
 }
 
 export function ResizableSidePanel({
@@ -36,7 +39,15 @@ export function ResizableSidePanel({
   children: ReactNode;
 }) {
   const reservedLeadingPx = useBotsSidebarWidth();
-  const [preferredWidth, setPreferredWidth] = useState(readPreferredWidth);
+  const code = panel === "code";
+  const [panelWidth, setPanelWidth] = useState(() =>
+    readPreferredWidth(STORAGE_KEY, DEFAULT_WIDTH),
+  );
+  const [codeWidth, setCodeWidth] = useState(() =>
+    readPreferredWidth(CODE_STORAGE_KEY, CODE_DEFAULT_WIDTH),
+  );
+  const preferredWidth = code ? codeWidth : panelWidth;
+  const setPreferredWidth = code ? setCodeWidth : setPanelWidth;
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   const maxWidth = maximumWidth(reservedLeadingPx, viewportWidth);
   const overlay = viewportWidth - reservedLeadingPx < MIN_CHAT_WIDTH + MIN_WIDTH;
@@ -46,11 +57,12 @@ export function ResizableSidePanel({
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, String(preferredWidth));
+      localStorage.setItem(STORAGE_KEY, String(panelWidth));
+      localStorage.setItem(CODE_STORAGE_KEY, String(codeWidth));
     } catch {
       /* Storage may be disabled. */
     }
-  }, [preferredWidth]);
+  }, [panelWidth, codeWidth]);
 
   useEffect(() => {
     function syncMax() {

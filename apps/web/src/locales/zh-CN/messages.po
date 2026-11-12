@@ -97,10 +97,25 @@ msgstr "{0}（超过 {1}）"
 msgid "{0} {unitLabel}"
 msgstr "{0} {unitLabel}"
 
+#. placeholder {0}: data.ahead
+#: src/pages/shell/code-panel.tsx
+msgid "{0} commits not pushed"
+msgstr "{0} 个提交未推送"
+
+#. placeholder {0}: data.commits.length
+#: src/pages/shell/code-panel.tsx
+msgid "{0} commits on this branch"
+msgstr "此分支上有 {0} 个提交"
+
 #. placeholder {0}: block.name
 #: src/pages/shell/message-cards.tsx
 msgid "{0} connection"
 msgstr "{0} 连接"
+
+#. placeholder {0}: data.files.length
+#: src/pages/shell/code-panel.tsx
+msgid "{0} files"
+msgstr "{0} 个文件"
 
 #. placeholder {0}: parts.amount
 #: src/components/ArtifactFileCard.tsx
@@ -455,6 +470,10 @@ msgstr "{title}，保存为 {savedAs}"
 msgid "{toolCount, plural, one {# tool} other {# tools}}"
 msgstr "{toolCount, plural, one {# 个工具} other {# 个工具}}"
 
+#: src/pages/shell/code-panel.tsx
+msgid "{uncommitted} not committed"
+msgstr "{uncommitted} 个未提交"
+
 #: src/components/ModelCredits.tsx
 msgid "{vcpus} vCPU, {memoryGb} GB, {hours} computer hours a month"
 msgstr "{vcpus} vCPU、{memoryGb} GB、每月 {hours} 小时电脑时长"
@@ -561,6 +580,14 @@ msgstr "**星期四**\n"
 #: src/components/ModelCredits.tsx
 msgid "/ month"
 msgstr "/ 月"
+
+#: src/pages/shell/code-panel.tsx
+msgid "1 commit on this branch"
+msgstr "此分支上有 1 个提交"
+
+#: src/pages/shell/code-panel.tsx
+msgid "1 file"
+msgstr "1 个文件"
 
 #: src/pages/BotContextMenu.tsx
 msgid "1 hour"
@@ -993,6 +1020,14 @@ msgstr "接听"
 msgid "Answered"
 msgstr "已回答"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {total}"
+msgstr "用时 {total}"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {total} · first reply after {first}"
+msgstr "用时 {total} · 首次回复用时 {first}"
+
 #: src/components/AskCard.tsx
 msgid "Answered: {answer}"
 msgstr "已回答：{answer}"
@@ -1236,6 +1271,7 @@ msgstr "头像工作室"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Back"
 msgstr "返回"
 
@@ -1286,6 +1322,10 @@ msgstr "账单地址"
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
 msgstr "账单周期"
+
+#: src/pages/shell/code-panel.tsx
+msgid "binary"
+msgstr "二进制"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Block"
@@ -1381,6 +1421,10 @@ msgstr "Brain 标签"
 #: src/pages/shell/branch-box.tsx
 msgid "Branch name"
 msgstr "分支名称"
+
+#: src/pages/shell/code-panel.tsx
+msgid "branch not pushed yet"
+msgstr "分支尚未推送"
 
 #: src/components/integrations/skills-dialog.tsx
 msgid "Browse"
@@ -1531,6 +1575,10 @@ msgstr "修改密码"
 #: src/pages/Auth.tsx
 msgid "Change server"
 msgstr "更换服务器"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Changes"
+msgstr "更改"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Changing…"
@@ -1837,6 +1885,7 @@ msgstr "舒适"
 
 #: src/pages/McpServerForm.tsx
 #: src/pages/routine-editor/trigger-cards.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Command"
 msgstr "命令"
 
@@ -1848,6 +1897,10 @@ msgstr "命令菜单"
 #: src/components/SecretAskCard.tsx
 msgid "Command variable"
 msgstr "命令变量"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Commands the bot ran, newest last."
+msgstr "机器人运行的命令，最新的在最后。"
 
 #: src/pages/Board.tsx
 msgid "Comment"
@@ -2401,6 +2454,10 @@ msgstr "无法安装插件"
 msgid "Could not leave space"
 msgstr "无法退出空间"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not list the files"
+msgstr "无法列出文件"
+
 #: src/components/ErrorBoundary.tsx
 #: src/components/PasskeySettings.tsx
 #: src/lib/user-devices.ts
@@ -2472,6 +2529,10 @@ msgstr "无法加载技能"
 msgid "Could not load templates"
 msgstr "无法加载模板"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not load the diff"
+msgstr "无法加载差异"
+
 #: src/pages/Artifacts.tsx
 msgid "Could not load this artifact."
 msgstr "无法加载此产物。"
@@ -2503,6 +2564,10 @@ msgstr "无法打开账单"
 msgid "Could not open the bot"
 msgstr "无法打开 Bot"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not open the file"
+msgstr "无法打开文件"
+
 #: src/components/pages/PagesList.tsx
 msgid "Could not pin this page. Try again."
 msgstr "无法置顶此页面。请重试。"
@@ -2528,6 +2593,10 @@ msgstr "无法连接到模型服务器。"
 #: src/pages/Auth.tsx
 msgid "Could not reach the server"
 msgstr "无法连接服务器"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not read the changes"
+msgstr "无法读取更改"
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Could not read the repository"
@@ -2610,6 +2679,10 @@ msgstr "无法撤销授权"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "无法运行例行任务"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not run the command"
+msgstr "无法运行命令"
 
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Could not run the test"
@@ -2775,6 +2848,10 @@ msgstr "无法更新默认记忆范围"
 #: src/components/ComputersUnavailableHint.tsx
 msgid "Could not verify computer setup ({failureMessage}). Fix the connection, then check again."
 msgstr "无法确认电脑是否就绪（{failureMessage}）。请修复连接后再检查一次。"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not wake the computer"
+msgstr "无法唤醒电脑"
 
 #: src/components/pages/SharePopover.tsx
 msgid "Couldn't copy. Select the link and copy it."
@@ -3466,6 +3543,10 @@ msgstr "这里的每个人都能看到它的聊天、Bot 和记忆"
 msgid "Everyone in this bot's space can read the chats it gets from {linkApp}."
 msgstr "此 Bot 所在空间的所有人都能读取它从 {linkApp} 收到的对话。"
 
+#: src/pages/shell/code-panel.tsx
+msgid "exit {exitCode}"
+msgstr "退出码 {exitCode}"
+
 #: src/pages/shell/message-cards.tsx
 msgid "Expand"
 msgstr "展开"
@@ -3561,6 +3642,10 @@ msgstr "要比较的字段，例如 id, modifiedTime（可选）"
 #: src/pages/McpServerForm.tsx
 #: src/pages/SpaceSearch.tsx
 msgid "File"
+msgstr "文件"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Files"
 msgstr "文件"
 
 #: src/pages/routine-editor/trigger-cards.tsx
@@ -3831,6 +3916,10 @@ msgstr "隐藏"
 msgid "Hide"
 msgstr "隐藏"
 
+#: src/pages/shell/chat-header.tsx
+msgid "Hide code"
+msgstr "隐藏代码"
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Hide key"
 msgstr "隐藏密钥"
@@ -4056,6 +4145,11 @@ msgstr "间隔数量"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "间隔单位"
+
+#. placeholder {0}: data.baseBranch
+#: src/pages/shell/code-panel.tsx
+msgid "into {0}"
+msgstr "合并到 {0}"
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -4294,6 +4388,7 @@ msgstr "正在加载语音提供商…"
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
+#: src/pages/shell/code-panel.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "加载中…"
@@ -4920,6 +5015,23 @@ msgstr "没有 Bot"
 msgid "No bots match"
 msgstr "没有匹配的 Bot"
 
+#: src/pages/shell/code-panel.tsx
+msgid "No branch checked out"
+msgstr "未检出分支"
+
+#. placeholder {0}: data.baseBranch
+#: src/pages/shell/code-panel.tsx
+msgid "No changes against {0} yet."
+msgstr "与 {0} 相比尚无更改。"
+
+#: src/pages/shell/code-panel.tsx
+msgid "No commands yet."
+msgstr "还没有命令。"
+
+#: src/pages/shell/code-diff.tsx
+msgid "No differences to show."
+msgstr "没有可显示的差异。"
+
 #: src/components/AskCard.tsx
 #: src/components/SecretAskCard.tsx
 msgid "No longer active"
@@ -5045,6 +5157,10 @@ msgstr "未添加：{0}"
 msgid "Not checked yet"
 msgstr "尚未检查"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Not committed"
+msgstr "未提交"
+
 #: src/pages/plugins/parts.tsx
 msgid "Not connected"
 msgstr "未连接"
@@ -5079,6 +5195,10 @@ msgstr "Rakazo 不使用"
 #: src/pages/plugins/parts.tsx
 msgid "Not working"
 msgstr "无法正常工作"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Nothing here yet. The bot clones the repository when it starts on the code."
+msgstr "这里还没有内容。机器人开始处理代码时会克隆仓库。"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Nothing remembered yet"
@@ -5153,6 +5273,11 @@ msgstr "只有 Bot 的创建者才能查看它的 Webhook 密钥。"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Only the bot's creator can set its webhook key."
 msgstr "只有 Bot 的创建者才能设置它的 Webhook 密钥。"
+
+#. placeholder {0}: data.files.length
+#: src/pages/shell/code-panel.tsx
+msgid "Only the first {0} files are shown."
+msgstr "仅显示前 {0} 个文件。"
 
 #: src/components/pages/SharePopover.tsx
 msgid "Only you"
@@ -5757,6 +5882,7 @@ msgstr "重定向 URI"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "刷新"
 
@@ -6141,6 +6267,14 @@ msgstr "你不在时也会运行的例行任务"
 msgid "Row"
 msgstr "行"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Run"
+msgstr "运行"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Run a command in the repository"
+msgstr "在仓库中运行命令"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
 msgstr "运行时间"
@@ -6481,6 +6615,10 @@ msgstr "服务器 URL"
 msgid "Set"
 msgstr "设置"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Set a repository in this bot's settings to see its changes."
+msgstr "在此机器人的设置中设置仓库即可查看其更改。"
+
 #: src/components/call/CallCard.tsx
 #: src/components/SidebarFooter.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -6563,9 +6701,18 @@ msgstr "显示全部"
 msgid "Show all {0}"
 msgstr "显示全部 {0} 个"
 
+#. placeholder {0}: lines.length
+#: src/pages/shell/code-panel.tsx
+msgid "Show all {0} lines"
+msgstr "显示全部 {0} 行"
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "显示 Bot"
+
+#: src/pages/shell/chat-header.tsx
+msgid "Show code"
+msgstr "显示代码"
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Show fewer"
@@ -7032,6 +7179,10 @@ msgstr "模板"
 msgid "Templates"
 msgstr "模板"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Terminal"
+msgstr "终端"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Test"
 msgstr "测试"
@@ -7071,9 +7222,18 @@ msgstr "这不是有效的分支名称。"
 msgid "The bot can use the file but won't see the picture."
 msgstr "Bot 可以使用该文件，但看不到图片内容。"
 
+#. placeholder {0}: data.folder
+#: src/pages/shell/code-panel.tsx
+msgid "The bot has not cloned {0} yet. It does when it starts working on the code."
+msgstr "机器人尚未克隆 {0}。它开始处理代码时会克隆。"
+
 #: src/components/SecretAskCard.tsx
 msgid "The bot's browser stays signed in for everyone in this space"
 msgstr "Bot 的浏览器会对此空间的所有人保持登录"
+
+#: src/pages/shell/code-panel.tsx
+msgid "The bot's computer is asleep. Wake it to read its git changes."
+msgstr "机器人的电脑处于休眠状态。唤醒它以读取 git 更改。"
 
 #: src/lib/dictation.ts
 msgid "The browser keeps dropping the microphone. Start dictation again to retry."
@@ -7086,6 +7246,11 @@ msgstr "你的 Bot 工作所用的电脑。"
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "连接超时。"
+
+#. placeholder {0}: data.workingBranch
+#: src/pages/shell/code-panel.tsx
+msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next syncs."
+msgstr "文件夹当前在 {otherBranch} 上，而不是 {0}。机器人下次同步时会切换。"
 
 #: src/pages/shell/repository-settings.tsx
 msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
@@ -7229,6 +7394,10 @@ msgstr "此对话对模型来说太长了。重试无济于事。请开始新的
 #: src/pages/Artifacts.tsx
 msgid "This deletes all {0} versions of this artifact. This can't be undone."
 msgstr "会删除这个产物的全部 {0} 个版本，而且无法撤销。"
+
+#: src/pages/shell/code-diff.tsx
+msgid "This diff is too long to show in full."
+msgstr "此差异太长，无法完整显示。"
 
 #: src/components/ArtifactFileCard.tsx
 msgid "This file is not valid UTF-8 text."
@@ -7799,9 +7968,14 @@ msgstr "排队等候…"
 msgid "Waiting…"
 msgstr "等待中…"
 
+#: src/pages/shell/code-panel.tsx
 #: src/pages/shell/computer-panel.tsx
 msgid "Wake"
 msgstr "唤醒"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Waking…"
+msgstr "正在唤醒…"
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"
@@ -8037,6 +8211,10 @@ msgstr "今天将从你的卡中扣款 {annualPrice}，并抵扣本月未使用�
 #: src/components/ModelCredits.tsx
 msgid "Your card is charged the prorated difference today."
 msgstr "今天将从你的卡中扣除按比例计算的差额。"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Your commands"
+msgstr "你的命令"
 
 #: src/pages/Shell.tsx
 msgid "Your computer's disk is nearly full. Free up space by removing build output and caches you no longer need."

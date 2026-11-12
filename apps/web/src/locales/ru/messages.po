@@ -97,10 +97,25 @@ msgstr "{0} (более {1})"
 msgid "{0} {unitLabel}"
 msgstr "{0} {unitLabel}"
 
+#. placeholder {0}: data.ahead
+#: src/pages/shell/code-panel.tsx
+msgid "{0} commits not pushed"
+msgstr ""
+
+#. placeholder {0}: data.commits.length
+#: src/pages/shell/code-panel.tsx
+msgid "{0} commits on this branch"
+msgstr ""
+
 #. placeholder {0}: block.name
 #: src/pages/shell/message-cards.tsx
 msgid "{0} connection"
 msgstr "Соединение {0}"
+
+#. placeholder {0}: data.files.length
+#: src/pages/shell/code-panel.tsx
+msgid "{0} files"
+msgstr ""
 
 #. placeholder {0}: parts.amount
 #: src/components/ArtifactFileCard.tsx
@@ -455,6 +470,10 @@ msgstr "{title}, сохранится как {savedAs}"
 msgid "{toolCount, plural, one {# tool} other {# tools}}"
 msgstr "{toolCount, plural, one {# инструмент} few {# инструмента} many {# инструментов} other {# инструмента}}"
 
+#: src/pages/shell/code-panel.tsx
+msgid "{uncommitted} not committed"
+msgstr ""
+
 #: src/components/ModelCredits.tsx
 msgid "{vcpus} vCPU, {memoryGb} GB, {hours} computer hours a month"
 msgstr "{vcpus} vCPU, {memoryGb} ГБ, {hours} часов компьютера в месяц"
@@ -561,6 +580,14 @@ msgstr "**Четверг**\n"
 #: src/components/ModelCredits.tsx
 msgid "/ month"
 msgstr "/ месяц"
+
+#: src/pages/shell/code-panel.tsx
+msgid "1 commit on this branch"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "1 file"
+msgstr ""
 
 #: src/pages/BotContextMenu.tsx
 msgid "1 hour"
@@ -993,6 +1020,14 @@ msgstr "Ответить"
 msgid "Answered"
 msgstr "Ответил"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {total}"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {total} · first reply after {first}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Answered: {answer}"
 msgstr "Ответ: {answer}"
@@ -1236,6 +1271,7 @@ msgstr "Студия аватаров"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Back"
 msgstr "Назад"
 
@@ -1286,6 +1322,10 @@ msgstr "Платёжный адрес"
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
 msgstr "Период оплаты"
+
+#: src/pages/shell/code-panel.tsx
+msgid "binary"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Block"
@@ -1380,6 +1420,10 @@ msgstr "Метка мозга"
 
 #: src/pages/shell/branch-box.tsx
 msgid "Branch name"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "branch not pushed yet"
 msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
@@ -1531,6 +1575,10 @@ msgstr "Изменить пароль"
 #: src/pages/Auth.tsx
 msgid "Change server"
 msgstr "Сменить сервер"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Changes"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Changing…"
@@ -1837,6 +1885,7 @@ msgstr "Просторно"
 
 #: src/pages/McpServerForm.tsx
 #: src/pages/routine-editor/trigger-cards.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Command"
 msgstr "Команда"
 
@@ -1848,6 +1897,10 @@ msgstr "Меню команд"
 #: src/components/SecretAskCard.tsx
 msgid "Command variable"
 msgstr "Переменная команды"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Commands the bot ran, newest last."
+msgstr ""
 
 #: src/pages/Board.tsx
 msgid "Comment"
@@ -2401,6 +2454,10 @@ msgstr "Не удалось установить плагин"
 msgid "Could not leave space"
 msgstr "Не удалось покинуть пространство"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not list the files"
+msgstr ""
+
 #: src/components/ErrorBoundary.tsx
 #: src/components/PasskeySettings.tsx
 #: src/lib/user-devices.ts
@@ -2472,6 +2529,10 @@ msgstr "Не удалось загрузить навык"
 msgid "Could not load templates"
 msgstr "Не удалось загрузить шаблоны"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not load the diff"
+msgstr ""
+
 #: src/pages/Artifacts.tsx
 msgid "Could not load this artifact."
 msgstr "Не удалось загрузить этот артефакт."
@@ -2503,6 +2564,10 @@ msgstr "Не удалось открыть оплату"
 msgid "Could not open the bot"
 msgstr "Не удалось открыть бота"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not open the file"
+msgstr ""
+
 #: src/components/pages/PagesList.tsx
 msgid "Could not pin this page. Try again."
 msgstr "Не удалось закрепить страницу. Попробуйте ещё раз."
@@ -2528,6 +2593,10 @@ msgstr "Не удалось связаться с сервером модели.
 #: src/pages/Auth.tsx
 msgid "Could not reach the server"
 msgstr "Не удалось связаться с сервером"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not read the changes"
+msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Could not read the repository"
@@ -2610,6 +2679,10 @@ msgstr "Не удалось отозвать доступ"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "Не удалось запустить задачу"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not run the command"
+msgstr ""
 
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Could not run the test"
@@ -2775,6 +2848,10 @@ msgstr "Не удалось обновить область памяти по у
 #: src/components/ComputersUnavailableHint.tsx
 msgid "Could not verify computer setup ({failureMessage}). Fix the connection, then check again."
 msgstr "Не удалось проверить настройку компьютеров ({failureMessage}). Восстановите подключение и проверьте снова."
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not wake the computer"
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 msgid "Couldn't copy. Select the link and copy it."
@@ -3466,6 +3543,10 @@ msgstr "Все здесь видят чаты, ботов и память это
 msgid "Everyone in this bot's space can read the chats it gets from {linkApp}."
 msgstr "Все в пространстве этого бота могут читать чаты, которые он получает из {linkApp}."
 
+#: src/pages/shell/code-panel.tsx
+msgid "exit {exitCode}"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Expand"
 msgstr "Развернуть"
@@ -3562,6 +3643,10 @@ msgstr "Поля для сравнения, например id, modifiedTime (�
 #: src/pages/SpaceSearch.tsx
 msgid "File"
 msgstr "Файл"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Files"
+msgstr ""
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Files or folders on the computer"
@@ -3831,6 +3916,10 @@ msgstr "Скрыто"
 msgid "Hide"
 msgstr "Скрыть"
 
+#: src/pages/shell/chat-header.tsx
+msgid "Hide code"
+msgstr ""
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Hide key"
 msgstr "Скрыть ключ"
@@ -4056,6 +4145,11 @@ msgstr "Значение интервала"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "Единица интервала"
+
+#. placeholder {0}: data.baseBranch
+#: src/pages/shell/code-panel.tsx
+msgid "into {0}"
+msgstr ""
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -4294,6 +4388,7 @@ msgstr "Загрузка поставщиков голосовой связи…
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
+#: src/pages/shell/code-panel.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "Загрузка…"
@@ -4920,6 +5015,23 @@ msgstr "Нет ботов"
 msgid "No bots match"
 msgstr "Ни один бот не подходит"
 
+#: src/pages/shell/code-panel.tsx
+msgid "No branch checked out"
+msgstr ""
+
+#. placeholder {0}: data.baseBranch
+#: src/pages/shell/code-panel.tsx
+msgid "No changes against {0} yet."
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "No commands yet."
+msgstr ""
+
+#: src/pages/shell/code-diff.tsx
+msgid "No differences to show."
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/SecretAskCard.tsx
 msgid "No longer active"
@@ -5045,6 +5157,10 @@ msgstr "Не добавлено: {0}"
 msgid "Not checked yet"
 msgstr "Ещё не проверено"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Not committed"
+msgstr ""
+
 #: src/pages/plugins/parts.tsx
 msgid "Not connected"
 msgstr "Не подключено"
@@ -5079,6 +5195,10 @@ msgstr "Не используется в Rakazo"
 #: src/pages/plugins/parts.tsx
 msgid "Not working"
 msgstr "Не работает"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Nothing here yet. The bot clones the repository when it starts on the code."
+msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Nothing remembered yet"
@@ -5153,6 +5273,11 @@ msgstr "Только создатель бота может видеть его 
 #: src/pages/shell/use-routine-editor.ts
 msgid "Only the bot's creator can set its webhook key."
 msgstr "Только создатель бота может задать его ключ вебхука."
+
+#. placeholder {0}: data.files.length
+#: src/pages/shell/code-panel.tsx
+msgid "Only the first {0} files are shown."
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 msgid "Only you"
@@ -5757,6 +5882,7 @@ msgstr "URI перенаправления"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -6141,6 +6267,14 @@ msgstr "Задачи, которые выполняются, пока вас н�
 msgid "Row"
 msgstr "Строка"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Run"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "Run a command in the repository"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
 msgstr "Запустить в"
@@ -6481,6 +6615,10 @@ msgstr "URL-адрес сервера"
 msgid "Set"
 msgstr "Задать"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Set a repository in this bot's settings to see its changes."
+msgstr ""
+
 #: src/components/call/CallCard.tsx
 #: src/components/SidebarFooter.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -6563,9 +6701,18 @@ msgstr "Показать все"
 msgid "Show all {0}"
 msgstr ""
 
+#. placeholder {0}: lines.length
+#: src/pages/shell/code-panel.tsx
+msgid "Show all {0} lines"
+msgstr ""
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "Показать ботов"
+
+#: src/pages/shell/chat-header.tsx
+msgid "Show code"
+msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Show fewer"
@@ -7032,6 +7179,10 @@ msgstr "Шаблон"
 msgid "Templates"
 msgstr "Шаблоны"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Terminal"
+msgstr ""
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Test"
 msgstr "Тест"
@@ -7071,9 +7222,18 @@ msgstr ""
 msgid "The bot can use the file but won't see the picture."
 msgstr "Бот сможет использовать файл, но не увидит изображение."
 
+#. placeholder {0}: data.folder
+#: src/pages/shell/code-panel.tsx
+msgid "The bot has not cloned {0} yet. It does when it starts working on the code."
+msgstr ""
+
 #: src/components/SecretAskCard.tsx
 msgid "The bot's browser stays signed in for everyone in this space"
 msgstr "Браузер бота остаётся авторизованным для всех в этом пространстве"
+
+#: src/pages/shell/code-panel.tsx
+msgid "The bot's computer is asleep. Wake it to read its git changes."
+msgstr ""
 
 #: src/lib/dictation.ts
 msgid "The browser keeps dropping the microphone. Start dictation again to retry."
@@ -7086,6 +7246,11 @@ msgstr "Компьютер, на котором работают ваши бот
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "Время ожидания соединения истекло."
+
+#. placeholder {0}: data.workingBranch
+#: src/pages/shell/code-panel.tsx
+msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next syncs."
+msgstr ""
 
 #: src/pages/shell/repository-settings.tsx
 msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
@@ -7229,6 +7394,10 @@ msgstr "Этот разговор слишком длинный для моде�
 #: src/pages/Artifacts.tsx
 msgid "This deletes all {0} versions of this artifact. This can't be undone."
 msgstr "Будут удалены все версии этого артефакта ({0}). Это действие нельзя отменить."
+
+#: src/pages/shell/code-diff.tsx
+msgid "This diff is too long to show in full."
+msgstr ""
 
 #: src/components/ArtifactFileCard.tsx
 msgid "This file is not valid UTF-8 text."
@@ -7799,9 +7968,14 @@ msgstr "Ожидание в очереди…"
 msgid "Waiting…"
 msgstr "Ожидание…"
 
+#: src/pages/shell/code-panel.tsx
 #: src/pages/shell/computer-panel.tsx
 msgid "Wake"
 msgstr "Разбудить"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Waking…"
+msgstr ""
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"
@@ -8037,6 +8211,10 @@ msgstr "Сегодня с карты спишется {annualPrice} за выч�
 #: src/components/ModelCredits.tsx
 msgid "Your card is charged the prorated difference today."
 msgstr "Сегодня с вашей карты спишут пропорциональную разницу."
+
+#: src/pages/shell/code-panel.tsx
+msgid "Your commands"
+msgstr ""
 
 #: src/pages/Shell.tsx
 msgid "Your computer's disk is nearly full. Free up space by removing build output and caches you no longer need."

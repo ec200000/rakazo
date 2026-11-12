@@ -685,6 +685,10 @@ export function fallbackAwareModelStream(
                     model: target.config.id,
                     retry: retries,
                     delayMs: delay,
+                    reason: sanitizeProviderError(
+                      target.config.provider,
+                      event.error.errorMessage ?? "Model request failed.",
+                    ).slice(0, 500),
                   });
                   await abortableDelay(delay, signal);
                   if (failIfAborted(target)) return;

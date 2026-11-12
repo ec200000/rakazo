@@ -21,6 +21,7 @@ import type { SettingsSection } from "../shell-overlay";
 import { AgentImportForm } from "./agent-import";
 import type { BotPanelTab } from "./bot-panel";
 import { BotSettings } from "./bot-panel";
+import { CodePanel } from "./code-panel";
 import { firstThreadRoute } from "./use-shell-navigation";
 
 /** The panel beside the chat: a bot's tabs, a routine, a group, or an import. */
@@ -228,6 +229,7 @@ export function ShellSidePanel({
               onClear={() => onClearBot(active)}
             />
           ) : null}
+          {panel === "code" && active ? <CodePanel key={active.id} bot={active} /> : null}
           {panel === "routine" && routineEditorProps ? (
             <RoutineEditor {...routineEditorProps} />
           ) : null}

@@ -140,6 +140,11 @@ async function runRepoScript(
     folder,
     baseBranch: base,
     workingBranch: branch || null,
+    ...(call.name === "repo_push" && code === 0
+      ? {
+          next: `Pushed. If this finishes the task, ask the person with ask_user whether to open a pull request from ${branch} into ${base}.`,
+        }
+      : {}),
   });
 }
 

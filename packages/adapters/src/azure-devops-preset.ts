@@ -91,7 +91,7 @@ export function azureDevOpsOperations(apiVersion = DEFAULT_AZURE_DEVOPS_API_VERS
       description:
         "List pull requests. " +
         "Pull requests in a project. Filter by status (active, completed, abandoned, all), by " +
-        "creator or reviewer id (from ado_whoami), or by repository id.",
+        "creator or reviewer id (from ado_whoami), by repository id, or by source branch.",
       method: "GET",
       path: "/{project}/_apis/git/pullrequests",
       readOnly: true,
@@ -105,6 +105,10 @@ export function azureDevOpsOperations(apiVersion = DEFAULT_AZURE_DEVOPS_API_VERS
           "searchCriteria.creatorId": { type: "string" },
           "searchCriteria.reviewerId": { type: "string" },
           "searchCriteria.repositoryId": { type: "string" },
+          "searchCriteria.sourceRefName": {
+            type: "string",
+            description: "Only pull requests from this full ref, e.g. refs/heads/feature-x.",
+          },
           $top: { type: "integer", description: "At most this many (default 100)." },
         },
         ["project"],

@@ -51,6 +51,8 @@ import { TimeSeparator, UnreadDivider } from "./chat-context";
 import type { ImportSetupTarget } from "./import-setup-card";
 import { MessageView } from "./message-view";
 import { QuoteSelectionButton } from "./quote-selection-button";
+import { ReplyTime } from "./reply-time";
+import { replyTimings } from "./reply-timing";
 
 /** Bubbles stop at a readable line length instead of stretching with wide windows. */
 export function bubbleFrameWidth(role: ThreadMessage["role"]) {
@@ -229,6 +231,7 @@ export const Transcript = memo(function Transcript({
     [onJumpToMessage],
   );
   const reactionView = useMemo(() => projectMessageReactions(pageView.visibleMessages), [pageView]);
+  const timings = useMemo(() => replyTimings(messages, running), [messages, running]);
   const visibleReceipts = reactionView.visibleMessages.filter((message) =>
     messageHasVisibleBlocks(message.blocks, showToolActivity),
   );
@@ -565,6 +568,7 @@ export const Transcript = memo(function Transcript({
           if (!messageHasVisibleBlocks(message.blocks, showToolActivity)) return null;
           const peerReceipt = isPeerReceiptBlocks(message.blocks);
           const messageReactions = reactionView.reactions.get(message.id);
+          const replyTiming = peerReceipt ? undefined : timings.get(message.id);
           return (
             <Fragment key={message.id}>
               {separatorIds.has(message.id) ? (
@@ -642,6 +646,7 @@ export const Transcript = memo(function Transcript({
                     />
                   </div>
                 </div>
+                {replyTiming ? <ReplyTime timing={replyTiming} /> : null}
                 {!peerReceipt && messageReactions ? (
                   <div
                     data-testid="message-reactions"

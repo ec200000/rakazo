@@ -17,11 +17,17 @@ import {
   expireComputerControl,
   hasActiveComputerControl,
   isComputerScreenUnavailable,
+  isRepoRelativePath,
   isSandboxGoneError,
+  parseRepoChanges,
+  parseRepoFileDiff,
   provisionComputer,
   queueComputerUpdate,
+  REPO_CHANGES_SCRIPT,
+  REPO_FILE_DIFF_SCRIPT,
   rateLimitEnds,
   releaseComputerExecutionLease,
+  repositoryFolder,
   resolveBotUploadPath,
   resolveBotWorkspaceCwd,
   resolveBotWorkspacePath,
@@ -33,11 +39,13 @@ import {
   toComputerRef,
   touchRunningComputer,
 } from "@rakazo/adapters";
+import type { RepoChanges } from "@rakazo/contracts";
 import {
   attachmentMaxBytes,
   attachmentSizeLabel,
   ComputerCommandSchema,
   foldComputerCommands,
+  GitBranchNameSchema,
 } from "@rakazo/contracts";
 import { ACTIVE_RUN_STATUSES, COMPUTER_USING_RUNS, scrollDirection } from "@rakazo/core";
 import { addScreenProxyCapability } from "@rakazo/core/node/screen-capability";
@@ -73,6 +81,51 @@ const MAX_COMPUTER_TEXT_FILE_BYTES = 2 * 1024 * 1024;
 
 /** Each command writes a running and a done event, so this keeps about 100 commands. */
 const COMPUTER_COMMAND_HISTORY_EVENTS = 200;
+
+const REPO_READ_TIMEOUT_MS = 30_000;
+const PERSON_COMMAND_TIMEOUT_MS = 120_000;
+const PERSON_COMMAND_OUTPUT_MAX_CHARS = 200_000;
+
+type RepoBot = {
+  id: string;
+  repoUrl: string | null;
+  repoBaseBranch: string | null;
+  repoBranch: string | null;
+};
+
+function repoBase(bot: RepoBot) {
+  return bot.repoBaseBranch && GitBranchNameSchema.safeParse(bot.repoBaseBranch).success
+    ? bot.repoBaseBranch
+    : "main";
+}
+
+/** Runs a command in a running computer and collects its output, keeping only the end. */
+async function collect(
+  events: AsyncIterable<
+    { type: "stdout" | "stderr"; data: string } | { type: "exit"; code: number }
+  >,
+  maxChars: number,
+  stderr = true,
+) {
+  let output = "";
+  let truncated = false;
+  let exitCode: number | null = null;
+  for await (const event of events) {
+    if (event.type === "exit") exitCode = event.code;
+    else if (event.type === "stdout" || stderr) {
+      output += event.data;
+      if (output.length > maxChars * 2) {
+        output = output.slice(-maxChars);
+        truncated = true;
+      }
+    }
+  }
+  if (output.length > maxChars) {
+    output = output.slice(-maxChars);
+    truncated = true;
+  }
+  return { output, truncated, exitCode };
+}
 
 export function computerRoutes(ctx: RouterContext) {
   const { deps, repos, taughtSkills, authed } = ctx;
@@ -834,6 +887,119 @@ export function computerRoutes(ctx: RouterContext) {
             session.headers,
           ),
         };
+      }),
+      repoChanges: authed.computer.repoChanges.handler(async ({ context, input }) => {
+        const bot = await repos.getBot(context.actor, input.botId);
+        const baseBranch = repoBase(bot);
+        const empty: RepoChanges = {
+          state: "no-repository",
+          folder: null,
+          baseBranch,
+          branch: null,
+          workingBranch: bot.repoBranch,
+          behind: null,
+          ahead: null,
+          commits: [],
+          files: [],
+          truncated: false,
+        };
+        if (!bot.repoUrl) return empty;
+        const folder = repositoryFolder(bot.repoUrl);
+        const computer = bot.computer;
+        if (computer?.state !== "running" || !computer.providerRef) {
+          return { ...empty, state: "asleep" as const, folder };
+        }
+        const mode = parseComputerMode(computer.scope);
+        let output: string;
+        try {
+          ({ output } = await collect(
+            deps.sandbox.execute(
+              toComputerRef(computer),
+              {
+                argv: ["bash", "-c", REPO_CHANGES_SCRIPT, "rakazo-repo-changes"],
+                cwd: resolveBotWorkspaceCwd(mode, bot.id, undefined),
+                env: { REPO_DIR: folder, REPO_BASE: baseBranch },
+                timeoutMs: REPO_READ_TIMEOUT_MS,
+              },
+              computerContext(context.actor, bot.id, "repo.changes"),
+            ),
+            4_000_000,
+            false,
+          ));
+        } catch (error) {
+          await clearGoneSandbox(deps, computer, error);
+          return { ...empty, state: "asleep" as const, folder };
+        }
+        const changes = parseRepoChanges(output);
+        return {
+          ...changes,
+          folder,
+          baseBranch,
+          workingBranch: bot.repoBranch,
+        };
+      }),
+      repoDiff: authed.computer.repoDiff.handler(async ({ context, input }) => {
+        const bot = await repos.getBot(context.actor, input.botId);
+        if (!isRepoRelativePath(input.path)) {
+          throw new ORPCError("BAD_REQUEST", { message: "Not a path in the repository." });
+        }
+        const computer = bot.computer;
+        if (!bot.repoUrl || !computer || computer.state !== "running" || !computer.providerRef) {
+          throw new ORPCError("CONFLICT", { message: "Wake the computer to see changes." });
+        }
+        const mode = parseComputerMode(computer.scope);
+        const { output } = await collect(
+          deps.sandbox.execute(
+            toComputerRef(computer),
+            {
+              argv: ["bash", "-c", REPO_FILE_DIFF_SCRIPT, "rakazo-repo-diff"],
+              cwd: resolveBotWorkspaceCwd(mode, bot.id, undefined),
+              env: {
+                REPO_DIR: repositoryFolder(bot.repoUrl),
+                REPO_BASE: repoBase(bot),
+                REPO_PATH: input.path,
+              },
+              timeoutMs: REPO_READ_TIMEOUT_MS,
+            },
+            computerContext(context.actor, bot.id, "repo.diff"),
+          ),
+          2_000_000,
+          false,
+        );
+        return { path: input.path, ...parseRepoFileDiff(output) };
+      }),
+      run: authed.computer.run.handler(async ({ context, input }) => {
+        const bot = await repos.getBot(context.actor, input.botId);
+        // Another person's bot is theirs to drive; they may share it to chat, not to run commands.
+        if (bot.userId !== context.actor.userId) {
+          throw new ORPCError("FORBIDDEN", { message: "Only the bot's owner can run commands." });
+        }
+        const computer = bot.computer;
+        if (computer?.state !== "running" || !computer.providerRef) {
+          throw new ORPCError("CONFLICT", { message: "Wake the computer first." });
+        }
+        await keepComputerAwake(deps, computer.id);
+        const mode = parseComputerMode(computer.scope);
+        const home = resolveBotWorkspaceCwd(mode, bot.id, undefined);
+        // Start in the repository when it has been cloned, else in the bot's workspace.
+        const folder = bot.repoUrl ? repositoryFolder(bot.repoUrl) : "";
+        const script = folder
+          ? `if [ -d "$RAKAZO_REPO_DIR" ]; then cd "$RAKAZO_REPO_DIR"; fi\n${input.command}`
+          : input.command;
+        const result = await collect(
+          deps.sandbox.execute(
+            toComputerRef(computer),
+            {
+              argv: ["bash", "-lc", script, "rakazo-person-command"],
+              cwd: home,
+              env: folder ? { RAKAZO_REPO_DIR: folder } : {},
+              timeoutMs: PERSON_COMMAND_TIMEOUT_MS,
+            },
+            computerContext(context.actor, bot.id, "person.command"),
+          ),
+          PERSON_COMMAND_OUTPUT_MAX_CHARS,
+        );
+        return { ...result, cwd: folder || "~" };
       }),
       heartbeat: authed.computer.heartbeat.handler(async ({ context, input }) => {
         const bot = await repos.getBot(context.actor, input.botId);

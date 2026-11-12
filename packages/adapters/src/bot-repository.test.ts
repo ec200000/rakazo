@@ -212,6 +212,14 @@ describe("repository settings", () => {
         repoBranch: "f",
       }),
     ).toContain("working branch f");
+    const offer = botRepositoryInstruction({
+      repoUrl: "https://a/_git/r",
+      repoBaseBranch: "dev",
+      repoBranch: "f",
+    });
+    expect(offer).toContain("offer a pull request yourself: call ask_user");
+    expect(offer).toContain("into dev");
+    expect(offer).toContain("Open it only after they agree");
     expect([...REPO_TOOL_NAMES]).toEqual(["repo_status", "repo_sync", "repo_push"]);
   });
 });

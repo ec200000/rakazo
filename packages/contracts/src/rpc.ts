@@ -62,8 +62,10 @@ import {
   ComputerProviderSettingsSchema,
   ComputerProviderUpdateSchema,
   ComputerReleaseReasonSchema,
+  ComputerRunResultSchema,
   ComputerStatusSchema,
   ComputerUpdateSchema,
+  RepoChangesSchema,
 } from "./computer.js";
 import {
   AccessGrantInputSchema,
@@ -874,6 +876,16 @@ export const appContract = {
       .output(z.array(ComputerCommandSchema.extend({ createdAt: z.string() }))),
     screenUrl: oc.input(botId).output(z.object({ url: z.string().nullable() })),
     heartbeat: oc.input(botId).output(z.object({ ok: z.literal(true) })),
+    /** What the bot's working branch changes against its base branch. */
+    repoChanges: oc.input(botId).output(RepoChangesSchema),
+    /** One changed file's unified diff against the base branch. */
+    repoDiff: oc
+      .input(z.object({ botId: Id, path: z.string().min(1).max(1000) }))
+      .output(z.object({ path: z.string(), diff: z.string(), truncated: z.boolean() })),
+    /** Runs the person's own command in their bot's running computer, in its repository. */
+    run: oc
+      .input(z.object({ botId: Id, command: z.string().trim().min(1).max(4000) }))
+      .output(ComputerRunResultSchema),
   },
   memory: {
     list: oc

@@ -467,7 +467,7 @@ export function botRepositoryInstruction(bot: {
       ? `The person chose the working branch ${bot.repoBranch}. Run repo_sync before working on code, edit and test with the shell in the repository folder it reports, commit with git, and publish with repo_push.`
       : "The person has not chosen a working branch yet. Before changing code, ask them to choose or type one in the Branch box above the chat.",
     "Never create, rename or switch to a branch name of your own; only the person names branches. Never put tokens or passwords in git commands or remote URLs; repo_sync and repo_push handle credentials.",
-    "Open pull requests with the Azure DevOps tools when the person asks, from the working branch into the branch they name (the base branch if they don't).",
+    `When you finish a coding task, commit your work and run repo_push, then offer a pull request yourself: call ask_user asking whether to open one from the working branch into ${base}, with the title and one-line summary you would use, and choices such as "Open pull request", "Open as draft" and "Not now". Open it only after they agree, with ado_create_pull_request (first check ado_list_pull_requests for an active one from this branch, and if one exists tell them it was updated instead). If the Azure DevOps tools are missing, tell them to connect Azure DevOps in Integrations. After "Not now", don't ask again until you push new work.`,
   ].join(" ");
 }
 

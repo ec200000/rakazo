@@ -1066,8 +1066,10 @@ function SpaceShell() {
             voiceReady={Boolean(voiceStatus?.ready)}
             inCall={Boolean(active) && call?.botId === active?.id}
             panelOpen={chatPanelOpen}
+            codeOpen={panel === "code"}
             onOpenNavigation={() => setMobileSidebarOpen(true)}
             onTogglePanel={toggleChatPanel}
+            onToggleCode={() => setPanel(panel === "code" ? null : "code")}
             onCall={(bot) => {
               if (call?.botId === bot.id) {
                 setCallMinimized(false);

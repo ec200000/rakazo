@@ -84,8 +84,10 @@ function renderHeader({ inGroup = false } = {}) {
         voiceReady={false}
         inCall={false}
         panelOpen={false}
+        codeOpen={false}
         onOpenNavigation={() => undefined}
         onTogglePanel={() => undefined}
+        onToggleCode={() => undefined}
         onCall={() => undefined}
       />,
     ),

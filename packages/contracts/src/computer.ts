@@ -93,3 +93,39 @@ export const COMPUTER_SIZE_SPECS: Record<ComputerSize, { vcpus: number; memoryGb
   large: { vcpus: 8, memoryGb: 16 },
   xlarge: { vcpus: 16, memoryGb: 32 },
 };
+
+/** A file the bot's working branch changes against the base branch, for the Changes panel. */
+export const RepoChangeSchema = z.object({
+  path: z.string(),
+  status: z.enum(["added", "modified", "deleted", "typechange", "untracked", "conflict"]),
+  additions: z.number().int().nullable(),
+  deletions: z.number().int().nullable(),
+  uncommitted: z.boolean(),
+});
+export type RepoChange = z.infer<typeof RepoChangeSchema>;
+
+export const RepoChangesSchema = z.object({
+  /** asleep: the computer is not running, so git cannot be read until it wakes. */
+  state: z.enum(["no-repository", "asleep", "not-cloned", "ready"]),
+  /** The repository folder, relative to the bot's workspace (as the Files tab lists it). */
+  folder: z.string().nullable(),
+  baseBranch: z.string(),
+  /** The branch checked out in the folder, and the one the person chose above the chat. */
+  branch: z.string().nullable(),
+  workingBranch: z.string().nullable(),
+  behind: z.number().int().nullable(),
+  ahead: z.number().int().nullable(),
+  commits: z.array(z.object({ sha: z.string(), subject: z.string() })),
+  files: z.array(RepoChangeSchema),
+  truncated: z.boolean(),
+});
+export type RepoChanges = z.infer<typeof RepoChangesSchema>;
+
+/** A command the person ran in the bot's computer from the Terminal tab. */
+export const ComputerRunResultSchema = z.object({
+  exitCode: z.number().int().nullable(),
+  output: z.string(),
+  truncated: z.boolean(),
+  cwd: z.string(),
+});
+export type ComputerRunResult = z.infer<typeof ComputerRunResultSchema>;

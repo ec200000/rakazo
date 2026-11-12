@@ -97,10 +97,25 @@ msgstr "{0} ({1} 초과)"
 msgid "{0} {unitLabel}"
 msgstr "{0} {unitLabel}"
 
+#. placeholder {0}: data.ahead
+#: src/pages/shell/code-panel.tsx
+msgid "{0} commits not pushed"
+msgstr ""
+
+#. placeholder {0}: data.commits.length
+#: src/pages/shell/code-panel.tsx
+msgid "{0} commits on this branch"
+msgstr ""
+
 #. placeholder {0}: block.name
 #: src/pages/shell/message-cards.tsx
 msgid "{0} connection"
 msgstr "{0} 연결"
+
+#. placeholder {0}: data.files.length
+#: src/pages/shell/code-panel.tsx
+msgid "{0} files"
+msgstr ""
 
 #. placeholder {0}: parts.amount
 #: src/components/ArtifactFileCard.tsx
@@ -455,6 +470,10 @@ msgstr "{title}, {savedAs}(으)로 저장"
 msgid "{toolCount, plural, one {# tool} other {# tools}}"
 msgstr "{toolCount, plural, other {도구 #개}}"
 
+#: src/pages/shell/code-panel.tsx
+msgid "{uncommitted} not committed"
+msgstr ""
+
 #: src/components/ModelCredits.tsx
 msgid "{vcpus} vCPU, {memoryGb} GB, {hours} computer hours a month"
 msgstr "{vcpus} vCPU, {memoryGb} GB, 월 {hours}시간 컴퓨터"
@@ -561,6 +580,14 @@ msgstr "**목요일**\n"
 #: src/components/ModelCredits.tsx
 msgid "/ month"
 msgstr "/ 월"
+
+#: src/pages/shell/code-panel.tsx
+msgid "1 commit on this branch"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "1 file"
+msgstr ""
 
 #: src/pages/BotContextMenu.tsx
 msgid "1 hour"
@@ -993,6 +1020,14 @@ msgstr "답변"
 msgid "Answered"
 msgstr "응답함"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {total}"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {total} · first reply after {first}"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Answered: {answer}"
 msgstr "응답: {answer}"
@@ -1236,6 +1271,7 @@ msgstr "아바타 스튜디오"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Back"
 msgstr "뒤로"
 
@@ -1286,6 +1322,10 @@ msgstr "청구지 주소"
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
 msgstr "결제 주기"
+
+#: src/pages/shell/code-panel.tsx
+msgid "binary"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Block"
@@ -1380,6 +1420,10 @@ msgstr "브레인 레이블"
 
 #: src/pages/shell/branch-box.tsx
 msgid "Branch name"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "branch not pushed yet"
 msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
@@ -1531,6 +1575,10 @@ msgstr "비밀번호 변경"
 #: src/pages/Auth.tsx
 msgid "Change server"
 msgstr "서버 변경"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Changes"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Changing…"
@@ -1837,6 +1885,7 @@ msgstr "넓게"
 
 #: src/pages/McpServerForm.tsx
 #: src/pages/routine-editor/trigger-cards.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Command"
 msgstr "실행 명령"
 
@@ -1848,6 +1897,10 @@ msgstr "명령 메뉴"
 #: src/components/SecretAskCard.tsx
 msgid "Command variable"
 msgstr "명령 변수"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Commands the bot ran, newest last."
+msgstr ""
 
 #: src/pages/Board.tsx
 msgid "Comment"
@@ -2401,6 +2454,10 @@ msgstr "플러그인을 설치하지 못했습니다"
 msgid "Could not leave space"
 msgstr "스페이스에서 나가지 못했습니다"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not list the files"
+msgstr ""
+
 #: src/components/ErrorBoundary.tsx
 #: src/components/PasskeySettings.tsx
 #: src/lib/user-devices.ts
@@ -2472,6 +2529,10 @@ msgstr "스킬을 불러오지 못했습니다"
 msgid "Could not load templates"
 msgstr "템플릿을 불러오지 못했습니다"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not load the diff"
+msgstr ""
+
 #: src/pages/Artifacts.tsx
 msgid "Could not load this artifact."
 msgstr "이 아티팩트를 불러오지 못했습니다."
@@ -2503,6 +2564,10 @@ msgstr "결제 페이지를 열지 못했습니다"
 msgid "Could not open the bot"
 msgstr "Bot을 열지 못했습니다"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Could not open the file"
+msgstr ""
+
 #: src/components/pages/PagesList.tsx
 msgid "Could not pin this page. Try again."
 msgstr "이 페이지를 고정하지 못했습니다. 다시 시도하세요."
@@ -2528,6 +2593,10 @@ msgstr "모델 서버에 연결하지 못했습니다."
 #: src/pages/Auth.tsx
 msgid "Could not reach the server"
 msgstr "서버에 연결할 수 없습니다"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not read the changes"
+msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Could not read the repository"
@@ -2610,6 +2679,10 @@ msgstr "권한을 취소하지 못했습니다"
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
 msgstr "루틴을 실행할 수 없습니다"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not run the command"
+msgstr ""
 
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Could not run the test"
@@ -2775,6 +2848,10 @@ msgstr "기본 기억 범위를 변경하지 못했습니다."
 #: src/components/ComputersUnavailableHint.tsx
 msgid "Could not verify computer setup ({failureMessage}). Fix the connection, then check again."
 msgstr "컴퓨터 설정을 확인할 수 없습니다 ({failureMessage}). 연결을 고친 후 다시 확인하세요."
+
+#: src/pages/shell/code-panel.tsx
+msgid "Could not wake the computer"
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 msgid "Couldn't copy. Select the link and copy it."
@@ -3466,6 +3543,10 @@ msgstr "여기 있는 모든 사람이 채팅, 봇, 기억을 볼 수 있습니�
 msgid "Everyone in this bot's space can read the chats it gets from {linkApp}."
 msgstr "이 봇의 스페이스에 있는 모든 사람이 {linkApp}에서 받은 채팅을 읽을 수 있습니다."
 
+#: src/pages/shell/code-panel.tsx
+msgid "exit {exitCode}"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Expand"
 msgstr "펼치기"
@@ -3562,6 +3643,10 @@ msgstr "비교할 필드, 예: id, modifiedTime (선택 사항)"
 #: src/pages/SpaceSearch.tsx
 msgid "File"
 msgstr "파일"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Files"
+msgstr ""
 
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Files or folders on the computer"
@@ -3831,6 +3916,10 @@ msgstr "숨김"
 msgid "Hide"
 msgstr "숨기기"
 
+#: src/pages/shell/chat-header.tsx
+msgid "Hide code"
+msgstr ""
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Hide key"
 msgstr "키 숨기기"
@@ -4056,6 +4145,11 @@ msgstr "간격 숫자"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "간격 단위"
+
+#. placeholder {0}: data.baseBranch
+#: src/pages/shell/code-panel.tsx
+msgid "into {0}"
+msgstr ""
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -4294,6 +4388,7 @@ msgstr "음성 서비스를 불러오는 중…"
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
+#: src/pages/shell/code-panel.tsx
 #: src/pages/shell/transcript.tsx
 msgid "Loading…"
 msgstr "불러오는 중…"
@@ -4920,6 +5015,23 @@ msgstr "봇 없음"
 msgid "No bots match"
 msgstr "일치하는 봇 없음"
 
+#: src/pages/shell/code-panel.tsx
+msgid "No branch checked out"
+msgstr ""
+
+#. placeholder {0}: data.baseBranch
+#: src/pages/shell/code-panel.tsx
+msgid "No changes against {0} yet."
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "No commands yet."
+msgstr ""
+
+#: src/pages/shell/code-diff.tsx
+msgid "No differences to show."
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/components/SecretAskCard.tsx
 msgid "No longer active"
@@ -5045,6 +5157,10 @@ msgstr "추가되지 않음: {0}"
 msgid "Not checked yet"
 msgstr "아직 확인되지 않음"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Not committed"
+msgstr ""
+
 #: src/pages/plugins/parts.tsx
 msgid "Not connected"
 msgstr "연결되지 않음"
@@ -5079,6 +5195,10 @@ msgstr "Rakazo에서 사용하지 않음"
 #: src/pages/plugins/parts.tsx
 msgid "Not working"
 msgstr "작동하지 않음"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Nothing here yet. The bot clones the repository when it starts on the code."
+msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Nothing remembered yet"
@@ -5153,6 +5273,11 @@ msgstr "봇을 만든 사람만 웹훅 키를 볼 수 있습니다."
 #: src/pages/shell/use-routine-editor.ts
 msgid "Only the bot's creator can set its webhook key."
 msgstr "봇을 만든 사람만 웹훅 키를 설정할 수 있습니다."
+
+#. placeholder {0}: data.files.length
+#: src/pages/shell/code-panel.tsx
+msgid "Only the first {0} files are shown."
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 msgid "Only you"
@@ -5757,6 +5882,7 @@ msgstr "리디렉션 URI"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "새로고침"
 
@@ -6141,6 +6267,14 @@ msgstr "자리를 비운 동안 실행되는 루틴"
 msgid "Row"
 msgstr "행"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Run"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
+msgid "Run a command in the repository"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
 msgstr "실행 시간"
@@ -6481,6 +6615,10 @@ msgstr "서버 URL"
 msgid "Set"
 msgstr "설정"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Set a repository in this bot's settings to see its changes."
+msgstr ""
+
 #: src/components/call/CallCard.tsx
 #: src/components/SidebarFooter.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -6563,9 +6701,18 @@ msgstr "모두 보기"
 msgid "Show all {0}"
 msgstr ""
 
+#. placeholder {0}: lines.length
+#: src/pages/shell/code-panel.tsx
+msgid "Show all {0} lines"
+msgstr ""
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Show bots"
 msgstr "봇 표시"
+
+#: src/pages/shell/chat-header.tsx
+msgid "Show code"
+msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Show fewer"
@@ -7032,6 +7179,10 @@ msgstr "템플릿"
 msgid "Templates"
 msgstr "템플릿"
 
+#: src/pages/shell/code-panel.tsx
+msgid "Terminal"
+msgstr ""
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Test"
 msgstr "시험 실행"
@@ -7071,9 +7222,18 @@ msgstr ""
 msgid "The bot can use the file but won't see the picture."
 msgstr "Bot은 파일을 사용할 수 있지만 이미지는 볼 수 없습니다."
 
+#. placeholder {0}: data.folder
+#: src/pages/shell/code-panel.tsx
+msgid "The bot has not cloned {0} yet. It does when it starts working on the code."
+msgstr ""
+
 #: src/components/SecretAskCard.tsx
 msgid "The bot's browser stays signed in for everyone in this space"
 msgstr "봇의 브라우저는 이 스페이스의 모든 사람에게 로그인 상태로 유지됩니다"
+
+#: src/pages/shell/code-panel.tsx
+msgid "The bot's computer is asleep. Wake it to read its git changes."
+msgstr ""
 
 #: src/lib/dictation.ts
 msgid "The browser keeps dropping the microphone. Start dictation again to retry."
@@ -7086,6 +7246,11 @@ msgstr "봇이 작업하는 컴퓨터."
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
 msgstr "연결 시간이 초과되었습니다."
+
+#. placeholder {0}: data.workingBranch
+#: src/pages/shell/code-panel.tsx
+msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next syncs."
+msgstr ""
 
 #: src/pages/shell/repository-settings.tsx
 msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
@@ -7229,6 +7394,10 @@ msgstr "이 대화는 모델이 처리하기에 너무 깁니다. 다시 시도�
 #: src/pages/Artifacts.tsx
 msgid "This deletes all {0} versions of this artifact. This can't be undone."
 msgstr "이 아티팩트의 버전 {0}개가 모두 삭제됩니다. 이 작업은 되돌릴 수 없습니다."
+
+#: src/pages/shell/code-diff.tsx
+msgid "This diff is too long to show in full."
+msgstr ""
 
 #: src/components/ArtifactFileCard.tsx
 msgid "This file is not valid UTF-8 text."
@@ -7799,9 +7968,14 @@ msgstr "줄에서 기다리는 중…"
 msgid "Waiting…"
 msgstr "기다리는 중…"
 
+#: src/pages/shell/code-panel.tsx
 #: src/pages/shell/computer-panel.tsx
 msgid "Wake"
 msgstr "깨우기"
+
+#: src/pages/shell/code-panel.tsx
+msgid "Waking…"
+msgstr ""
 
 #: src/pages/settings-nav.ts
 msgid "Wallet"
@@ -8037,6 +8211,10 @@ msgstr "오늘 카드에서 {annualPrice}이 결제되며, 이번 달 사용하�
 #: src/components/ModelCredits.tsx
 msgid "Your card is charged the prorated difference today."
 msgstr "오늘 일할 계산된 차액이 카드로 청구됩니다."
+
+#: src/pages/shell/code-panel.tsx
+msgid "Your commands"
+msgstr ""
 
 #: src/pages/Shell.tsx
 msgid "Your computer's disk is nearly full. Free up space by removing build output and caches you no longer need."
