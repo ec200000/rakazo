@@ -9,6 +9,9 @@ import {
   gitHostsFromConfig,
   inspectPluginRepository,
   isTransientFetchError,
+  JENKINS_PRESET_ID,
+  jenkinsInstallConfig,
+  jenkinsPreset,
   mcpSourcePresets,
   pluginPreviewDto,
   prepareApiInstall,
@@ -145,7 +148,11 @@ export function capabilitiesRoutes(ctx: RouterContext) {
         }));
       }),
       sourcePresets: authed.capabilities.sourcePresets.handler(() =>
-        mcpSourcePresets({ echoUrl: deps.env.echoUrl, azureDevOpsUrl: deps.env.azureDevOpsUrl }),
+        mcpSourcePresets({
+          echoUrl: deps.env.echoUrl,
+          azureDevOpsUrl: deps.env.azureDevOpsUrl,
+          jenkinsUrl: deps.env.jenkinsUrl,
+        }),
       ),
       catalogSearch: authed.capabilities.catalogSearch.handler(async ({ context, input }) => {
         const baseUrl =
@@ -233,6 +240,13 @@ export function capabilitiesRoutes(ctx: RouterContext) {
                 throw new Error("Azure DevOps is not configured on this server");
               source = azureDevOps.url;
               config = azureDevOpsInstallConfig(deps.env.azureDevOpsApiVersion);
+            }
+            // The Jenkins preset: the deployment's controller, its operations, the person's token.
+            if (config.preset === JENKINS_PRESET_ID) {
+              const jenkins = jenkinsPreset(deps.env.jenkinsUrl);
+              if (!jenkins?.url) throw new Error("Jenkins is not configured on this server");
+              source = jenkins.url;
+              config = jenkinsInstallConfig();
             }
             const prepared = await prepareApiInstall({
               source,

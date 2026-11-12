@@ -1613,3 +1613,62 @@ describe("overlapping tracked identities", () => {
     expect(readItems([list[0]], ["id", "modifiedTime"]).fingerprint).not.toBe(before.fingerprint);
   });
 });
+
+it("reaches a tool that discovery lists only through a catalog", async () => {
+  const hidden = {
+    name: "jenkins_last_completed_build",
+    readOnly: true,
+    description: "Last build",
+    inputSchema: {},
+    route: {
+      connectorId: "installed",
+      resourceId: "jenkins",
+      toolName: "jenkins_last_completed_build",
+    },
+  };
+  const wrapper = {
+    name: "installed_execute_tool",
+    description: "Run a tool",
+    inputSchema: {},
+    route: { connectorId: "installed", toolName: "__catalog_execute" },
+  };
+  const resolveCall = vi.fn(async (call: { args: Record<string, unknown>; route?: unknown }) =>
+    call.args.id === hidden.name && call.route
+      ? {
+          tool: hidden,
+          call: {
+            tool: hidden.name,
+            args: call.args.arguments,
+            executionId: "x",
+            route: hidden.route,
+          },
+        }
+      : undefined,
+  );
+  const execute = vi.fn(async function* () {
+    yield { type: "result", data: { data: { number: 13, result: "FAILURE" } } };
+  });
+  const deps = {
+    prisma: {
+      connection: { findMany: vi.fn(async () => []) },
+      spaceSettingOverride: { findUnique: vi.fn(async () => null) },
+      actionApprovalRule: { findMany: vi.fn(async () => []) },
+      userActionApprovalRule: { findMany: vi.fn(async () => []) },
+    },
+    connector: { discoverTools: vi.fn(async () => [wrapper]), execute, resolveCall },
+  } as unknown as RoutineWatchTickDeps;
+  const routine = {
+    id: "r",
+    spaceId: "s",
+    userId: "u",
+    botId: "b",
+    watch: { kind: "tool", tool: hidden.name, args: { job: "app" }, track: ["number", "result"] },
+    watchState: null,
+  };
+  const outcome = await checkRoutineWatch(deps, routine);
+  expect(outcome.state.outcome).toBe("baseline");
+  expect(execute).toHaveBeenCalledWith(
+    expect.objectContaining({ tool: hidden.name, args: { job: "app" }, route: hidden.route }),
+    expect.anything(),
+  );
+});

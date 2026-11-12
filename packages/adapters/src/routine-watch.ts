@@ -28,6 +28,7 @@ import { scheduleComputerSleep } from "./computer-idle.js";
 import { ComputerBusyError, provisionComputer } from "./computer-lifecycle.js";
 import { resolveBotWorkspaceCwd, teamBotWorkspaceDirectory } from "./computer-support.js";
 import { connectedContext, selectRunConnections } from "./connection-context.js";
+import { CATALOG_EXECUTE } from "./lazy-tool-catalog.js";
 import { nativeShellCommandArgv, usesNativeShell } from "./native-shell.js";
 import { loadPurchaseRedactions } from "./purchase-service.js";
 
@@ -567,6 +568,35 @@ async function run(
   return { stdout, stderr, code };
 }
 
+/**
+ * With many installed tools, discovery lists only a catalog's search, load and execute wrappers;
+ * the watched tool is still there, reached through the execute wrapper by its name.
+ */
+async function resolveThroughCatalog(
+  connector: ConnectorProvider,
+  tools: ConnectorTool[],
+  call: { tool: string; args: Record<string, unknown>; executionId: string },
+  ctx: AdapterContext,
+) {
+  for (const wrapper of tools.filter(
+    (candidate) => candidate.route?.toolName === CATALOG_EXECUTE,
+  )) {
+    const resolved = await connector
+      .resolveCall?.(
+        {
+          tool: wrapper.name,
+          args: { id: call.tool, arguments: call.args },
+          executionId: call.executionId,
+          route: wrapper.route,
+        },
+        ctx,
+      )
+      .catch(() => undefined);
+    if (resolved?.tool.name === call.tool) return resolved;
+  }
+  return undefined;
+}
+
 async function readTool(
   deps: RoutineWatchDeps,
   routine: RoutineWatchTarget,
@@ -588,7 +618,8 @@ async function readTool(
   const tool = tools.find((candidate) => candidate.name === toolName);
   const resolved = tool
     ? { call: { ...call, route: tool.route }, tool }
-    : await connector.resolveCall?.(call, ctx).catch(() => undefined);
+    : ((await connector.resolveCall?.(call, ctx).catch(() => undefined)) ??
+      (await resolveThroughCatalog(connector, tools, call, ctx)));
   if (!resolved) {
     throw new RoutineWatchError(`No connected integration has a tool named ${toolName}.`);
   }

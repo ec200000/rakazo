@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr " (непрочитано)"
 
+#: src/pages/Automations.tsx
+msgid "… earlier lines not shown"
+msgstr ""
+
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "(empty)"
 msgstr ""
@@ -151,6 +155,11 @@ msgstr "{0} КБ"
 #: src/components/ArtifactFileCard.tsx
 msgid "{0} MB"
 msgstr "{0} МБ"
+
+#. placeholder {0}: bot.name
+#: src/pages/Automations.tsx
+msgid "{0} now watches this job and tells you about each finished build."
+msgstr ""
 
 #. placeholder {0}: sender.name
 #: src/pages/ExternalConversationSettings.tsx
@@ -627,6 +636,14 @@ msgstr "Учётные данные подписки надежно сохран
 msgid "A weekly digest of what changed on topics you follow"
 msgstr "Еженедельная сводка изменений по темам, за которыми вы следите"
 
+#: src/pages/PullRequests.tsx
+msgid "Abandoned"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Aborted"
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 msgid "About {kb} KB of memory no longer reaches the bot."
 msgstr "Около {kb} КБ памяти больше не доходит до бота."
@@ -634,6 +651,15 @@ msgstr "Около {kb} КБ памяти больше не доходит до 
 #: src/components/InfoTooltip.tsx
 msgid "About {label}"
 msgstr "О настройке «{label}»"
+
+#. placeholder {0}: data.id
+#. placeholder {1}: data.title
+#. placeholder {2}: data.repository
+#. placeholder {3}: data.sourceBranch
+#. placeholder {4}: data.targetBranch
+#: src/pages/PullRequests.tsx
+msgid "About pull request !{0} \"{1}\" in {2}{link}, {3} into {4}: "
+msgstr ""
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Access key ID"
@@ -714,6 +740,11 @@ msgstr "Добавить {0} в группу"
 #: src/lib/routine-draft.ts
 msgid "Add a command to run"
 msgstr "Добавьте команду для выполнения"
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Add a comment"
+msgstr ""
 
 #: src/lib/routine-draft.ts
 msgid "Add a file or folder to watch"
@@ -898,6 +929,14 @@ msgstr "Все боты"
 #: src/pages/Artifacts.tsx
 msgid "All files"
 msgstr "Все файлы"
+
+#: src/pages/Automations.tsx
+msgid "All jobs"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "All open"
+msgstr ""
 
 #: src/components/integrations/space-availability.tsx
 msgid "All spaces"
@@ -1115,6 +1154,7 @@ msgstr "Подтверждения"
 
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Approve"
 msgstr "Утвердить"
@@ -1127,9 +1167,18 @@ msgstr "Утвердите или запретите это на экране."
 msgid "Approve this server to let your agent use its tools."
 msgstr "Одобрите этот сервер, чтобы ваш агент мог использовать его инструменты."
 
+#: src/pages/PullRequests.tsx
+msgid "Approve with suggestions"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Approved"
 msgstr "Одобрено"
+
+#: src/pages/PullRequests.tsx
+msgid "Approved with suggestions"
+msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Approving…"
@@ -1151,6 +1200,10 @@ msgstr "в архиве"
 msgid "Archived"
 msgstr "В архиве"
 
+#: src/pages/Issues.tsx
+msgid "Area"
+msgstr ""
+
 #: src/pages/McpServerForm.tsx
 msgid "Arguments"
 msgstr "Аргументы"
@@ -1164,6 +1217,14 @@ msgstr "Артефакты"
 msgid "Ask"
 msgstr "Спрашивать"
 
+#: src/pages/PullRequests.tsx
+msgid "Ask a bot"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Ask about this pull request"
+msgstr ""
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Asks before sending, spending or changing anything in your apps."
 msgstr "Спрашивает перед отправкой, тратами или изменением чего-либо в ваших приложениях."
@@ -1175,6 +1236,14 @@ msgstr "Спрашивает только перед покупками и пе�
 #: src/pages/shell/computer-panel.tsx
 msgid "Asleep"
 msgstr "Спит"
+
+#: src/pages/Issues.tsx
+msgid "Assigned to me"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "assigned to you"
+msgstr ""
 
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
@@ -1235,6 +1304,11 @@ msgstr "Авто"
 msgid "Automated senders"
 msgstr "Автоматические отправители"
 
+#: src/pages/Automations.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Automations"
+msgstr ""
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Available after saving"
 msgstr "Доступно после сохранения"
@@ -1255,6 +1329,19 @@ msgstr "Доступна командам оболочки как {commandVariab
 msgid "Avatar Studio"
 msgstr "Студия аватаров"
 
+#: src/pages/Issues.tsx
+msgid "Azure Boards"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps"
+msgstr ""
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps did not accept that"
+msgstr ""
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -1263,11 +1350,14 @@ msgstr "Студия аватаров"
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/Auth.tsx
+#: src/pages/Automations.tsx
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
 #: src/pages/McpServerForm.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/plugins/parts.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
@@ -1435,6 +1525,30 @@ msgstr "Обзор"
 msgid "Browse MCP servers"
 msgstr "Просмотреть MCP-серверы"
 
+#: src/pages/Automations.tsx
+msgid "Build"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build now"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build queued."
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build with parameters"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Building"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Builds"
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Built-in"
@@ -1496,11 +1610,13 @@ msgstr "Не может читать изображения"
 #: src/components/teach/TeachComputerOverlay.tsx
 #: src/components/vault/VaultItemDetail.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Automations.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/onboarding/model-step.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "Cancel"
@@ -1677,6 +1793,22 @@ msgstr "Проверка подключения…"
 #: src/pages/HostComputerPrompt.tsx
 msgid "Checking…"
 msgstr "Проверка…"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks failed"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks passed"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks running"
+msgstr ""
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose a bot shape, color, or upload an image"
@@ -1903,8 +2035,14 @@ msgid "Commands the bot ran, newest last."
 msgstr ""
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 msgid "Comment"
 msgstr "Комментарий"
+
+#: src/pages/PullRequests.tsx
+msgid "Comments"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Communication"
@@ -2000,6 +2138,10 @@ msgstr "Подтвердить удаление"
 #: src/lib/model-connection-preflight.ts
 msgid "Confirm the URL is reachable from this browser session, then test again."
 msgstr "Убедитесь, что URL доступен из этого сеанса браузера, и повторите тест."
+
+#: src/pages/PullRequests.tsx
+msgid "Conflicts"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 #: src/components/integrations/plugin-marketplace.tsx
@@ -2118,6 +2260,10 @@ msgstr ""
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
 msgstr "Коннектор"
+
+#: src/pages/Automations.tsx
+msgid "Console of #{number}"
+msgstr ""
 
 #: src/components/vault/kinds.tsx
 msgid "Contact"
@@ -2498,6 +2644,10 @@ msgstr "Не удалось загрузить учётные данные."
 msgid "Could not load integrations"
 msgstr "Не удалось загрузить интеграции"
 
+#: src/pages/Automations.tsx
+msgid "Could not load Jenkins jobs"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Could not load MCP servers"
@@ -2510,6 +2660,10 @@ msgstr "Не удалось загрузить участников"
 #: src/pages/model-settings/use-model-settings.ts
 msgid "Could not load model settings"
 msgstr "Не удалось загрузить настройки модели."
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load pull requests"
+msgstr ""
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Could not load run history"
@@ -2529,8 +2683,21 @@ msgstr "Не удалось загрузить навык"
 msgid "Could not load templates"
 msgstr "Не удалось загрузить шаблоны"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Could not load the diff"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Could not load the job"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load the pull request"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "Could not load the work item"
 msgstr ""
 
 #: src/pages/Artifacts.tsx
@@ -2548,6 +2715,10 @@ msgstr "Не удалось загрузить этот файл."
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Could not load voice settings"
 msgstr "Не удалось загрузить голосовые настройки."
+
+#: src/pages/Issues.tsx
+msgid "Could not load work items"
+msgstr ""
 
 #: src/lib/sign-out.ts
 msgid "Could not log out. Try again."
@@ -2576,6 +2747,10 @@ msgstr "Не удалось закрепить страницу. Попробу�
 msgid "Could not play a test clip"
 msgstr "Не удалось воспроизвести тестовый клип."
 
+#: src/pages/PullRequests.tsx
+msgid "Could not post the comment"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Could not preview plugin"
 msgstr "Не удалось открыть предпросмотр плагина"
@@ -2596,6 +2771,10 @@ msgstr "Не удалось связаться с сервером"
 
 #: src/pages/shell/code-panel.tsx
 msgid "Could not read the changes"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Could not read the log"
 msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
@@ -2949,6 +3128,10 @@ msgstr "Создайте свой Rakazo"
 msgid "Created"
 msgstr "Создано"
 
+#: src/pages/Issues.tsx
+msgid "Created by me"
+msgstr ""
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/agent-import-plan.tsx
@@ -3107,6 +3290,11 @@ msgstr "Удалить «{0}»?"
 msgid "Delete {0}"
 msgstr "Удалить {0}"
 
+#. placeholder {0}: data.sourceBranch
+#: src/pages/PullRequests.tsx
+msgid "Delete {0} after merging"
+msgstr ""
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: deleting.name
 #. placeholder {0}: item.name
@@ -3170,6 +3358,8 @@ msgid "Deny"
 msgstr "Запретить"
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Description"
 msgstr "Описание"
@@ -3190,6 +3380,7 @@ msgstr "ID рабочего стола"
 msgid "Desktop update"
 msgstr "Обновление настольного приложения"
 
+#: src/pages/Issues.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
@@ -3265,6 +3456,10 @@ msgstr "{disconnectName}: отключено."
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnecting…"
 msgstr "Отключение…"
+
+#: src/pages/Issues.tsx
+msgid "Discussion"
+msgstr ""
 
 #: src/components/AskCard.tsx
 #: src/components/ComputerUpdateProgress.tsx
@@ -3349,6 +3544,10 @@ msgstr "Скачать PDF"
 #: src/components/DesktopUpdates.tsx
 msgid "Downloading…"
 msgstr "Скачивание…"
+
+#: src/pages/PullRequests.tsx
+msgid "Draft"
+msgstr ""
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Draft skill"
@@ -3535,6 +3734,10 @@ msgstr "Все сообщения"
 msgid "Every Monday"
 msgstr "Каждый понедельник"
 
+#: src/pages/PullRequests.tsx
+msgid "Everyone else"
+msgstr ""
+
 #: src/components/SharedSpaceRules.tsx
 msgid "Everyone here sees its chats, bots and memory"
 msgstr "Все здесь видят чаты, ботов и память этого пространства"
@@ -3610,6 +3813,7 @@ msgstr "неуспешный"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "Ошибка"
@@ -3626,6 +3830,10 @@ msgstr "Не удалось остановить"
 #: src/lib/browser-notifications.ts
 msgid "Failed."
 msgstr "Неуспешный."
+
+#: src/pages/Automations.tsx
+msgid "Failing now"
+msgstr ""
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Failure handling"
@@ -3644,6 +3852,7 @@ msgstr "Поля для сравнения, например id, modifiedTime (�
 msgid "File"
 msgstr "Файл"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Files"
 msgstr ""
@@ -3727,6 +3936,10 @@ msgstr "Завершение подключения MCP…"
 #: src/pages/shell/keyboard-shortcuts-dialog.tsx
 msgid "Focus message"
 msgstr "Перейти к сообщению"
+
+#: src/pages/Automations.tsx
+msgid "Folder"
+msgstr ""
 
 #. placeholder {0}: entry.name
 #: src/components/integrations/marketplace-inspector.tsx
@@ -3992,6 +4205,11 @@ msgstr "Как проверить"
 msgid "How will you use Rakazo?"
 msgstr "Как вы будете использовать Rakazo?"
 
+#. placeholder {0}: item.id
+#: src/pages/Issues.tsx
+msgid "I'll choose the branch in the Branch box. When it's done, ask me before opening a pull request, and link it to #{0}."
+msgstr ""
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "Готово"
@@ -4185,9 +4403,18 @@ msgstr "изолированный"
 msgid "Isolated preview — no access to your account"
 msgstr "Изолированный предпросмотр — без доступа к вашему аккаунту"
 
+#: src/pages/Issues.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Issues"
+msgstr ""
+
 #: src/components/pages/PageViewHost.tsx
 msgid "It may have been deleted, or it belongs to someone else."
 msgstr "Возможно, она удалена или принадлежит другому человеку."
+
+#: src/pages/Issues.tsx
+msgid "Iteration"
+msgstr ""
 
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Its bots and groups are kept and leave the section."
@@ -4200,6 +4427,22 @@ msgstr "Его диалог, файлы и задачи будут безвоз�
 #: src/components/pages/PagesList.tsx
 msgid "Its shared link stops working and its cards in chat show it as deleted. This can't be undone."
 msgstr "Общая ссылка перестанет работать, а карточки в чате будут показаны как удалённые. Это нельзя отменить."
+
+#: src/pages/Automations.tsx
+msgid "Jenkins did not accept that"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Jenkins jobs"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Job"
+msgstr ""
+
+#: src/pages/shell/work-nav.tsx
+msgid "jobs failing"
+msgstr ""
 
 #: src/pages/Invite.tsx
 msgid "Join"
@@ -4382,10 +4625,13 @@ msgstr "Загрузка поставщиков голосовой связи…
 #: src/components/SpaceMembersSettings.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/Automations.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/Invite.tsx
+#: src/pages/Issues.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
 #: src/pages/shell/code-panel.tsx
@@ -4577,6 +4823,10 @@ msgstr "Память для {title}"
 msgid "Memory scope"
 msgstr "Область памяти"
 
+#: src/pages/Issues.tsx
+msgid "Mentioned"
+msgstr ""
+
 #: src/pages/shell/composer-parts.tsx
 msgid "Mentions"
 msgstr "Упоминания"
@@ -4592,6 +4842,26 @@ msgstr "Упоминает функции OpenClaw"
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Mentions: {mentions}"
 msgstr "Упоминает: {mentions}"
+
+#: src/pages/PullRequests.tsx
+msgid "Merge"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merge commit"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merge now"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merged"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merges when checks pass"
+msgstr ""
 
 #: src/pages/shell/chat-shared.ts
 #: src/pages/shell/composer.tsx
@@ -4789,12 +5059,17 @@ msgid "Move them to your shared memory."
 msgstr "Переместите их в свою общую память."
 
 #: src/pages/BotContextMenu.tsx
+#: src/pages/Issues.tsx
 msgid "Move to"
 msgstr "Переместить в"
 
 #: src/pages/ModelRoleSettings.tsx
 msgid "Move up"
 msgstr "Переместить вверх"
+
+#: src/pages/Automations.tsx
+msgid "Multibranch pipeline"
+msgstr ""
 
 #: src/components/call/CallCard.tsx
 msgid "Mute"
@@ -4879,6 +5154,10 @@ msgstr "Требуется передача управления"
 #: src/pages/shell/message-view.tsx
 msgid "Needs you"
 msgstr "Требуется ваше участие"
+
+#: src/pages/PullRequests.tsx
+msgid "Needs your review"
+msgstr ""
 
 #: src/pages/shell/import-status.ts
 msgid "Needs: {names}"
@@ -5019,17 +5298,43 @@ msgstr "Ни один бот не подходит"
 msgid "No branch checked out"
 msgstr ""
 
+#: src/pages/Automations.tsx
+msgid "No builds yet."
+msgstr ""
+
 #. placeholder {0}: data.baseBranch
 #: src/pages/shell/code-panel.tsx
 msgid "No changes against {0} yet."
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No checks"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No checks reported. Jenkins builds appear here when they post a status to the pull request."
 msgstr ""
 
 #: src/pages/shell/code-panel.tsx
 msgid "No commands yet."
 msgstr ""
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No comments yet."
+msgstr ""
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No description."
+msgstr ""
+
 #: src/pages/shell/code-diff.tsx
 msgid "No differences to show."
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No file changes."
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -5072,6 +5377,10 @@ msgstr "Каталога моделей нет."
 msgid "No models listed."
 msgstr "Модели не перечислены."
 
+#: src/pages/PullRequests.tsx
+msgid "No open pull requests."
+msgstr ""
+
 #: src/pages/shell/use-agent-import-source.ts
 msgid "No OpenClaw, Hermes or agent document found."
 msgstr "Не найдено файлов OpenClaw, Hermes или документа агента."
@@ -5079,6 +5388,10 @@ msgstr "Не найдено файлов OpenClaw, Hermes или докумен�
 #: src/components/pages/PagesList.tsx
 msgid "No pages match “{query}”."
 msgstr "Нет страниц по запросу «{query}»."
+
+#: src/pages/PullRequests.tsx
+msgid "No pull requests match."
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "No remote MCP servers found"
@@ -5098,6 +5411,10 @@ msgstr "Без сброса"
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "Нет результатов"
+
+#: src/pages/PullRequests.tsx
+msgid "No reviewers yet."
+msgstr ""
 
 #: src/pages/RoutineList.tsx
 msgid "No routines yet"
@@ -5135,6 +5452,10 @@ msgstr "Пока нет тикетов"
 msgid "No trigger"
 msgstr "Нет триггера"
 
+#: src/pages/PullRequests.tsx
+msgid "No vote"
+msgstr ""
+
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemEditor.tsx
 msgid "None"
@@ -5152,6 +5473,10 @@ msgstr "Недопустимый навык"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Not added: {0}"
 msgstr "Не добавлено: {0}"
+
+#: src/pages/Automations.tsx
+msgid "Not built"
+msgstr ""
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Not checked yet"
@@ -5198,6 +5523,10 @@ msgstr "Не работает"
 
 #: src/pages/shell/code-panel.tsx
 msgid "Nothing here yet. The bot clones the repository when it starts on the code."
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "Nothing here."
 msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
@@ -5287,6 +5616,7 @@ msgstr "Только вы"
 #: src/components/markdown-link-prompt.tsx
 #: src/components/pages/PagesList.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/computer-panel.tsx
 #: src/pages/shell/import-setup-card.tsx
 #: src/pages/shell/message-view.tsx
@@ -5364,6 +5694,11 @@ msgstr "URL-адрес сервера, совместимого с OpenAI"
 msgid "OpenClaw or Hermes"
 msgstr "OpenClaw или Hermes"
 
+#. placeholder {0}: item.createdBy
+#: src/pages/Issues.tsx
+msgid "opened by {0}"
+msgstr ""
+
 #: src/components/pages/DownloadPdfButton.tsx
 msgid "Opens your browser's print dialog. Choose Save as PDF as the destination."
 msgstr "Открывает окно печати браузера. Выберите «Сохранить как PDF»."
@@ -5410,6 +5745,10 @@ msgstr "Другая модель…"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
 msgstr "Вывод"
+
+#: src/pages/PullRequests.tsx
+msgid "Overview"
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 #: src/components/SpaceMembersSettings.tsx
@@ -5474,6 +5813,7 @@ msgstr "Здесь появляются страницы, которые это�
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "Здесь появляются страницы, которые эта группа создаёт для вас. Попросите дашборд, трекер или план, чтобы создать страницу."
 
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Passed"
 msgstr ""
@@ -5542,6 +5882,10 @@ msgstr "Вставьте свой ключ API"
 msgid "Paste your API key, then test again."
 msgstr "Вставьте API-ключ и повторите тест."
 
+#: src/pages/Automations.tsx
+msgid "paused"
+msgstr ""
+
 #: src/pages/RoutineList.tsx
 #: src/pages/shell/import-status.ts
 msgid "Paused"
@@ -5588,6 +5932,10 @@ msgstr "Выберите {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr ""
 
+#: src/pages/Automations.tsx
+msgid "Pick a job to see its builds and logs, start a build, or have a bot watch it."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "Выберите модель из каталога."
@@ -5596,9 +5944,17 @@ msgstr "Выберите модель из каталога."
 msgid "Pick a model from the list or enter a model id served by this endpoint."
 msgstr "Выберите модель из списка или введите id модели, который обслуживает этот адрес."
 
+#: src/pages/PullRequests.tsx
+msgid "Pick a pull request to see its checks, changes and comments."
+msgstr ""
+
 #: src/lib/routine-draft.ts
 msgid "Pick a tool to check"
 msgstr "Выберите инструмент для проверки"
+
+#: src/pages/Issues.tsx
+msgid "Pick a work item to read it, move it along, or start a bot on it."
+msgstr ""
 
 #: src/components/pages/PagesList.tsx
 #: src/pages/BotContextMenu.tsx
@@ -5621,6 +5977,14 @@ msgstr "Воспроизвести {name}"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Playing…"
 msgstr "Воспроизведение…"
+
+#. placeholder {0}: item.type
+#. placeholder {1}: item.id
+#. placeholder {2}: item.title
+#. placeholder {3}: item.webUrl ?? ""
+#: src/pages/Issues.tsx
+msgid "Please work on {0} #{1} \"{2}\" ({3})."
+msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Plugin"
@@ -5723,6 +6087,12 @@ msgstr "Поставщики"
 msgid "Pull request"
 msgstr "Запрос на слияние"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Pull requests"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 msgid "Queued"
 msgstr "В очереди"
@@ -5764,6 +6134,10 @@ msgstr ""
 msgid "Ready"
 msgstr "Готово"
 
+#: src/pages/PullRequests.tsx
+msgid "Ready for review"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr "Причина"
@@ -5772,6 +6146,14 @@ msgstr "Причина"
 #: src/pages/onboarding/model-step.tsx
 msgid "Reasoning effort"
 msgstr "Уровень рассуждений"
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase and fast-forward"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase with merge commit"
+msgstr ""
 
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Recall and write"
@@ -5796,6 +6178,10 @@ msgstr "Недавние"
 #: src/components/SpendingLimitSettings.tsx
 msgid "Recent payments"
 msgstr "Последние платежи"
+
+#: src/pages/PullRequests.tsx
+msgid "Recently closed"
+msgstr ""
 
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Recommended"
@@ -5882,6 +6268,9 @@ msgstr "URI перенаправления"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/Automations.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "Обновить"
@@ -5907,6 +6296,7 @@ msgid "Registration is closed"
 msgstr "Регистрация закрыта"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Reject"
 msgstr "Отклонить"
 
@@ -5916,6 +6306,7 @@ msgid "Reject {0}"
 msgstr "Отклонить {0}"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Rejected"
 msgstr "Отклонено"
 
@@ -6077,6 +6468,7 @@ msgstr "Ответы"
 msgid "Replies to"
 msgstr "Отвечает на"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-hover-actions.tsx
 #: src/pages/shell/quote-selection-button.tsx
 msgid "Reply"
@@ -6088,6 +6480,10 @@ msgstr "Ответ отменён"
 
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Reply:"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Reply…"
 msgstr ""
 
 #. placeholder {0}: replyNameRef.current
@@ -6106,6 +6502,10 @@ msgstr "Запросите новый код"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "Запросы"
+
+#: src/pages/PullRequests.tsx
+msgid "Required"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
@@ -6132,6 +6532,10 @@ msgstr "Сбросить компьютер?"
 #: src/pages/Auth.tsx
 msgid "Reset password"
 msgstr "Сбросить пароль"
+
+#: src/pages/PullRequests.tsx
+msgid "Reset vote"
+msgstr ""
 
 #: src/pages/Auth.tsx
 msgid "Reset your password"
@@ -6222,9 +6626,17 @@ msgstr "Вернуться к звонку с {0}"
 msgid "Return to Rakazo"
 msgstr "Вернуться в Rakazo"
 
+#: src/pages/PullRequests.tsx
+msgid "Review"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "Проверьте настройки поставщика и повторите тест."
+
+#: src/pages/PullRequests.tsx
+msgid "Reviewers"
+msgstr ""
 
 #: src/components/bot-templates/bot-template-copy.ts
 msgid "Reviews pull requests waiting on you"
@@ -6478,6 +6890,10 @@ msgstr "Поиск по домену"
 msgid "Search integrations.sh"
 msgstr "Поиск integrations.sh"
 
+#: src/pages/Automations.tsx
+msgid "Search jobs"
+msgstr ""
+
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Search MCP servers for “{query}”"
 msgstr "Искать «{query}» среди MCP-серверов"
@@ -6488,6 +6904,10 @@ msgstr "Искать «{query}» среди MCP-серверов"
 #: src/pages/shell/chat-model-picker.tsx
 msgid "Search models"
 msgstr "Поиск моделей"
+
+#: src/pages/PullRequests.tsx
+msgid "Search pull requests"
+msgstr ""
 
 #: src/pages/shell/shell-sidebar.tsx
 msgid "Search runs"
@@ -6508,6 +6928,10 @@ msgstr "Поиск инструментов"
 #: src/components/VaultSettings.tsx
 msgid "Search Vault"
 msgstr "Поиск в хранилище"
+
+#: src/pages/Issues.tsx
+msgid "Search work items"
+msgstr ""
 
 #. placeholder {0}: filters.query.trim()
 #: src/pages/ActivityList.tsx
@@ -6945,6 +7369,14 @@ msgstr "Речевая модель"
 msgid "Spending limit"
 msgstr "Лимит расходов"
 
+#: src/pages/PullRequests.tsx
+msgid "Squash and merge"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Squash when checks pass"
+msgstr ""
+
 #: src/components/AccountAccess.tsx
 msgid "SSO"
 msgstr "SSO"
@@ -6965,6 +7397,10 @@ msgstr "Запустить"
 #: src/pages/Paywall.tsx
 msgid "Start {trialDays}-day free trial"
 msgstr "Начать бесплатный пробный период на {trialDays} дн."
+
+#: src/pages/Issues.tsx
+msgid "Start a bot on this"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Start plan"
@@ -7141,6 +7577,10 @@ msgstr "Системная"
 msgid "Table"
 msgstr "Таблица"
 
+#: src/pages/Issues.tsx
+msgid "Tags"
+msgstr ""
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "Взять управление"
@@ -7169,6 +7609,14 @@ msgstr "Командный компьютер"
 #: src/pages/RoutineList.tsx
 msgid "Teams message"
 msgstr "Сообщение Teams"
+
+#: src/pages/Automations.tsx
+msgid "Tell me about each finished build"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Tell me about new review comments"
+msgstr ""
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Template"
@@ -7679,6 +8127,10 @@ msgstr "Ввести без записи"
 msgid "Type your answer"
 msgstr "Введите ответ"
 
+#: src/pages/Issues.tsx
+msgid "unassigned"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 #: src/pages/Shell.tsx
 msgid "Unassigned"
@@ -7718,6 +8170,10 @@ msgstr "Вернуть"
 #: src/pages/shell/snoozed-chats.tsx
 msgid "Unsnooze {0}"
 msgstr "Вернуть {0}"
+
+#: src/pages/Automations.tsx
+msgid "Unstable"
+msgstr ""
 
 #. placeholder {0}: pending.file.name
 #: src/pages/shell/use-composer-actions.ts
@@ -7960,6 +8416,18 @@ msgstr "Время ожидания голосового запроса исте
 msgid "Wait a moment and test again."
 msgstr "Подождите немного и повторите тест."
 
+#: src/pages/PullRequests.tsx
+msgid "Wait for author"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Waiting for author"
+msgstr ""
+
+#: src/pages/shell/work-nav.tsx
+msgid "waiting for your review"
+msgstr ""
+
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "Ожидание в очереди…"
@@ -7980,6 +8448,14 @@ msgstr ""
 #: src/pages/settings-nav.ts
 msgid "Wallet"
 msgstr "Кошелёк"
+
+#: src/pages/Automations.tsx
+msgid "Watch with a bot"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Watched by"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Web, desktop and mobile"
@@ -8119,8 +8595,13 @@ msgid "Won't do"
 msgstr "Не будет сделано"
 
 #: src/components/SignupSurvey.tsx
+#: src/pages/shell/work-nav.tsx
 msgid "Work"
 msgstr "Работа"
+
+#: src/pages/Issues.tsx
+msgid "Work items"
+msgstr ""
 
 #: src/pages/ActivityList.tsx
 msgid "Working"
@@ -8166,8 +8647,14 @@ msgstr "Год"
 msgid "Yesterday"
 msgstr "Вчера"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "you"
+msgstr ""
+
 #: src/components/pages/SharePopover.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/message-view.tsx
 #: src/pages/shell/shell-sidebar.tsx
@@ -8298,6 +8785,10 @@ msgstr "У вашего голосового провайдера закончи
 #: src/lib/user-error.ts
 msgid "Your voice provider key was rejected."
 msgstr "Ваш голосовой провайдер отклонил ключ."
+
+#: src/pages/PullRequests.tsx
+msgid "Yours"
+msgstr ""
 
 #: src/components/vault/VaultItemEditor.tsx
 msgid "ZIP or postal code"

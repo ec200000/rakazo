@@ -14,6 +14,9 @@ import type {
   PullRequestRef,
   PullRequestSummary,
   PullRequestThread,
+  WorkItemDetail,
+  WorkItemSummary,
+  WorkItemView,
   WorkPerson,
 } from "@rakazo/contracts";
 import { unifiedDiff } from "./text-diff.js";
@@ -122,13 +125,23 @@ export class AzureDevOpsClient {
     private readonly fetchImpl: Fetch = globalThis.fetch,
   ) {}
 
-  private url(path: string, query: Record<string, string | number | undefined> = {}) {
+  private url(
+    path: string,
+    query: Record<string, string | number | undefined> = {},
+    apiVersion = this.apiVersion,
+  ) {
     const url = new URL(`${this.collectionUrl.replace(/\/+$/, "")}${path}`);
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined) url.searchParams.set(key, String(value));
     }
-    url.searchParams.set("api-version", this.apiVersion);
+    url.searchParams.set("api-version", apiVersion);
     return url;
+  }
+
+  /** Work item comments are still a preview API: 6.0-preview.3, or 7.1-preview.4 on newer servers. */
+  private commentsVersion() {
+    const major = Number.parseFloat(this.apiVersion);
+    return major >= 7.1 ? `${this.apiVersion}-preview.4` : `${this.apiVersion}-preview.3`;
   }
 
   private async request(
@@ -138,16 +151,20 @@ export class AzureDevOpsClient {
       query?: Record<string, string | number | undefined>;
       body?: unknown;
       text?: boolean;
+      contentType?: string;
+      apiVersion?: string;
     } = {},
   ): Promise<unknown> {
     let response: Response;
     try {
-      response = await this.fetchImpl(this.url(path, options.query), {
+      response = await this.fetchImpl(this.url(path, options.query, options.apiVersion), {
         method,
         headers: {
           Authorization: this.authorization,
           Accept: options.text ? "text/plain" : "application/json",
-          ...(options.body === undefined ? {} : { "Content-Type": "application/json" }),
+          ...(options.body === undefined
+            ? {}
+            : { "Content-Type": options.contentType ?? "application/json" }),
         },
         body: options.body === undefined ? undefined : JSON.stringify(options.body),
         redirect: "manual",
@@ -481,4 +498,175 @@ export class AzureDevOpsClient {
   async publish(ref: PullRequestRef) {
     await this.request("PATCH", this.prPath(ref), { body: { isDraft: false } });
   }
+
+  // Azure Boards ----------------------------------------------------------------------------
+
+  private static WORK_ITEM_FIELDS = [
+    "System.Id",
+    "System.Title",
+    "System.State",
+    "System.WorkItemType",
+    "System.AssignedTo",
+    "System.ChangedDate",
+    "System.Tags",
+    "System.TeamProject",
+    "Microsoft.VSTS.Common.Priority",
+  ];
+
+  private workItemSummary(raw: Json, me: WorkPerson | null): WorkItemSummary {
+    const fields = obj(raw.fields);
+    const assigned = obj(fields["System.AssignedTo"]);
+    const project = str(fields["System.TeamProject"]);
+    const id = Number(raw.id ?? fields["System.Id"]);
+    const priority = Number(fields["Microsoft.VSTS.Common.Priority"]);
+    return {
+      id,
+      project,
+      type: str(fields["System.WorkItemType"]),
+      title: str(fields["System.Title"]),
+      state: str(fields["System.State"]),
+      stateCategory: null,
+      assignedTo: assigned.id || assigned.displayName ? this.person(assigned, me) : null,
+      changedAt: str(fields["System.ChangedDate"]),
+      priority: Number.isFinite(priority) && priority > 0 ? priority : null,
+      tags: str(fields["System.Tags"])
+        .split(";")
+        .map((tag) => tag.trim())
+        .filter(Boolean),
+      webUrl: project
+        ? `${this.collectionUrl.replace(/\/+$/, "")}/${encodeURIComponent(project)}/_workitems/edit/${id}`
+        : null,
+    };
+  }
+
+  /** The person's work items: assigned to them, created by them, mentioning them, or all open. */
+  async workItems(view: WorkItemView): Promise<WorkItemSummary[]> {
+    const me = await this.me();
+    const open =
+      "[System.State] NOT IN ('Closed', 'Done', 'Removed', 'Completed', 'Resolved', 'Cut')";
+    const where = {
+      assigned: `[System.AssignedTo] = @Me AND ${open}`,
+      created: `[System.CreatedBy] = @Me AND [System.ChangedDate] >= @Today - 90`,
+      mentioned: "[System.Id] IN (@RecentMentions)",
+      open: `${open} AND [System.ChangedDate] >= @Today - 30`,
+    }[view];
+    const query = obj(
+      await this.request("POST", "/_apis/wit/wiql", {
+        query: { $top: 200 },
+        body: {
+          query: `SELECT [System.Id] FROM WorkItems WHERE ${where} ORDER BY [System.ChangedDate] DESC`,
+        },
+      }),
+    );
+    const ids = list(query.workItems)
+      .map((item) => Number(item.id))
+      .filter((id) => Number.isFinite(id))
+      .slice(0, 200);
+    if (ids.length === 0) return [];
+    const items = list(
+      await this.request("GET", "/_apis/wit/workitems", {
+        query: {
+          ids: ids.join(","),
+          fields: AzureDevOpsClient.WORK_ITEM_FIELDS.join(","),
+          errorPolicy: "omit",
+        },
+      }),
+    ).filter((item) => item.id !== undefined && item.id !== null);
+    const byId = new Map(items.map((item) => [Number(item.id), this.workItemSummary(item, me)]));
+    return ids.flatMap((id) => {
+      const item = byId.get(id);
+      return item ? [item] : [];
+    });
+  }
+
+  async workItem(id: number): Promise<WorkItemDetail> {
+    const me = await this.me();
+    const raw = obj(
+      await this.request("GET", `/_apis/wit/workitems/${id}`, { query: { $expand: "all" } }),
+    );
+    const fields = obj(raw.fields);
+    const summary = this.workItemSummary(raw, me);
+    const project = encodeURIComponent(summary.project);
+    const [states, comments] = await Promise.all([
+      this.request(
+        "GET",
+        `/${project}/_apis/wit/workitemtypes/${encodeURIComponent(summary.type)}/states`,
+      ).catch(() => null),
+      this.request("GET", `/${project}/_apis/wit/workItems/${id}/comments`, {
+        apiVersion: this.commentsVersion(),
+        query: { $top: 100, order: "asc" },
+      }).catch(() => null),
+    ]);
+    const stateList = list(states).map((state) => ({
+      name: str(state.name),
+      category: str(state.category) || null,
+    }));
+    const pullRequests = list(raw.relations).flatMap((relation) => {
+      const match = /^vstfs:\/\/\/Git\/PullRequestId\/[^%]+%2F[^%]+%2F(\d+)$/i.exec(
+        str(relation.url),
+      );
+      return match ? [{ id: Number(match[1]), url: str(relation.url) }] : [];
+    });
+    const createdBy = obj(fields["System.CreatedBy"]);
+    return {
+      ...summary,
+      stateCategory: stateList.find((state) => state.name === summary.state)?.category ?? null,
+      description: htmlToText(
+        str(fields["System.Description"]) || str(fields["Microsoft.VSTS.TCM.ReproSteps"]),
+      ),
+      createdBy: str(createdBy.displayName) || null,
+      createdAt: str(fields["System.CreatedDate"]) || null,
+      areaPath: str(fields["System.AreaPath"]) || null,
+      iterationPath: str(fields["System.IterationPath"]) || null,
+      states: stateList,
+      comments: list(obj(comments).comments).map((comment) => ({
+        id: Number(comment.id),
+        author: str(obj(comment.createdBy).displayName) || "Unknown",
+        text: htmlToText(str(comment.text)),
+        createdAt: str(comment.createdDate),
+      })),
+      pullRequests,
+    };
+  }
+
+  async setWorkItemState(id: number, state: string) {
+    await this.request("PATCH", `/_apis/wit/workitems/${id}`, {
+      body: [{ op: "add", path: "/fields/System.State", value: state }],
+      contentType: "application/json-patch+json",
+    });
+  }
+
+  async commentOnWorkItem(id: number, text: string) {
+    const raw = obj(
+      await this.request("GET", `/_apis/wit/workitems/${id}`, {
+        query: { fields: "System.TeamProject" },
+      }),
+    );
+    const project = encodeURIComponent(str(obj(raw.fields)["System.TeamProject"]));
+    await this.request("POST", `/${project}/_apis/wit/workItems/${id}/comments`, {
+      apiVersion: this.commentsVersion(),
+      body: { text: escapeHtml(text).replace(/\n/g, "<br>") },
+    });
+  }
+}
+
+function escapeHtml(text: string) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/** Azure Boards stores rich text as HTML; the page and bots read it as plain text. */
+export function htmlToText(html: string): string {
+  return html
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(p|div|li|h[1-6]|tr)>/gi, "\n")
+    .replace(/<li[^>]*>/gi, "- ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }

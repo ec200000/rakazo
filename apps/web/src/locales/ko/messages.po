@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr " (읽지 않음)"
 
+#: src/pages/Automations.tsx
+msgid "… earlier lines not shown"
+msgstr ""
+
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "(empty)"
 msgstr ""
@@ -151,6 +155,11 @@ msgstr "{0} KB"
 #: src/components/ArtifactFileCard.tsx
 msgid "{0} MB"
 msgstr "{0} MB"
+
+#. placeholder {0}: bot.name
+#: src/pages/Automations.tsx
+msgid "{0} now watches this job and tells you about each finished build."
+msgstr ""
 
 #. placeholder {0}: sender.name
 #: src/pages/ExternalConversationSettings.tsx
@@ -627,6 +636,14 @@ msgstr "구독 인증 정보가 안전하게 저장되어 있습니다."
 msgid "A weekly digest of what changed on topics you follow"
 msgstr "팔로우하는 주제의 변화를 매주 요약합니다"
 
+#: src/pages/PullRequests.tsx
+msgid "Abandoned"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Aborted"
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 msgid "About {kb} KB of memory no longer reaches the bot."
 msgstr "약 {kb}KB의 기억이 더 이상 봇에 전달되지 않습니다."
@@ -634,6 +651,15 @@ msgstr "약 {kb}KB의 기억이 더 이상 봇에 전달되지 않습니다."
 #: src/components/InfoTooltip.tsx
 msgid "About {label}"
 msgstr "{label} 정보"
+
+#. placeholder {0}: data.id
+#. placeholder {1}: data.title
+#. placeholder {2}: data.repository
+#. placeholder {3}: data.sourceBranch
+#. placeholder {4}: data.targetBranch
+#: src/pages/PullRequests.tsx
+msgid "About pull request !{0} \"{1}\" in {2}{link}, {3} into {4}: "
+msgstr ""
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Access key ID"
@@ -714,6 +740,11 @@ msgstr "그룹에 {0} 추가"
 #: src/lib/routine-draft.ts
 msgid "Add a command to run"
 msgstr "실행할 명령 추가"
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Add a comment"
+msgstr ""
 
 #: src/lib/routine-draft.ts
 msgid "Add a file or folder to watch"
@@ -898,6 +929,14 @@ msgstr "모든 봇"
 #: src/pages/Artifacts.tsx
 msgid "All files"
 msgstr "모든 파일"
+
+#: src/pages/Automations.tsx
+msgid "All jobs"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "All open"
+msgstr ""
 
 #: src/components/integrations/space-availability.tsx
 msgid "All spaces"
@@ -1115,6 +1154,7 @@ msgstr "승인"
 
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Approve"
 msgstr "승인"
@@ -1127,9 +1167,18 @@ msgstr "화면에서 승인하거나 거부하세요."
 msgid "Approve this server to let your agent use its tools."
 msgstr "이 서버를 승인하면 Bot이 제공되는 도구를 사용할 수 있습니다."
 
+#: src/pages/PullRequests.tsx
+msgid "Approve with suggestions"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Approved"
 msgstr "승인됨"
+
+#: src/pages/PullRequests.tsx
+msgid "Approved with suggestions"
+msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Approving…"
@@ -1151,6 +1200,10 @@ msgstr "보관됨"
 msgid "Archived"
 msgstr "보관됨"
 
+#: src/pages/Issues.tsx
+msgid "Area"
+msgstr ""
+
 #: src/pages/McpServerForm.tsx
 msgid "Arguments"
 msgstr "인자"
@@ -1164,6 +1217,14 @@ msgstr "아티팩트"
 msgid "Ask"
 msgstr "묻기"
 
+#: src/pages/PullRequests.tsx
+msgid "Ask a bot"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Ask about this pull request"
+msgstr ""
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Asks before sending, spending or changing anything in your apps."
 msgstr "앱에서 무언가를 보내거나, 결제하거나, 변경하기 전에 묻습니다."
@@ -1175,6 +1236,14 @@ msgstr "구매할 때와 컴퓨터를 처음 사용할 때만 묻습니다. 차�
 #: src/pages/shell/computer-panel.tsx
 msgid "Asleep"
 msgstr "절전 중"
+
+#: src/pages/Issues.tsx
+msgid "Assigned to me"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "assigned to you"
+msgstr ""
 
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
@@ -1235,6 +1304,11 @@ msgstr "자동"
 msgid "Automated senders"
 msgstr "자동 발신자"
 
+#: src/pages/Automations.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Automations"
+msgstr ""
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Available after saving"
 msgstr "저장 후 사용 가능"
@@ -1255,6 +1329,19 @@ msgstr "셸 명령에서 {commandVariable}(으)로 사용 가능"
 msgid "Avatar Studio"
 msgstr "아바타 스튜디오"
 
+#: src/pages/Issues.tsx
+msgid "Azure Boards"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps"
+msgstr ""
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps did not accept that"
+msgstr ""
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -1263,11 +1350,14 @@ msgstr "아바타 스튜디오"
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/Auth.tsx
+#: src/pages/Automations.tsx
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
 #: src/pages/McpServerForm.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/plugins/parts.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
@@ -1435,6 +1525,30 @@ msgstr "둘러보기"
 msgid "Browse MCP servers"
 msgstr "MCP 서버 둘러보기"
 
+#: src/pages/Automations.tsx
+msgid "Build"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build now"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build queued."
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build with parameters"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Building"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Builds"
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Built-in"
@@ -1496,11 +1610,13 @@ msgstr "이미지를 읽을 수 없음"
 #: src/components/teach/TeachComputerOverlay.tsx
 #: src/components/vault/VaultItemDetail.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Automations.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/onboarding/model-step.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "Cancel"
@@ -1677,6 +1793,22 @@ msgstr "연결 확인 중…"
 #: src/pages/HostComputerPrompt.tsx
 msgid "Checking…"
 msgstr "확인 중…"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks failed"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks passed"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks running"
+msgstr ""
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose a bot shape, color, or upload an image"
@@ -1903,8 +2035,14 @@ msgid "Commands the bot ran, newest last."
 msgstr ""
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 msgid "Comment"
 msgstr "댓글"
+
+#: src/pages/PullRequests.tsx
+msgid "Comments"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Communication"
@@ -2000,6 +2138,10 @@ msgstr "삭제 확인"
 #: src/lib/model-connection-preflight.ts
 msgid "Confirm the URL is reachable from this browser session, then test again."
 msgstr "이 브라우저 세션에서 URL에 연결할 수 있는지 확인한 뒤 다시 테스트하세요."
+
+#: src/pages/PullRequests.tsx
+msgid "Conflicts"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 #: src/components/integrations/plugin-marketplace.tsx
@@ -2118,6 +2260,10 @@ msgstr ""
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
 msgstr "커넥터"
+
+#: src/pages/Automations.tsx
+msgid "Console of #{number}"
+msgstr ""
 
 #: src/components/vault/kinds.tsx
 msgid "Contact"
@@ -2498,6 +2644,10 @@ msgstr "자격 증명을 불러오지 못했습니다."
 msgid "Could not load integrations"
 msgstr "연동 목록을 불러오지 못했습니다."
 
+#: src/pages/Automations.tsx
+msgid "Could not load Jenkins jobs"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Could not load MCP servers"
@@ -2510,6 +2660,10 @@ msgstr "멤버를 불러오지 못했습니다"
 #: src/pages/model-settings/use-model-settings.ts
 msgid "Could not load model settings"
 msgstr "AI 모델 설정을 불러오지 못했습니다."
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load pull requests"
+msgstr ""
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Could not load run history"
@@ -2529,8 +2683,21 @@ msgstr "스킬을 불러오지 못했습니다"
 msgid "Could not load templates"
 msgstr "템플릿을 불러오지 못했습니다"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Could not load the diff"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Could not load the job"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load the pull request"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "Could not load the work item"
 msgstr ""
 
 #: src/pages/Artifacts.tsx
@@ -2548,6 +2715,10 @@ msgstr "파일을 불러오지 못했습니다."
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Could not load voice settings"
 msgstr "음성 설정을 불러오지 못했습니다."
+
+#: src/pages/Issues.tsx
+msgid "Could not load work items"
+msgstr ""
 
 #: src/lib/sign-out.ts
 msgid "Could not log out. Try again."
@@ -2576,6 +2747,10 @@ msgstr "이 페이지를 고정하지 못했습니다. 다시 시도하세요."
 msgid "Could not play a test clip"
 msgstr "샘플 음성을 재생하지 못했습니다."
 
+#: src/pages/PullRequests.tsx
+msgid "Could not post the comment"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Could not preview plugin"
 msgstr "플러그인을 미리 보지 못했습니다"
@@ -2596,6 +2771,10 @@ msgstr "서버에 연결할 수 없습니다"
 
 #: src/pages/shell/code-panel.tsx
 msgid "Could not read the changes"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Could not read the log"
 msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
@@ -2949,6 +3128,10 @@ msgstr "Rakazo 계정 만들기"
 msgid "Created"
 msgstr "생성됨"
 
+#: src/pages/Issues.tsx
+msgid "Created by me"
+msgstr ""
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/agent-import-plan.tsx
@@ -3107,6 +3290,11 @@ msgstr "\"{0}\"을(를) 삭제할까요?"
 msgid "Delete {0}"
 msgstr "{0} 삭제"
 
+#. placeholder {0}: data.sourceBranch
+#: src/pages/PullRequests.tsx
+msgid "Delete {0} after merging"
+msgstr ""
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: deleting.name
 #. placeholder {0}: item.name
@@ -3170,6 +3358,8 @@ msgid "Deny"
 msgstr "거부"
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Description"
 msgstr "설명"
@@ -3190,6 +3380,7 @@ msgstr "데스크톱 ID"
 msgid "Desktop update"
 msgstr "데스크톱 업데이트"
 
+#: src/pages/Issues.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
@@ -3265,6 +3456,10 @@ msgstr "{disconnectName} 연결을 해제했습니다."
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnecting…"
 msgstr "연결 해제 중…"
+
+#: src/pages/Issues.tsx
+msgid "Discussion"
+msgstr ""
 
 #: src/components/AskCard.tsx
 #: src/components/ComputerUpdateProgress.tsx
@@ -3349,6 +3544,10 @@ msgstr "PDF 다운로드"
 #: src/components/DesktopUpdates.tsx
 msgid "Downloading…"
 msgstr "다운로드 중…"
+
+#: src/pages/PullRequests.tsx
+msgid "Draft"
+msgstr ""
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Draft skill"
@@ -3535,6 +3734,10 @@ msgstr "모든 메시지"
 msgid "Every Monday"
 msgstr "매주 월요일"
 
+#: src/pages/PullRequests.tsx
+msgid "Everyone else"
+msgstr ""
+
 #: src/components/SharedSpaceRules.tsx
 msgid "Everyone here sees its chats, bots and memory"
 msgstr "여기 있는 모든 사람이 채팅, 봇, 기억을 볼 수 있습니다"
@@ -3610,6 +3813,7 @@ msgstr "실패"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "실패"
@@ -3626,6 +3830,10 @@ msgstr "작업을 중지하지 못했습니다."
 #: src/lib/browser-notifications.ts
 msgid "Failed."
 msgstr "실패했습니다."
+
+#: src/pages/Automations.tsx
+msgid "Failing now"
+msgstr ""
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Failure handling"
@@ -3644,6 +3852,7 @@ msgstr "비교할 필드, 예: id, modifiedTime (선택 사항)"
 msgid "File"
 msgstr "파일"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Files"
 msgstr ""
@@ -3727,6 +3936,10 @@ msgstr "MCP 연결을 마무리하는 중…"
 #: src/pages/shell/keyboard-shortcuts-dialog.tsx
 msgid "Focus message"
 msgstr "메시지 입력란으로 이동"
+
+#: src/pages/Automations.tsx
+msgid "Folder"
+msgstr ""
 
 #. placeholder {0}: entry.name
 #: src/components/integrations/marketplace-inspector.tsx
@@ -3992,6 +4205,11 @@ msgstr "완료 확인 방법"
 msgid "How will you use Rakazo?"
 msgstr "Rakazo를 어떻게 사용하실 건가요?"
 
+#. placeholder {0}: item.id
+#: src/pages/Issues.tsx
+msgid "I'll choose the branch in the Branch box. When it's done, ask me before opening a pull request, and link it to #{0}."
+msgstr ""
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "조작 끝내기"
@@ -4185,9 +4403,18 @@ msgstr "이 Bot만 사용"
 msgid "Isolated preview — no access to your account"
 msgstr "격리된 미리보기 — 계정에 액세스할 수 없음"
 
+#: src/pages/Issues.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Issues"
+msgstr ""
+
 #: src/components/pages/PageViewHost.tsx
 msgid "It may have been deleted, or it belongs to someone else."
 msgstr "삭제되었거나 다른 사람의 페이지일 수 있습니다."
+
+#: src/pages/Issues.tsx
+msgid "Iteration"
+msgstr ""
 
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Its bots and groups are kept and leave the section."
@@ -4200,6 +4427,22 @@ msgstr "대화, 파일, 자동 실행이 영구 삭제됩니다. 이 Bot이 만�
 #: src/components/pages/PagesList.tsx
 msgid "Its shared link stops working and its cards in chat show it as deleted. This can't be undone."
 msgstr "공유 링크가 더 이상 작동하지 않고 채팅의 카드는 삭제됨으로 표시됩니다. 되돌릴 수 없습니다."
+
+#: src/pages/Automations.tsx
+msgid "Jenkins did not accept that"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Jenkins jobs"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Job"
+msgstr ""
+
+#: src/pages/shell/work-nav.tsx
+msgid "jobs failing"
+msgstr ""
 
 #: src/pages/Invite.tsx
 msgid "Join"
@@ -4382,10 +4625,13 @@ msgstr "음성 서비스를 불러오는 중…"
 #: src/components/SpaceMembersSettings.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/Automations.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/Invite.tsx
+#: src/pages/Issues.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
 #: src/pages/shell/code-panel.tsx
@@ -4577,6 +4823,10 @@ msgstr "{title}의 기억"
 msgid "Memory scope"
 msgstr "기억 사용 범위"
 
+#: src/pages/Issues.tsx
+msgid "Mentioned"
+msgstr ""
+
 #: src/pages/shell/composer-parts.tsx
 msgid "Mentions"
 msgstr "멘션"
@@ -4592,6 +4842,26 @@ msgstr "OpenClaw 기능을 언급함"
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Mentions: {mentions}"
 msgstr "언급: {mentions}"
+
+#: src/pages/PullRequests.tsx
+msgid "Merge"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merge commit"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merge now"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merged"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merges when checks pass"
+msgstr ""
 
 #: src/pages/shell/chat-shared.ts
 #: src/pages/shell/composer.tsx
@@ -4789,12 +5059,17 @@ msgid "Move them to your shared memory."
 msgstr "공용 기억으로 옮깁니다."
 
 #: src/pages/BotContextMenu.tsx
+#: src/pages/Issues.tsx
 msgid "Move to"
 msgstr "섹션으로 이동"
 
 #: src/pages/ModelRoleSettings.tsx
 msgid "Move up"
 msgstr "위로 이동"
+
+#: src/pages/Automations.tsx
+msgid "Multibranch pipeline"
+msgstr ""
 
 #: src/components/call/CallCard.tsx
 msgid "Mute"
@@ -4879,6 +5154,10 @@ msgstr "인수 필요"
 #: src/pages/shell/message-view.tsx
 msgid "Needs you"
 msgstr "확인 필요"
+
+#: src/pages/PullRequests.tsx
+msgid "Needs your review"
+msgstr ""
 
 #: src/pages/shell/import-status.ts
 msgid "Needs: {names}"
@@ -5019,17 +5298,43 @@ msgstr "일치하는 봇 없음"
 msgid "No branch checked out"
 msgstr ""
 
+#: src/pages/Automations.tsx
+msgid "No builds yet."
+msgstr ""
+
 #. placeholder {0}: data.baseBranch
 #: src/pages/shell/code-panel.tsx
 msgid "No changes against {0} yet."
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No checks"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No checks reported. Jenkins builds appear here when they post a status to the pull request."
 msgstr ""
 
 #: src/pages/shell/code-panel.tsx
 msgid "No commands yet."
 msgstr ""
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No comments yet."
+msgstr ""
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No description."
+msgstr ""
+
 #: src/pages/shell/code-diff.tsx
 msgid "No differences to show."
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No file changes."
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -5072,6 +5377,10 @@ msgstr "사용 가능한 모델 목록이 없습니다."
 msgid "No models listed."
 msgstr "나열된 모델이 없습니다."
 
+#: src/pages/PullRequests.tsx
+msgid "No open pull requests."
+msgstr ""
+
 #: src/pages/shell/use-agent-import-source.ts
 msgid "No OpenClaw, Hermes or agent document found."
 msgstr "OpenClaw, Hermes 또는 에이전트 문서를 찾지 못했습니다."
@@ -5079,6 +5388,10 @@ msgstr "OpenClaw, Hermes 또는 에이전트 문서를 찾지 못했습니다."
 #: src/components/pages/PagesList.tsx
 msgid "No pages match “{query}”."
 msgstr "“{query}”과(와) 일치하는 페이지가 없습니다."
+
+#: src/pages/PullRequests.tsx
+msgid "No pull requests match."
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "No remote MCP servers found"
@@ -5098,6 +5411,10 @@ msgstr "초기화 안 함"
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "검색 결과가 없습니다"
+
+#: src/pages/PullRequests.tsx
+msgid "No reviewers yet."
+msgstr ""
 
 #: src/pages/RoutineList.tsx
 msgid "No routines yet"
@@ -5135,6 +5452,10 @@ msgstr "아직 티켓이 없습니다"
 msgid "No trigger"
 msgstr "트리거 없음"
 
+#: src/pages/PullRequests.tsx
+msgid "No vote"
+msgstr ""
+
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemEditor.tsx
 msgid "None"
@@ -5152,6 +5473,10 @@ msgstr "올바른 스킬이 아닙니다"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Not added: {0}"
 msgstr "추가되지 않음: {0}"
+
+#: src/pages/Automations.tsx
+msgid "Not built"
+msgstr ""
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Not checked yet"
@@ -5198,6 +5523,10 @@ msgstr "작동하지 않음"
 
 #: src/pages/shell/code-panel.tsx
 msgid "Nothing here yet. The bot clones the repository when it starts on the code."
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "Nothing here."
 msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
@@ -5287,6 +5616,7 @@ msgstr "나만"
 #: src/components/markdown-link-prompt.tsx
 #: src/components/pages/PagesList.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/computer-panel.tsx
 #: src/pages/shell/import-setup-card.tsx
 #: src/pages/shell/message-view.tsx
@@ -5364,6 +5694,11 @@ msgstr "OpenAI 호환 서버 주소"
 msgid "OpenClaw or Hermes"
 msgstr "OpenClaw 또는 Hermes"
 
+#. placeholder {0}: item.createdBy
+#: src/pages/Issues.tsx
+msgid "opened by {0}"
+msgstr ""
+
 #: src/components/pages/DownloadPdfButton.tsx
 msgid "Opens your browser's print dialog. Choose Save as PDF as the destination."
 msgstr "브라우저의 인쇄 대화상자를 엽니다. 대상으로 PDF로 저장을 선택하세요."
@@ -5410,6 +5745,10 @@ msgstr "다른 모델 직접 입력…"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
 msgstr "출력"
+
+#: src/pages/PullRequests.tsx
+msgid "Overview"
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 #: src/components/SpaceMembersSettings.tsx
@@ -5474,6 +5813,7 @@ msgstr "이 봇이 만든 페이지가 여기에 표시됩니다. 대시보드, 
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "이 그룹이 만든 페이지가 여기에 표시됩니다. 대시보드, 트래커 또는 계획을 요청해 만들어 보세요."
 
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Passed"
 msgstr ""
@@ -5542,6 +5882,10 @@ msgstr "API 키를 붙여넣으세요"
 msgid "Paste your API key, then test again."
 msgstr "API 키를 붙여넣은 뒤 다시 테스트하세요."
 
+#: src/pages/Automations.tsx
+msgid "paused"
+msgstr ""
+
 #: src/pages/RoutineList.tsx
 #: src/pages/shell/import-status.ts
 msgid "Paused"
@@ -5588,6 +5932,10 @@ msgstr "{GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}개 선택"
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr ""
 
+#: src/pages/Automations.tsx
+msgid "Pick a job to see its builds and logs, start a build, or have a bot watch it."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "모델 목록에서 모델을 선택하세요."
@@ -5596,9 +5944,17 @@ msgstr "모델 목록에서 모델을 선택하세요."
 msgid "Pick a model from the list or enter a model id served by this endpoint."
 msgstr "목록에서 모델을 선택하거나 이 엔드포인트가 제공하는 모델 ID를 입력하세요."
 
+#: src/pages/PullRequests.tsx
+msgid "Pick a pull request to see its checks, changes and comments."
+msgstr ""
+
 #: src/lib/routine-draft.ts
 msgid "Pick a tool to check"
 msgstr "확인할 도구 선택"
+
+#: src/pages/Issues.tsx
+msgid "Pick a work item to read it, move it along, or start a bot on it."
+msgstr ""
 
 #: src/components/pages/PagesList.tsx
 #: src/pages/BotContextMenu.tsx
@@ -5621,6 +5977,14 @@ msgstr "{name} 재생"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Playing…"
 msgstr "재생 중…"
+
+#. placeholder {0}: item.type
+#. placeholder {1}: item.id
+#. placeholder {2}: item.title
+#. placeholder {3}: item.webUrl ?? ""
+#: src/pages/Issues.tsx
+msgid "Please work on {0} #{1} \"{2}\" ({3})."
+msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Plugin"
@@ -5723,6 +6087,12 @@ msgstr "서비스"
 msgid "Pull request"
 msgstr "풀 리퀘스트"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Pull requests"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 msgid "Queued"
 msgstr "대기 중"
@@ -5764,6 +6134,10 @@ msgstr ""
 msgid "Ready"
 msgstr "준비됨"
 
+#: src/pages/PullRequests.tsx
+msgid "Ready for review"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr "사유"
@@ -5772,6 +6146,14 @@ msgstr "사유"
 #: src/pages/onboarding/model-step.tsx
 msgid "Reasoning effort"
 msgstr "추론 강도"
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase and fast-forward"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase with merge commit"
+msgstr ""
 
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Recall and write"
@@ -5796,6 +6178,10 @@ msgstr "최근"
 #: src/components/SpendingLimitSettings.tsx
 msgid "Recent payments"
 msgstr "최근 결제"
+
+#: src/pages/PullRequests.tsx
+msgid "Recently closed"
+msgstr ""
 
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Recommended"
@@ -5882,6 +6268,9 @@ msgstr "리디렉션 URI"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/Automations.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "새로고침"
@@ -5907,6 +6296,7 @@ msgid "Registration is closed"
 msgstr "가입이 마감되었습니다"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Reject"
 msgstr "거부"
 
@@ -5916,6 +6306,7 @@ msgid "Reject {0}"
 msgstr "{0} 거부"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Rejected"
 msgstr "거부됨"
 
@@ -6077,6 +6468,7 @@ msgstr "답장"
 msgid "Replies to"
 msgstr "응답 대상"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-hover-actions.tsx
 #: src/pages/shell/quote-selection-button.tsx
 msgid "Reply"
@@ -6088,6 +6480,10 @@ msgstr "답장이 취소되었습니다"
 
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Reply:"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Reply…"
 msgstr ""
 
 #. placeholder {0}: replyNameRef.current
@@ -6106,6 +6502,10 @@ msgstr "새 코드를 요청하세요"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "요청"
+
+#: src/pages/PullRequests.tsx
+msgid "Required"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
@@ -6132,6 +6532,10 @@ msgstr "컴퓨터를 재설정할까요?"
 #: src/pages/Auth.tsx
 msgid "Reset password"
 msgstr "비밀번호 재설정"
+
+#: src/pages/PullRequests.tsx
+msgid "Reset vote"
+msgstr ""
 
 #: src/pages/Auth.tsx
 msgid "Reset your password"
@@ -6222,9 +6626,17 @@ msgstr "{0}과(와)의 통화로 돌아가기"
 msgid "Return to Rakazo"
 msgstr "Rakazo로 돌아가기"
 
+#: src/pages/PullRequests.tsx
+msgid "Review"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "서비스 설정을 확인한 뒤 다시 테스트하세요."
+
+#: src/pages/PullRequests.tsx
+msgid "Reviewers"
+msgstr ""
 
 #: src/components/bot-templates/bot-template-copy.ts
 msgid "Reviews pull requests waiting on you"
@@ -6478,6 +6890,10 @@ msgstr "도메인으로 검색"
 msgid "Search integrations.sh"
 msgstr "integrations.sh 검색"
 
+#: src/pages/Automations.tsx
+msgid "Search jobs"
+msgstr ""
+
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Search MCP servers for “{query}”"
 msgstr "MCP 서버에서 “{query}” 검색"
@@ -6488,6 +6904,10 @@ msgstr "MCP 서버에서 “{query}” 검색"
 #: src/pages/shell/chat-model-picker.tsx
 msgid "Search models"
 msgstr "모델 검색"
+
+#: src/pages/PullRequests.tsx
+msgid "Search pull requests"
+msgstr ""
 
 #: src/pages/shell/shell-sidebar.tsx
 msgid "Search runs"
@@ -6508,6 +6928,10 @@ msgstr "도구 검색"
 #: src/components/VaultSettings.tsx
 msgid "Search Vault"
 msgstr "보관함 검색"
+
+#: src/pages/Issues.tsx
+msgid "Search work items"
+msgstr ""
 
 #. placeholder {0}: filters.query.trim()
 #: src/pages/ActivityList.tsx
@@ -6945,6 +7369,14 @@ msgstr "음성 모델"
 msgid "Spending limit"
 msgstr "지출 한도"
 
+#: src/pages/PullRequests.tsx
+msgid "Squash and merge"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Squash when checks pass"
+msgstr ""
+
 #: src/components/AccountAccess.tsx
 msgid "SSO"
 msgstr "SSO"
@@ -6965,6 +7397,10 @@ msgstr "시작"
 #: src/pages/Paywall.tsx
 msgid "Start {trialDays}-day free trial"
 msgstr "{trialDays}일 무료 체험 시작"
+
+#: src/pages/Issues.tsx
+msgid "Start a bot on this"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Start plan"
@@ -7141,6 +7577,10 @@ msgstr "시스템"
 msgid "Table"
 msgstr "표"
 
+#: src/pages/Issues.tsx
+msgid "Tags"
+msgstr ""
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "제어권 가져오기"
@@ -7169,6 +7609,14 @@ msgstr "팀 컴퓨터"
 #: src/pages/RoutineList.tsx
 msgid "Teams message"
 msgstr "Teams 메시지"
+
+#: src/pages/Automations.tsx
+msgid "Tell me about each finished build"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Tell me about new review comments"
+msgstr ""
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Template"
@@ -7679,6 +8127,10 @@ msgstr "녹음 없이 입력"
 msgid "Type your answer"
 msgstr "답변을 입력하세요"
 
+#: src/pages/Issues.tsx
+msgid "unassigned"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 #: src/pages/Shell.tsx
 msgid "Unassigned"
@@ -7718,6 +8170,10 @@ msgstr "스누즈 해제"
 #: src/pages/shell/snoozed-chats.tsx
 msgid "Unsnooze {0}"
 msgstr "{0} 스누즈 해제"
+
+#: src/pages/Automations.tsx
+msgid "Unstable"
+msgstr ""
 
 #. placeholder {0}: pending.file.name
 #: src/pages/shell/use-composer-actions.ts
@@ -7960,6 +8416,18 @@ msgstr "음성 요청 시간이 초과되었습니다."
 msgid "Wait a moment and test again."
 msgstr "잠시 기다린 뒤 다시 테스트하세요."
 
+#: src/pages/PullRequests.tsx
+msgid "Wait for author"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Waiting for author"
+msgstr ""
+
+#: src/pages/shell/work-nav.tsx
+msgid "waiting for your review"
+msgstr ""
+
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "줄에서 기다리는 중…"
@@ -7980,6 +8448,14 @@ msgstr ""
 #: src/pages/settings-nav.ts
 msgid "Wallet"
 msgstr "지갑"
+
+#: src/pages/Automations.tsx
+msgid "Watch with a bot"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Watched by"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Web, desktop and mobile"
@@ -8119,8 +8595,13 @@ msgid "Won't do"
 msgstr "하지 않음"
 
 #: src/components/SignupSurvey.tsx
+#: src/pages/shell/work-nav.tsx
 msgid "Work"
 msgstr "업무"
+
+#: src/pages/Issues.tsx
+msgid "Work items"
+msgstr ""
 
 #: src/pages/ActivityList.tsx
 msgid "Working"
@@ -8166,8 +8647,14 @@ msgstr "연간"
 msgid "Yesterday"
 msgstr "어제"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "you"
+msgstr ""
+
 #: src/components/pages/SharePopover.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/message-view.tsx
 #: src/pages/shell/shell-sidebar.tsx
@@ -8298,6 +8785,10 @@ msgstr "음성 서비스 크레딧이 모두 소진되었습니다."
 #: src/lib/user-error.ts
 msgid "Your voice provider key was rejected."
 msgstr "음성 서비스에서 키를 거부했습니다."
+
+#: src/pages/PullRequests.tsx
+msgid "Yours"
+msgstr ""
 
 #: src/components/vault/VaultItemEditor.tsx
 msgid "ZIP or postal code"

@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr "（未読）"
 
+#: src/pages/Automations.tsx
+msgid "… earlier lines not shown"
+msgstr ""
+
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "(empty)"
 msgstr ""
@@ -151,6 +155,11 @@ msgstr "{0} KB"
 #: src/components/ArtifactFileCard.tsx
 msgid "{0} MB"
 msgstr "{0} MB"
+
+#. placeholder {0}: bot.name
+#: src/pages/Automations.tsx
+msgid "{0} now watches this job and tells you about each finished build."
+msgstr ""
 
 #. placeholder {0}: sender.name
 #: src/pages/ExternalConversationSettings.tsx
@@ -627,6 +636,14 @@ msgstr "サブスクリプションの認証情報は安全に保存されてい
 msgid "A weekly digest of what changed on topics you follow"
 msgstr "フォロー中のトピックの変化を毎週まとめてお届け"
 
+#: src/pages/PullRequests.tsx
+msgid "Abandoned"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Aborted"
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 msgid "About {kb} KB of memory no longer reaches the bot."
 msgstr "約{kb} KBのメモリがボットに届かなくなっています。"
@@ -634,6 +651,15 @@ msgstr "約{kb} KBのメモリがボットに届かなくなっています。"
 #: src/components/InfoTooltip.tsx
 msgid "About {label}"
 msgstr "{label}について"
+
+#. placeholder {0}: data.id
+#. placeholder {1}: data.title
+#. placeholder {2}: data.repository
+#. placeholder {3}: data.sourceBranch
+#. placeholder {4}: data.targetBranch
+#: src/pages/PullRequests.tsx
+msgid "About pull request !{0} \"{1}\" in {2}{link}, {3} into {4}: "
+msgstr ""
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Access key ID"
@@ -714,6 +740,11 @@ msgstr "{0}をグループに追加"
 #: src/lib/routine-draft.ts
 msgid "Add a command to run"
 msgstr "実行するコマンドを追加"
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Add a comment"
+msgstr ""
 
 #: src/lib/routine-draft.ts
 msgid "Add a file or folder to watch"
@@ -898,6 +929,14 @@ msgstr "すべてのボット"
 #: src/pages/Artifacts.tsx
 msgid "All files"
 msgstr "すべてのファイル"
+
+#: src/pages/Automations.tsx
+msgid "All jobs"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "All open"
+msgstr ""
 
 #: src/components/integrations/space-availability.tsx
 msgid "All spaces"
@@ -1115,6 +1154,7 @@ msgstr "承認"
 
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Approve"
 msgstr "承認"
@@ -1127,9 +1167,18 @@ msgstr "画面で承認または拒否してください。"
 msgid "Approve this server to let your agent use its tools."
 msgstr "このサーバーを承認すると、エージェントがそのツールを使用できるようになります。"
 
+#: src/pages/PullRequests.tsx
+msgid "Approve with suggestions"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Approved"
 msgstr "承認済み"
+
+#: src/pages/PullRequests.tsx
+msgid "Approved with suggestions"
+msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Approving…"
@@ -1151,6 +1200,10 @@ msgstr "アーカイブ済み"
 msgid "Archived"
 msgstr "アーカイブ済み"
 
+#: src/pages/Issues.tsx
+msgid "Area"
+msgstr ""
+
 #: src/pages/McpServerForm.tsx
 msgid "Arguments"
 msgstr "引数"
@@ -1164,6 +1217,14 @@ msgstr "成果物"
 msgid "Ask"
 msgstr "確認"
 
+#: src/pages/PullRequests.tsx
+msgid "Ask a bot"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Ask about this pull request"
+msgstr ""
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Asks before sending, spending or changing anything in your apps."
 msgstr "アプリでの送信、支払い、変更の前に確認します。"
@@ -1175,6 +1236,14 @@ msgstr "購入時とコンピューターの初回使用時のみ確認します
 #: src/pages/shell/computer-panel.tsx
 msgid "Asleep"
 msgstr "スリープ中"
+
+#: src/pages/Issues.tsx
+msgid "Assigned to me"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "assigned to you"
+msgstr ""
 
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
@@ -1235,6 +1304,11 @@ msgstr "自動"
 msgid "Automated senders"
 msgstr "自動送信者"
 
+#: src/pages/Automations.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Automations"
+msgstr ""
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Available after saving"
 msgstr "保存後に利用できます"
@@ -1255,6 +1329,19 @@ msgstr "シェルコマンドで{commandVariable}として利用可能"
 msgid "Avatar Studio"
 msgstr "Avatar Studio"
 
+#: src/pages/Issues.tsx
+msgid "Azure Boards"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps"
+msgstr ""
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps did not accept that"
+msgstr ""
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -1263,11 +1350,14 @@ msgstr "Avatar Studio"
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/Auth.tsx
+#: src/pages/Automations.tsx
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
 #: src/pages/McpServerForm.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/plugins/parts.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
@@ -1435,6 +1525,30 @@ msgstr "参照"
 msgid "Browse MCP servers"
 msgstr "MCPサーバーを探す"
 
+#: src/pages/Automations.tsx
+msgid "Build"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build now"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build queued."
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Build with parameters"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Building"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Builds"
+msgstr ""
+
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Built-in"
@@ -1496,11 +1610,13 @@ msgstr "画像を読み取れません"
 #: src/components/teach/TeachComputerOverlay.tsx
 #: src/components/vault/VaultItemDetail.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Automations.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/onboarding/model-step.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "Cancel"
@@ -1677,6 +1793,22 @@ msgstr "接続を確認中…"
 #: src/pages/HostComputerPrompt.tsx
 msgid "Checking…"
 msgstr "確認中…"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks failed"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks passed"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Checks running"
+msgstr ""
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose a bot shape, color, or upload an image"
@@ -1903,8 +2035,14 @@ msgid "Commands the bot ran, newest last."
 msgstr ""
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 msgid "Comment"
 msgstr "コメント"
+
+#: src/pages/PullRequests.tsx
+msgid "Comments"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Communication"
@@ -2000,6 +2138,10 @@ msgstr "削除の確認"
 #: src/lib/model-connection-preflight.ts
 msgid "Confirm the URL is reachable from this browser session, then test again."
 msgstr "このブラウザセッションからURLにアクセスできることを確認してから、もう一度テストしてください。"
+
+#: src/pages/PullRequests.tsx
+msgid "Conflicts"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 #: src/components/integrations/plugin-marketplace.tsx
@@ -2118,6 +2260,10 @@ msgstr ""
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
 msgstr "コネクタ"
+
+#: src/pages/Automations.tsx
+msgid "Console of #{number}"
+msgstr ""
 
 #: src/components/vault/kinds.tsx
 msgid "Contact"
@@ -2498,6 +2644,10 @@ msgstr "認証情報を読み込めませんでした。"
 msgid "Could not load integrations"
 msgstr "連携を読み込めませんでした"
 
+#: src/pages/Automations.tsx
+msgid "Could not load Jenkins jobs"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Could not load MCP servers"
@@ -2510,6 +2660,10 @@ msgstr "メンバーを読み込めませんでした"
 #: src/pages/model-settings/use-model-settings.ts
 msgid "Could not load model settings"
 msgstr "モデル設定を読み込めませんでした"
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load pull requests"
+msgstr ""
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Could not load run history"
@@ -2529,8 +2683,21 @@ msgstr "スキルを読み込めませんでした"
 msgid "Could not load templates"
 msgstr "テンプレートを読み込めませんでした"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Could not load the diff"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Could not load the job"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load the pull request"
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "Could not load the work item"
 msgstr ""
 
 #: src/pages/Artifacts.tsx
@@ -2548,6 +2715,10 @@ msgstr "このファイルを読み込めませんでした。"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Could not load voice settings"
 msgstr "音声設定を読み込めませんでした"
+
+#: src/pages/Issues.tsx
+msgid "Could not load work items"
+msgstr ""
 
 #: src/lib/sign-out.ts
 msgid "Could not log out. Try again."
@@ -2576,6 +2747,10 @@ msgstr "このページをピン留めできませんでした。もう一度お
 msgid "Could not play a test clip"
 msgstr "テスト音声を再生できませんでした"
 
+#: src/pages/PullRequests.tsx
+msgid "Could not post the comment"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Could not preview plugin"
 msgstr "プラグインをプレビューできませんでした"
@@ -2596,6 +2771,10 @@ msgstr "サーバーに接続できませんでした"
 
 #: src/pages/shell/code-panel.tsx
 msgid "Could not read the changes"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Could not read the log"
 msgstr ""
 
 #: src/components/integrations/marketplace-inspector.tsx
@@ -2949,6 +3128,10 @@ msgstr "Rakazoを作成"
 msgid "Created"
 msgstr "作成済み"
 
+#: src/pages/Issues.tsx
+msgid "Created by me"
+msgstr ""
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/agent-import-plan.tsx
@@ -3107,6 +3290,11 @@ msgstr "「{0}」を削除しますか？"
 msgid "Delete {0}"
 msgstr "{0}を削除"
 
+#. placeholder {0}: data.sourceBranch
+#: src/pages/PullRequests.tsx
+msgid "Delete {0} after merging"
+msgstr ""
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: deleting.name
 #. placeholder {0}: item.name
@@ -3170,6 +3358,8 @@ msgid "Deny"
 msgstr "拒否"
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Description"
 msgstr "説明"
@@ -3190,6 +3380,7 @@ msgstr "デスクトップID"
 msgid "Desktop update"
 msgstr "デスクトップの更新"
 
+#: src/pages/Issues.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
@@ -3265,6 +3456,10 @@ msgstr "{disconnectName}を切断しました。"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnecting…"
 msgstr "切断中…"
+
+#: src/pages/Issues.tsx
+msgid "Discussion"
+msgstr ""
 
 #: src/components/AskCard.tsx
 #: src/components/ComputerUpdateProgress.tsx
@@ -3349,6 +3544,10 @@ msgstr "PDF をダウンロード"
 #: src/components/DesktopUpdates.tsx
 msgid "Downloading…"
 msgstr "ダウンロード中…"
+
+#: src/pages/PullRequests.tsx
+msgid "Draft"
+msgstr ""
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Draft skill"
@@ -3535,6 +3734,10 @@ msgstr "すべてのメッセージ"
 msgid "Every Monday"
 msgstr "毎週月曜日"
 
+#: src/pages/PullRequests.tsx
+msgid "Everyone else"
+msgstr ""
+
 #: src/components/SharedSpaceRules.tsx
 msgid "Everyone here sees its chats, bots and memory"
 msgstr "ここにいる全員がチャット、ボット、メモリを閲覧できます"
@@ -3610,6 +3813,7 @@ msgstr "失敗"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "失敗"
@@ -3626,6 +3830,10 @@ msgstr "停止できませんでした"
 #: src/lib/browser-notifications.ts
 msgid "Failed."
 msgstr "失敗しました。"
+
+#: src/pages/Automations.tsx
+msgid "Failing now"
+msgstr ""
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Failure handling"
@@ -3644,6 +3852,7 @@ msgstr "比較するフィールド（例: id, modifiedTime）（任意）"
 msgid "File"
 msgstr "ファイル"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Files"
 msgstr ""
@@ -3727,6 +3936,10 @@ msgstr "MCP接続を完了しています…"
 #: src/pages/shell/keyboard-shortcuts-dialog.tsx
 msgid "Focus message"
 msgstr "メッセージ欄に移動"
+
+#: src/pages/Automations.tsx
+msgid "Folder"
+msgstr ""
 
 #. placeholder {0}: entry.name
 #: src/components/integrations/marketplace-inspector.tsx
@@ -3992,6 +4205,11 @@ msgstr "確認方法"
 msgid "How will you use Rakazo?"
 msgstr "Rakazoをどのように使いますか？"
 
+#. placeholder {0}: item.id
+#: src/pages/Issues.tsx
+msgid "I'll choose the branch in the Branch box. When it's done, ask me before opening a pull request, and link it to #{0}."
+msgstr ""
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "完了しました"
@@ -4185,9 +4403,18 @@ msgstr "分離"
 msgid "Isolated preview — no access to your account"
 msgstr "分離されたプレビュー — アカウントにはアクセスできません"
 
+#: src/pages/Issues.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Issues"
+msgstr ""
+
 #: src/components/pages/PageViewHost.tsx
 msgid "It may have been deleted, or it belongs to someone else."
 msgstr "削除されたか、別のユーザーのページの可能性があります。"
+
+#: src/pages/Issues.tsx
+msgid "Iteration"
+msgstr ""
 
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Its bots and groups are kept and leave the section."
@@ -4200,6 +4427,22 @@ msgstr "会話、ファイル、ルーティンは完全に削除されます。
 #: src/components/pages/PagesList.tsx
 msgid "Its shared link stops working and its cards in chat show it as deleted. This can't be undone."
 msgstr "共有リンクは使えなくなり、チャット内のカードは削除済みと表示されます。元に戻すことはできません。"
+
+#: src/pages/Automations.tsx
+msgid "Jenkins did not accept that"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Jenkins jobs"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Job"
+msgstr ""
+
+#: src/pages/shell/work-nav.tsx
+msgid "jobs failing"
+msgstr ""
 
 #: src/pages/Invite.tsx
 msgid "Join"
@@ -4382,10 +4625,13 @@ msgstr "音声プロバイダーを読み込み中…"
 #: src/components/SpaceMembersSettings.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/Automations.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/Invite.tsx
+#: src/pages/Issues.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
 #: src/pages/shell/code-panel.tsx
@@ -4577,6 +4823,10 @@ msgstr "{title}のメモリ"
 msgid "Memory scope"
 msgstr "メモリの範囲"
 
+#: src/pages/Issues.tsx
+msgid "Mentioned"
+msgstr ""
+
 #: src/pages/shell/composer-parts.tsx
 msgid "Mentions"
 msgstr "メンション"
@@ -4592,6 +4842,26 @@ msgstr "OpenClawの機能に言及しています"
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Mentions: {mentions}"
 msgstr "言及: {mentions}"
+
+#: src/pages/PullRequests.tsx
+msgid "Merge"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merge commit"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merge now"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merged"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Merges when checks pass"
+msgstr ""
 
 #: src/pages/shell/chat-shared.ts
 #: src/pages/shell/composer.tsx
@@ -4789,12 +5059,17 @@ msgid "Move them to your shared memory."
 msgstr "共有メモリに移動します。"
 
 #: src/pages/BotContextMenu.tsx
+#: src/pages/Issues.tsx
 msgid "Move to"
 msgstr "移動先"
 
 #: src/pages/ModelRoleSettings.tsx
 msgid "Move up"
 msgstr "上へ移動"
+
+#: src/pages/Automations.tsx
+msgid "Multibranch pipeline"
+msgstr ""
 
 #: src/components/call/CallCard.tsx
 msgid "Mute"
@@ -4879,6 +5154,10 @@ msgstr "引き継ぎが必要"
 #: src/pages/shell/message-view.tsx
 msgid "Needs you"
 msgstr "対応が必要"
+
+#: src/pages/PullRequests.tsx
+msgid "Needs your review"
+msgstr ""
 
 #: src/pages/shell/import-status.ts
 msgid "Needs: {names}"
@@ -5019,17 +5298,43 @@ msgstr "一致するボットはありません"
 msgid "No branch checked out"
 msgstr ""
 
+#: src/pages/Automations.tsx
+msgid "No builds yet."
+msgstr ""
+
 #. placeholder {0}: data.baseBranch
 #: src/pages/shell/code-panel.tsx
 msgid "No changes against {0} yet."
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No checks"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No checks reported. Jenkins builds appear here when they post a status to the pull request."
 msgstr ""
 
 #: src/pages/shell/code-panel.tsx
 msgid "No commands yet."
 msgstr ""
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No comments yet."
+msgstr ""
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No description."
+msgstr ""
+
 #: src/pages/shell/code-diff.tsx
 msgid "No differences to show."
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "No file changes."
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -5072,6 +5377,10 @@ msgstr "利用できるモデルカタログがありません。"
 msgid "No models listed."
 msgstr "モデルが一覧にありません。"
 
+#: src/pages/PullRequests.tsx
+msgid "No open pull requests."
+msgstr ""
+
 #: src/pages/shell/use-agent-import-source.ts
 msgid "No OpenClaw, Hermes or agent document found."
 msgstr "OpenClaw、Hermes、またはエージェントのドキュメントが見つかりません。"
@@ -5079,6 +5388,10 @@ msgstr "OpenClaw、Hermes、またはエージェントのドキュメントが�
 #: src/components/pages/PagesList.tsx
 msgid "No pages match “{query}”."
 msgstr "「{query}」に一致するページはありません。"
+
+#: src/pages/PullRequests.tsx
+msgid "No pull requests match."
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "No remote MCP servers found"
@@ -5098,6 +5411,10 @@ msgstr "リセットなし"
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "結果なし"
+
+#: src/pages/PullRequests.tsx
+msgid "No reviewers yet."
+msgstr ""
 
 #: src/pages/RoutineList.tsx
 msgid "No routines yet"
@@ -5135,6 +5452,10 @@ msgstr "チケットはまだありません"
 msgid "No trigger"
 msgstr "トリガーなし"
 
+#: src/pages/PullRequests.tsx
+msgid "No vote"
+msgstr ""
+
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemEditor.tsx
 msgid "None"
@@ -5152,6 +5473,10 @@ msgstr "有効なスキルではありません"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Not added: {0}"
 msgstr "追加されませんでした: {0}"
+
+#: src/pages/Automations.tsx
+msgid "Not built"
+msgstr ""
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Not checked yet"
@@ -5198,6 +5523,10 @@ msgstr "動作していません"
 
 #: src/pages/shell/code-panel.tsx
 msgid "Nothing here yet. The bot clones the repository when it starts on the code."
+msgstr ""
+
+#: src/pages/Issues.tsx
+msgid "Nothing here."
 msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
@@ -5287,6 +5616,7 @@ msgstr "自分のみ"
 #: src/components/markdown-link-prompt.tsx
 #: src/components/pages/PagesList.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/computer-panel.tsx
 #: src/pages/shell/import-setup-card.tsx
 #: src/pages/shell/message-view.tsx
@@ -5364,6 +5694,11 @@ msgstr "OpenAI互換サーバーのURL"
 msgid "OpenClaw or Hermes"
 msgstr "OpenClawまたはHermes"
 
+#. placeholder {0}: item.createdBy
+#: src/pages/Issues.tsx
+msgid "opened by {0}"
+msgstr ""
+
 #: src/components/pages/DownloadPdfButton.tsx
 msgid "Opens your browser's print dialog. Choose Save as PDF as the destination."
 msgstr "ブラウザの印刷ダイアログを開きます。送信先に「PDF に保存」を選んでください。"
@@ -5410,6 +5745,10 @@ msgstr "その他のモデル…"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
 msgstr "出力"
+
+#: src/pages/PullRequests.tsx
+msgid "Overview"
+msgstr ""
 
 #: src/components/pages/SharePopover.tsx
 #: src/components/SpaceMembersSettings.tsx
@@ -5474,6 +5813,7 @@ msgstr "このボットが作成したページがここに表示されます。
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "このグループが作成したページがここに表示されます。ダッシュボード、トラッカー、計画などを頼むと作成されます。"
 
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Passed"
 msgstr ""
@@ -5542,6 +5882,10 @@ msgstr "APIキーを貼り付け"
 msgid "Paste your API key, then test again."
 msgstr "APIキーを貼り付けてから、もう一度テストしてください。"
 
+#: src/pages/Automations.tsx
+msgid "paused"
+msgstr ""
+
 #: src/pages/RoutineList.tsx
 #: src/pages/shell/import-status.ts
 msgid "Paused"
@@ -5588,6 +5932,10 @@ msgstr "{GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}人を選択"
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr ""
 
+#: src/pages/Automations.tsx
+msgid "Pick a job to see its builds and logs, start a build, or have a bot watch it."
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "カタログからモデルを選択してください。"
@@ -5596,9 +5944,17 @@ msgstr "カタログからモデルを選択してください。"
 msgid "Pick a model from the list or enter a model id served by this endpoint."
 msgstr "一覧からモデルを選択するか、このエンドポイントで提供されているモデルIDを入力してください。"
 
+#: src/pages/PullRequests.tsx
+msgid "Pick a pull request to see its checks, changes and comments."
+msgstr ""
+
 #: src/lib/routine-draft.ts
 msgid "Pick a tool to check"
 msgstr "確認するツールを選択"
+
+#: src/pages/Issues.tsx
+msgid "Pick a work item to read it, move it along, or start a bot on it."
+msgstr ""
 
 #: src/components/pages/PagesList.tsx
 #: src/pages/BotContextMenu.tsx
@@ -5621,6 +5977,14 @@ msgstr "{name}を再生"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Playing…"
 msgstr "再生中…"
+
+#. placeholder {0}: item.type
+#. placeholder {1}: item.id
+#. placeholder {2}: item.title
+#. placeholder {3}: item.webUrl ?? ""
+#: src/pages/Issues.tsx
+msgid "Please work on {0} #{1} \"{2}\" ({3})."
+msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Plugin"
@@ -5723,6 +6087,12 @@ msgstr "プロバイダー"
 msgid "Pull request"
 msgstr "プルリクエスト"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Pull requests"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 msgid "Queued"
 msgstr "待機中"
@@ -5764,6 +6134,10 @@ msgstr ""
 msgid "Ready"
 msgstr "準備完了"
 
+#: src/pages/PullRequests.tsx
+msgid "Ready for review"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr "理由"
@@ -5772,6 +6146,14 @@ msgstr "理由"
 #: src/pages/onboarding/model-step.tsx
 msgid "Reasoning effort"
 msgstr "推論レベル"
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase and fast-forward"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase with merge commit"
+msgstr ""
 
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Recall and write"
@@ -5796,6 +6178,10 @@ msgstr "最近"
 #: src/components/SpendingLimitSettings.tsx
 msgid "Recent payments"
 msgstr "最近の支払い"
+
+#: src/pages/PullRequests.tsx
+msgid "Recently closed"
+msgstr ""
 
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Recommended"
@@ -5882,6 +6268,9 @@ msgstr "リダイレクトURI"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/Automations.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "更新"
@@ -5907,6 +6296,7 @@ msgid "Registration is closed"
 msgstr "新規登録は締め切られています"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Reject"
 msgstr "却下"
 
@@ -5916,6 +6306,7 @@ msgid "Reject {0}"
 msgstr "{0}を却下"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Rejected"
 msgstr "却下済み"
 
@@ -6077,6 +6468,7 @@ msgstr "返信"
 msgid "Replies to"
 msgstr "返信対象"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-hover-actions.tsx
 #: src/pages/shell/quote-selection-button.tsx
 msgid "Reply"
@@ -6088,6 +6480,10 @@ msgstr "返信をキャンセルしました"
 
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Reply:"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Reply…"
 msgstr ""
 
 #. placeholder {0}: replyNameRef.current
@@ -6106,6 +6502,10 @@ msgstr "新しいコードをリクエスト"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "リクエスト"
+
+#: src/pages/PullRequests.tsx
+msgid "Required"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
@@ -6132,6 +6532,10 @@ msgstr "コンピューターをリセットしますか？"
 #: src/pages/Auth.tsx
 msgid "Reset password"
 msgstr "パスワードをリセット"
+
+#: src/pages/PullRequests.tsx
+msgid "Reset vote"
+msgstr ""
 
 #: src/pages/Auth.tsx
 msgid "Reset your password"
@@ -6222,9 +6626,17 @@ msgstr "{0}との通話に戻る"
 msgid "Return to Rakazo"
 msgstr "Rakazoに戻る"
 
+#: src/pages/PullRequests.tsx
+msgid "Review"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "プロバイダー設定を確認して、もう一度テストしてください。"
+
+#: src/pages/PullRequests.tsx
+msgid "Reviewers"
+msgstr ""
 
 #: src/components/bot-templates/bot-template-copy.ts
 msgid "Reviews pull requests waiting on you"
@@ -6478,6 +6890,10 @@ msgstr "ドメインで検索"
 msgid "Search integrations.sh"
 msgstr "integrations.shを検索"
 
+#: src/pages/Automations.tsx
+msgid "Search jobs"
+msgstr ""
+
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Search MCP servers for “{query}”"
 msgstr "MCPサーバーで「{query}」を検索"
@@ -6488,6 +6904,10 @@ msgstr "MCPサーバーで「{query}」を検索"
 #: src/pages/shell/chat-model-picker.tsx
 msgid "Search models"
 msgstr "モデルを検索"
+
+#: src/pages/PullRequests.tsx
+msgid "Search pull requests"
+msgstr ""
 
 #: src/pages/shell/shell-sidebar.tsx
 msgid "Search runs"
@@ -6508,6 +6928,10 @@ msgstr "ツールを検索"
 #: src/components/VaultSettings.tsx
 msgid "Search Vault"
 msgstr "保管庫を検索"
+
+#: src/pages/Issues.tsx
+msgid "Search work items"
+msgstr ""
 
 #. placeholder {0}: filters.query.trim()
 #: src/pages/ActivityList.tsx
@@ -6945,6 +7369,14 @@ msgstr "音声モデル"
 msgid "Spending limit"
 msgstr "支出上限"
 
+#: src/pages/PullRequests.tsx
+msgid "Squash and merge"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Squash when checks pass"
+msgstr ""
+
 #: src/components/AccountAccess.tsx
 msgid "SSO"
 msgstr "SSO"
@@ -6965,6 +7397,10 @@ msgstr "起動"
 #: src/pages/Paywall.tsx
 msgid "Start {trialDays}-day free trial"
 msgstr "{trialDays}日間の無料トライアルを開始"
+
+#: src/pages/Issues.tsx
+msgid "Start a bot on this"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Start plan"
@@ -7141,6 +7577,10 @@ msgstr "システム"
 msgid "Table"
 msgstr "テーブル"
 
+#: src/pages/Issues.tsx
+msgid "Tags"
+msgstr ""
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "操作を引き継ぐ"
@@ -7169,6 +7609,14 @@ msgstr "チームのコンピューター"
 #: src/pages/RoutineList.tsx
 msgid "Teams message"
 msgstr "Teamsメッセージ"
+
+#: src/pages/Automations.tsx
+msgid "Tell me about each finished build"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Tell me about new review comments"
+msgstr ""
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Template"
@@ -7679,6 +8127,10 @@ msgstr "録画せずに入力"
 msgid "Type your answer"
 msgstr "回答を入力"
 
+#: src/pages/Issues.tsx
+msgid "unassigned"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 #: src/pages/Shell.tsx
 msgid "Unassigned"
@@ -7718,6 +8170,10 @@ msgstr "スヌーズを解除"
 #: src/pages/shell/snoozed-chats.tsx
 msgid "Unsnooze {0}"
 msgstr "{0}のスヌーズを解除"
+
+#: src/pages/Automations.tsx
+msgid "Unstable"
+msgstr ""
 
 #. placeholder {0}: pending.file.name
 #: src/pages/shell/use-composer-actions.ts
@@ -7960,6 +8416,18 @@ msgstr "音声リクエストがタイムアウトしました。"
 msgid "Wait a moment and test again."
 msgstr "しばらく待ってから再度テストしてください。"
 
+#: src/pages/PullRequests.tsx
+msgid "Wait for author"
+msgstr ""
+
+#: src/pages/PullRequests.tsx
+msgid "Waiting for author"
+msgstr ""
+
+#: src/pages/shell/work-nav.tsx
+msgid "waiting for your review"
+msgstr ""
+
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "順番待ち…"
@@ -7980,6 +8448,14 @@ msgstr ""
 #: src/pages/settings-nav.ts
 msgid "Wallet"
 msgstr "ウォレット"
+
+#: src/pages/Automations.tsx
+msgid "Watch with a bot"
+msgstr ""
+
+#: src/pages/Automations.tsx
+msgid "Watched by"
+msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Web, desktop and mobile"
@@ -8119,8 +8595,13 @@ msgid "Won't do"
 msgstr "対応しない"
 
 #: src/components/SignupSurvey.tsx
+#: src/pages/shell/work-nav.tsx
 msgid "Work"
 msgstr "仕事"
+
+#: src/pages/Issues.tsx
+msgid "Work items"
+msgstr ""
 
 #: src/pages/ActivityList.tsx
 msgid "Working"
@@ -8166,8 +8647,14 @@ msgstr "年払い"
 msgid "Yesterday"
 msgstr "昨日"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "you"
+msgstr ""
+
 #: src/components/pages/SharePopover.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/message-view.tsx
 #: src/pages/shell/shell-sidebar.tsx
@@ -8298,6 +8785,10 @@ msgstr "音声プロバイダーのクレジットが不足しています。"
 #: src/lib/user-error.ts
 msgid "Your voice provider key was rejected."
 msgstr "音声プロバイダーのキーが拒否されました。"
+
+#: src/pages/PullRequests.tsx
+msgid "Yours"
+msgstr ""
 
 #: src/components/vault/VaultItemEditor.tsx
 msgid "ZIP or postal code"

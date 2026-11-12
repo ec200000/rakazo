@@ -213,10 +213,16 @@ import { SecurityEventListInputSchema, SecurityEventSchema } from "./security-ev
 import { SettingsScopeSchema, SpaceSettingSchema, settingsScopeInput } from "./settings-scope.js";
 import { SpaceAvailabilitySchema } from "./space-availability.js";
 import {
+  JenkinsJobDetailSchema,
+  JenkinsJobListSchema,
+  JenkinsJobPathSchema,
   MergeStrategySchema,
   PullRequestDetailSchema,
   PullRequestListSchema,
   PullRequestRefSchema,
+  WorkItemDetailSchema,
+  WorkItemListSchema,
+  WorkItemViewSchema,
   WorkStatusSchema,
 } from "./work.js";
 
@@ -934,6 +940,30 @@ export const appContract = {
       )
       .output(z.object({ ok: z.literal(true) })),
     publishPullRequest: oc.input(PullRequestRefSchema).output(z.object({ ok: z.literal(true) })),
+    workItems: oc.input(z.object({ view: WorkItemViewSchema })).output(WorkItemListSchema),
+    workItem: oc.input(z.object({ id: z.number().int().positive() })).output(WorkItemDetailSchema),
+    setWorkItemState: oc
+      .input(z.object({ id: z.number().int().positive(), state: z.string().min(1).max(100) }))
+      .output(z.object({ ok: z.literal(true) })),
+    commentWorkItem: oc
+      .input(
+        z.object({ id: z.number().int().positive(), text: z.string().trim().min(1).max(20_000) }),
+      )
+      .output(z.object({ ok: z.literal(true) })),
+    jenkinsJobs: oc.output(JenkinsJobListSchema),
+    jenkinsJob: oc.input(z.object({ path: JenkinsJobPathSchema })).output(JenkinsJobDetailSchema),
+    /** The end of a build's console log. */
+    jenkinsConsole: oc
+      .input(z.object({ path: JenkinsJobPathSchema, number: z.number().int().positive() }))
+      .output(z.object({ text: z.string(), truncated: z.boolean(), building: z.boolean() })),
+    jenkinsBuild: oc
+      .input(
+        z.object({
+          path: JenkinsJobPathSchema,
+          parameters: z.record(z.string().max(200), z.string().max(10_000)).optional(),
+        }),
+      )
+      .output(z.object({ ok: z.literal(true) })),
   },
   memory: {
     list: oc

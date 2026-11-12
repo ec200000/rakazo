@@ -242,3 +242,139 @@ describe("Azure DevOps pull requests", () => {
     expect(overallCheckState([])).toBe("none");
   });
 });
+
+describe("Azure Boards work items", () => {
+  function boards() {
+    const calls: {
+      method: string;
+      path: string;
+      version: string | null;
+      body: unknown;
+      type?: string;
+    }[] = [];
+    const fetch = (async (input: string | URL, init?: RequestInit) => {
+      const url = new URL(String(input));
+      const path = url.pathname.replace("/DefaultCollection", "");
+      calls.push({
+        method: init?.method ?? "GET",
+        path,
+        version: url.searchParams.get("api-version"),
+        body: init?.body ? JSON.parse(String(init.body)) : undefined,
+        type: (init?.headers as Record<string, string>)["Content-Type"],
+      });
+      if (path === "/_apis/connectionData")
+        return Response.json({ authenticatedUser: { id: "me" } });
+      if (path === "/_apis/wit/wiql") return Response.json({ workItems: [{ id: 7 }, { id: 5 }] });
+      if (path === "/_apis/wit/workitems") {
+        return Response.json({
+          value: [
+            {
+              id: 5,
+              fields: {
+                "System.Title": "Old",
+                "System.State": "Active",
+                "System.WorkItemType": "Task",
+                "System.TeamProject": "Team",
+              },
+            },
+            {
+              id: 7,
+              fields: {
+                "System.Title": "Login loops",
+                "System.State": "New",
+                "System.WorkItemType": "Bug",
+                "System.TeamProject": "Team",
+                "System.AssignedTo": { id: "me", displayName: "Itay" },
+                "System.Tags": "auth; urgent",
+                "Microsoft.VSTS.Common.Priority": 1,
+              },
+            },
+          ],
+        });
+      }
+      if (path === "/_apis/wit/workitems/7" && (init?.method ?? "GET") === "GET") {
+        return Response.json({
+          id: 7,
+          fields: {
+            "System.Title": "Login loops",
+            "System.State": "New",
+            "System.WorkItemType": "Bug",
+            "System.TeamProject": "Team",
+            "Microsoft.VSTS.TCM.ReproSteps":
+              "<div>Open <b>/login</b></div><ul><li>it loops</li></ul>",
+          },
+          relations: [{ url: "vstfs:///Git/PullRequestId/p1%2Fr1%2F101" }],
+        });
+      }
+      if (path === "/Team/_apis/wit/workitemtypes/Bug/states") {
+        return Response.json({
+          value: [
+            { name: "New", category: "Proposed" },
+            { name: "Active", category: "InProgress" },
+          ],
+        });
+      }
+      if (path === "/Team/_apis/wit/workItems/7/comments") {
+        if (init?.method === "POST") return Response.json({});
+        return Response.json({
+          comments: [
+            {
+              id: 1,
+              text: "<p>Seen on prod</p>",
+              createdBy: { displayName: "Dana" },
+              createdDate: "2026-11-10T00:00:00Z",
+            },
+          ],
+        });
+      }
+      if (path === "/_apis/wit/workitems/7") return Response.json({});
+      return new Response("", { status: 404 });
+    }) as typeof globalThis.fetch;
+    return { fetch, calls };
+  }
+
+  it("lists the person's work items in the query's order", async () => {
+    const server = boards();
+    const items = await new AzureDevOpsClient(BASE, AUTH, "7.1", server.fetch).workItems(
+      "assigned",
+    );
+    expect(items.map((item) => [item.id, item.type, item.state])).toEqual([
+      [7, "Bug", "New"],
+      [5, "Task", "Active"],
+    ]);
+    expect(items[0]).toMatchObject({
+      assignedTo: { me: true },
+      tags: ["auth", "urgent"],
+      priority: 1,
+    });
+    expect(items[0]?.webUrl).toBe(`${BASE}/Team/_workitems/edit/7`);
+    const wiql = server.calls.find((call) => call.path === "/_apis/wit/wiql");
+    expect(String((wiql?.body as { query: string }).query)).toContain("[System.AssignedTo] = @Me");
+  });
+
+  it("reads one with its states, comments and pull requests, and changes it", async () => {
+    const server = boards();
+    const client = new AzureDevOpsClient(BASE, AUTH, "7.1", server.fetch);
+    const item = await client.workItem(7);
+    expect(item.description).toBe("Open /login\n- it loops");
+    expect(item.states.map((state) => state.name)).toEqual(["New", "Active"]);
+    expect(item.stateCategory).toBe("Proposed");
+    expect(item.comments).toEqual([
+      { id: 1, author: "Dana", text: "Seen on prod", createdAt: "2026-11-10T00:00:00Z" },
+    ]);
+    expect(item.pullRequests.map((pr) => pr.id)).toEqual([101]);
+    expect(server.calls.find((call) => call.path.endsWith("/comments"))?.version).toBe(
+      "7.1-preview.4",
+    );
+    await client.setWorkItemState(7, "Active");
+    await client.commentOnWorkItem(7, "On it <now>");
+    const writes = server.calls.filter((call) => call.method !== "GET");
+    expect(writes[0]).toMatchObject({
+      method: "PATCH",
+      path: "/_apis/wit/workitems/7",
+      type: "application/json-patch+json",
+      body: [{ op: "add", path: "/fields/System.State", value: "Active" }],
+    });
+    expect(writes[1]).toMatchObject({ method: "POST", body: { text: "On it &lt;now&gt;" } });
+  });
+});

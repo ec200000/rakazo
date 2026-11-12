@@ -388,6 +388,19 @@ const STRATEGIES: { strategy: MergeStrategy; label: () => string }[] = [
   { strategy: "rebaseMerge", label: () => t`Rebase with merge commit` },
 ];
 
+/** What a bot does when a watched pull request gets review comments: summarize, and ask first. */
+export function reviewWatchPrompt(
+  pr: Pick<PullRequestDetail, "id" | "title" | "projectId" | "repositoryId" | "sourceBranch">,
+) {
+  return [
+    `Pull request !${pr.id} "${pr.title}" (branch ${pr.sourceBranch}) has new review activity.`,
+    `Read its comment threads with ado_list_pull_request_threads (project "${pr.projectId}", repository "${pr.repositoryId}", pullRequestId ${pr.id}).`,
+    "Summarize in a few sentences what reviewers asked for, quoting file and line where given.",
+    'Then ask the person with ask_user whether to address it, with the choices "Fix it" and "Not now".',
+    "Do not change code, reply on the pull request, or push before they agree. Branch names come only from the person.",
+  ].join(" ");
+}
+
 function voteLabel(vote: number) {
   if (vote === 10) return t`Approved`;
   if (vote === 5) return t`Approved with suggestions`;
@@ -626,12 +639,52 @@ function PullRequestPane({ pr }: { pr: PullRequestRef }) {
                   <Trans>Ask a bot</Trans>
                   <ChevronDown className="size-3.5" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="min-w-48">
-                  {bots.map((bot) => (
-                    <DropdownMenuItem key={bot.id} onClick={() => askBot(bot)}>
-                      {bot.name}
-                    </DropdownMenuItem>
-                  ))}
+                <DropdownMenuContent align="end" className="min-w-56">
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>
+                      <Trans>Ask about this pull request</Trans>
+                    </DropdownMenuLabel>
+                    {bots.map((bot) => (
+                      <DropdownMenuItem key={bot.id} onClick={() => askBot(bot)}>
+                        {bot.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>
+                      <Trans>Tell me about new review comments</Trans>
+                    </DropdownMenuLabel>
+                    {bots.map((bot) => (
+                      <DropdownMenuItem
+                        key={`watch-${bot.id}`}
+                        onClick={() =>
+                          void run("watch", () =>
+                            rpc.routines.create({
+                              botId: bot.id,
+                              name: `PR !${data.id}: ${data.title}`.slice(0, 80),
+                              prompt: reviewWatchPrompt(data),
+                              active: true,
+                              notify: true,
+                              watch: {
+                                kind: "tool",
+                                tool: "ado_list_pull_request_threads",
+                                args: {
+                                  project: data.projectId,
+                                  repository: data.repositoryId,
+                                  pullRequestId: data.id,
+                                },
+                                track: ["id", "lastUpdatedDate"],
+                                everyMinutes: 5,
+                              },
+                            }),
+                          )
+                        }
+                      >
+                        {bot.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : null}

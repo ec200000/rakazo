@@ -17,6 +17,10 @@ msgstr ""
 msgid " (unread)"
 msgstr "（未读）"
 
+#: src/pages/Automations.tsx
+msgid "… earlier lines not shown"
+msgstr "… 较早的行未显示"
+
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "(empty)"
 msgstr "（空）"
@@ -151,6 +155,11 @@ msgstr "{0} KB"
 #: src/components/ArtifactFileCard.tsx
 msgid "{0} MB"
 msgstr "{0} MB"
+
+#. placeholder {0}: bot.name
+#: src/pages/Automations.tsx
+msgid "{0} now watches this job and tells you about each finished build."
+msgstr "{0} 现在会关注此任务，并在每次构建完成时告诉你。"
 
 #. placeholder {0}: sender.name
 #: src/pages/ExternalConversationSettings.tsx
@@ -627,6 +636,14 @@ msgstr "订阅凭据已安全存储。"
 msgid "A weekly digest of what changed on topics you follow"
 msgstr "每周汇总你关注话题的最新变化"
 
+#: src/pages/PullRequests.tsx
+msgid "Abandoned"
+msgstr "已放弃"
+
+#: src/pages/Automations.tsx
+msgid "Aborted"
+msgstr "已中止"
+
 #: src/pages/KnowledgeSection.tsx
 msgid "About {kb} KB of memory no longer reaches the bot."
 msgstr "约 {kb} KB 的记忆不再提供给 Bot。"
@@ -634,6 +651,15 @@ msgstr "约 {kb} KB 的记忆不再提供给 Bot。"
 #: src/components/InfoTooltip.tsx
 msgid "About {label}"
 msgstr "关于{label}"
+
+#. placeholder {0}: data.id
+#. placeholder {1}: data.title
+#. placeholder {2}: data.repository
+#. placeholder {3}: data.sourceBranch
+#. placeholder {4}: data.targetBranch
+#: src/pages/PullRequests.tsx
+msgid "About pull request !{0} \"{1}\" in {2}{link}, {3} into {4}: "
+msgstr "关于 {2} 中的拉取请求 !{0}“{1}”{link}，{3} 合并到 {4}："
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Access key ID"
@@ -714,6 +740,11 @@ msgstr "把 {0} 加入群组"
 #: src/lib/routine-draft.ts
 msgid "Add a command to run"
 msgstr "添加要运行的命令"
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Add a comment"
+msgstr "添加评论"
 
 #: src/lib/routine-draft.ts
 msgid "Add a file or folder to watch"
@@ -898,6 +929,14 @@ msgstr "全部 Bot"
 #: src/pages/Artifacts.tsx
 msgid "All files"
 msgstr "全部文件"
+
+#: src/pages/Automations.tsx
+msgid "All jobs"
+msgstr "所有任务"
+
+#: src/pages/Issues.tsx
+msgid "All open"
+msgstr "所有未关闭"
 
 #: src/components/integrations/space-availability.tsx
 msgid "All spaces"
@@ -1115,6 +1154,7 @@ msgstr "审批"
 
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Approve"
 msgstr "批准"
@@ -1127,9 +1167,18 @@ msgstr "请在屏幕上批准或拒绝。"
 msgid "Approve this server to let your agent use its tools."
 msgstr "批准此服务器后，智能体才能使用它的工具。"
 
+#: src/pages/PullRequests.tsx
+msgid "Approve with suggestions"
+msgstr "批准并附建议"
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Approved"
 msgstr "已批准"
+
+#: src/pages/PullRequests.tsx
+msgid "Approved with suggestions"
+msgstr "已批准并附建议"
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Approving…"
@@ -1151,6 +1200,10 @@ msgstr "已归档"
 msgid "Archived"
 msgstr "已归档"
 
+#: src/pages/Issues.tsx
+msgid "Area"
+msgstr "区域"
+
 #: src/pages/McpServerForm.tsx
 msgid "Arguments"
 msgstr "参数"
@@ -1164,6 +1217,14 @@ msgstr "产物"
 msgid "Ask"
 msgstr "询问"
 
+#: src/pages/PullRequests.tsx
+msgid "Ask a bot"
+msgstr "询问机器人"
+
+#: src/pages/PullRequests.tsx
+msgid "Ask about this pull request"
+msgstr "询问此拉取请求"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Asks before sending, spending or changing anything in your apps."
 msgstr "在你的应用中发送、花费或更改任何内容前都会询问。"
@@ -1175,6 +1236,14 @@ msgstr "仅在购买和首次使用你的电脑前询问。只有“阻止”规
 #: src/pages/shell/computer-panel.tsx
 msgid "Asleep"
 msgstr "休眠中"
+
+#: src/pages/Issues.tsx
+msgid "Assigned to me"
+msgstr "分配给我"
+
+#: src/pages/Issues.tsx
+msgid "assigned to you"
+msgstr "分配给你"
 
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
@@ -1235,6 +1304,11 @@ msgstr "自动"
 msgid "Automated senders"
 msgstr "自动发送者"
 
+#: src/pages/Automations.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Automations"
+msgstr "自动化"
+
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Available after saving"
 msgstr "保存后可用"
@@ -1255,6 +1329,19 @@ msgstr "Shell 命令可通过 {commandVariable} 使用"
 msgid "Avatar Studio"
 msgstr "头像工作室"
 
+#: src/pages/Issues.tsx
+msgid "Azure Boards"
+msgstr "Azure Boards"
+
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps"
+msgstr "Azure DevOps"
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "Azure DevOps did not accept that"
+msgstr "Azure DevOps 未接受该操作"
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -1263,11 +1350,14 @@ msgstr "头像工作室"
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/Auth.tsx
+#: src/pages/Automations.tsx
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
 #: src/pages/McpServerForm.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/plugins/parts.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineEditor.tsx
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/agent-import.tsx
@@ -1435,6 +1525,30 @@ msgstr "浏览"
 msgid "Browse MCP servers"
 msgstr "浏览 MCP 服务器"
 
+#: src/pages/Automations.tsx
+msgid "Build"
+msgstr "构建"
+
+#: src/pages/Automations.tsx
+msgid "Build now"
+msgstr "立即构建"
+
+#: src/pages/Automations.tsx
+msgid "Build queued."
+msgstr "构建已排队。"
+
+#: src/pages/Automations.tsx
+msgid "Build with parameters"
+msgstr "带参数构建"
+
+#: src/pages/Automations.tsx
+msgid "Building"
+msgstr "构建中"
+
+#: src/pages/Automations.tsx
+msgid "Builds"
+msgstr "构建"
+
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Built-in"
@@ -1496,11 +1610,13 @@ msgstr "无法读取图像"
 #: src/components/teach/TeachComputerOverlay.tsx
 #: src/components/vault/VaultItemDetail.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Automations.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/onboarding/model-step.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "Cancel"
@@ -1677,6 +1793,22 @@ msgstr "正在检查连接…"
 #: src/pages/HostComputerPrompt.tsx
 msgid "Checking…"
 msgstr "正在检查…"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks"
+msgstr "检查"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks failed"
+msgstr "检查失败"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks passed"
+msgstr "检查通过"
+
+#: src/pages/PullRequests.tsx
+msgid "Checks running"
+msgstr "检查运行中"
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Choose a bot shape, color, or upload an image"
@@ -1903,7 +2035,13 @@ msgid "Commands the bot ran, newest last."
 msgstr "机器人运行的命令，最新的在最后。"
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 msgid "Comment"
+msgstr "评论"
+
+#: src/pages/PullRequests.tsx
+msgid "Comments"
 msgstr "评论"
 
 #: src/pages/plugins/use-catalog-browse.ts
@@ -2000,6 +2138,10 @@ msgstr "确认移除"
 #: src/lib/model-connection-preflight.ts
 msgid "Confirm the URL is reachable from this browser session, then test again."
 msgstr "请确认此浏览器会话可以访问该 URL，然后重新测试。"
+
+#: src/pages/PullRequests.tsx
+msgid "Conflicts"
+msgstr "冲突"
 
 #: src/components/integrations/IntegrationSetup.tsx
 #: src/components/integrations/plugin-marketplace.tsx
@@ -2118,6 +2260,10 @@ msgstr "连接正常。"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
 msgstr "连接器"
+
+#: src/pages/Automations.tsx
+msgid "Console of #{number}"
+msgstr "#{number} 的控制台"
 
 #: src/components/vault/kinds.tsx
 msgid "Contact"
@@ -2498,6 +2644,10 @@ msgstr "无法加载凭据。"
 msgid "Could not load integrations"
 msgstr "无法加载集成"
 
+#: src/pages/Automations.tsx
+msgid "Could not load Jenkins jobs"
+msgstr "无法加载 Jenkins 任务"
+
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/plugins/use-plugin-connections.ts
 msgid "Could not load MCP servers"
@@ -2510,6 +2660,10 @@ msgstr "无法加载成员"
 #: src/pages/model-settings/use-model-settings.ts
 msgid "Could not load model settings"
 msgstr "无法加载模型设置"
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load pull requests"
+msgstr "无法加载拉取请求"
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Could not load run history"
@@ -2529,9 +2683,22 @@ msgstr "无法加载技能"
 msgid "Could not load templates"
 msgstr "无法加载模板"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Could not load the diff"
 msgstr "无法加载差异"
+
+#: src/pages/Automations.tsx
+msgid "Could not load the job"
+msgstr "无法加载任务"
+
+#: src/pages/PullRequests.tsx
+msgid "Could not load the pull request"
+msgstr "无法加载拉取请求"
+
+#: src/pages/Issues.tsx
+msgid "Could not load the work item"
+msgstr "无法加载工作项"
 
 #: src/pages/Artifacts.tsx
 msgid "Could not load this artifact."
@@ -2548,6 +2715,10 @@ msgstr "无法加载此文件。"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Could not load voice settings"
 msgstr "无法加载语音设置"
+
+#: src/pages/Issues.tsx
+msgid "Could not load work items"
+msgstr "无法加载工作项"
 
 #: src/lib/sign-out.ts
 msgid "Could not log out. Try again."
@@ -2576,6 +2747,10 @@ msgstr "无法置顶此页面。请重试。"
 msgid "Could not play a test clip"
 msgstr "无法播放测试片段"
 
+#: src/pages/PullRequests.tsx
+msgid "Could not post the comment"
+msgstr "无法发布评论"
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Could not preview plugin"
 msgstr "无法预览插件"
@@ -2597,6 +2772,10 @@ msgstr "无法连接服务器"
 #: src/pages/shell/code-panel.tsx
 msgid "Could not read the changes"
 msgstr "无法读取更改"
+
+#: src/pages/Automations.tsx
+msgid "Could not read the log"
+msgstr "无法读取日志"
 
 #: src/components/integrations/marketplace-inspector.tsx
 msgid "Could not read the repository"
@@ -2949,6 +3128,10 @@ msgstr "创建你的 Rakazo"
 msgid "Created"
 msgstr "已创建"
 
+#: src/pages/Issues.tsx
+msgid "Created by me"
+msgstr "我创建的"
+
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/agent-import-plan.tsx
@@ -3107,6 +3290,11 @@ msgstr "删除“{0}”？"
 msgid "Delete {0}"
 msgstr "删除 {0}"
 
+#. placeholder {0}: data.sourceBranch
+#: src/pages/PullRequests.tsx
+msgid "Delete {0} after merging"
+msgstr "合并后删除 {0}"
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: deleting.name
 #. placeholder {0}: item.name
@@ -3170,6 +3358,8 @@ msgid "Deny"
 msgstr "拒绝"
 
 #: src/pages/Board.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Description"
 msgstr "描述"
@@ -3190,6 +3380,7 @@ msgstr "桌面 ID"
 msgid "Desktop update"
 msgstr "桌面更新"
 
+#: src/pages/Issues.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
@@ -3265,6 +3456,10 @@ msgstr "已断开 {disconnectName}。"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnecting…"
 msgstr "正在断开…"
+
+#: src/pages/Issues.tsx
+msgid "Discussion"
+msgstr "讨论"
 
 #: src/components/AskCard.tsx
 #: src/components/ComputerUpdateProgress.tsx
@@ -3349,6 +3544,10 @@ msgstr "下载 PDF"
 #: src/components/DesktopUpdates.tsx
 msgid "Downloading…"
 msgstr "正在下载…"
+
+#: src/pages/PullRequests.tsx
+msgid "Draft"
+msgstr "草稿"
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Draft skill"
@@ -3535,6 +3734,10 @@ msgstr "所有消息"
 msgid "Every Monday"
 msgstr "每周一"
 
+#: src/pages/PullRequests.tsx
+msgid "Everyone else"
+msgstr "其他人"
+
 #: src/components/SharedSpaceRules.tsx
 msgid "Everyone here sees its chats, bots and memory"
 msgstr "这里的每个人都能看到它的聊天、Bot 和记忆"
@@ -3610,6 +3813,7 @@ msgstr "失败"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Failed"
 msgstr "失败"
@@ -3626,6 +3830,10 @@ msgstr "停止失败"
 #: src/lib/browser-notifications.ts
 msgid "Failed."
 msgstr "失败。"
+
+#: src/pages/Automations.tsx
+msgid "Failing now"
+msgstr "当前失败"
 
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Failure handling"
@@ -3644,6 +3852,7 @@ msgstr "要比较的字段，例如 id, modifiedTime（可选）"
 msgid "File"
 msgstr "文件"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Files"
 msgstr "文件"
@@ -3727,6 +3936,10 @@ msgstr "正在完成 MCP 连接…"
 #: src/pages/shell/keyboard-shortcuts-dialog.tsx
 msgid "Focus message"
 msgstr "聚焦消息框"
+
+#: src/pages/Automations.tsx
+msgid "Folder"
+msgstr "文件夹"
 
 #. placeholder {0}: entry.name
 #: src/components/integrations/marketplace-inspector.tsx
@@ -3992,6 +4205,11 @@ msgstr "如何检查"
 msgid "How will you use Rakazo?"
 msgstr "你会如何使用 Rakazo？"
 
+#. placeholder {0}: item.id
+#: src/pages/Issues.tsx
+msgid "I'll choose the branch in the Branch box. When it's done, ask me before opening a pull request, and link it to #{0}."
+msgstr "我会在分支框中选择分支。完成后，先问我再打开拉取请求，并将其关联到 #{0}。"
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "我做完了"
@@ -4185,9 +4403,18 @@ msgstr "隔离"
 msgid "Isolated preview — no access to your account"
 msgstr "隔离预览，访问不了你的账户"
 
+#: src/pages/Issues.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Issues"
+msgstr "问题"
+
 #: src/components/pages/PageViewHost.tsx
 msgid "It may have been deleted, or it belongs to someone else."
 msgstr "它可能已被删除，或属于其他人。"
+
+#: src/pages/Issues.tsx
+msgid "Iteration"
+msgstr "迭代"
 
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Its bots and groups are kept and leave the section."
@@ -4200,6 +4427,22 @@ msgstr "它的对话、文件和例行任务将被永久删除。它创建的 Bo
 #: src/components/pages/PagesList.tsx
 msgid "Its shared link stops working and its cards in chat show it as deleted. This can't be undone."
 msgstr "其共享链接将失效，聊天中的卡片会显示为已删除。此操作无法撤销。"
+
+#: src/pages/Automations.tsx
+msgid "Jenkins did not accept that"
+msgstr "Jenkins 未接受该操作"
+
+#: src/pages/Automations.tsx
+msgid "Jenkins jobs"
+msgstr "Jenkins 任务"
+
+#: src/pages/Automations.tsx
+msgid "Job"
+msgstr "任务"
+
+#: src/pages/shell/work-nav.tsx
+msgid "jobs failing"
+msgstr "个任务失败"
 
 #: src/pages/Invite.tsx
 msgid "Join"
@@ -4382,10 +4625,13 @@ msgstr "正在加载语音提供商…"
 #: src/components/SpaceMembersSettings.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/Automations.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/Invite.tsx
+#: src/pages/Issues.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/branch-box.tsx
 #: src/pages/shell/code-panel.tsx
@@ -4577,6 +4823,10 @@ msgstr "{title} 的记忆"
 msgid "Memory scope"
 msgstr "记忆范围"
 
+#: src/pages/Issues.tsx
+msgid "Mentioned"
+msgstr "提及我的"
+
 #: src/pages/shell/composer-parts.tsx
 msgid "Mentions"
 msgstr "提及"
@@ -4592,6 +4842,26 @@ msgstr "提到了 OpenClaw 功能"
 #: src/pages/shell/agent-import-plan.tsx
 msgid "Mentions: {mentions}"
 msgstr "提到：{mentions}"
+
+#: src/pages/PullRequests.tsx
+msgid "Merge"
+msgstr "合并"
+
+#: src/pages/PullRequests.tsx
+msgid "Merge commit"
+msgstr "合并提交"
+
+#: src/pages/PullRequests.tsx
+msgid "Merge now"
+msgstr "立即合并"
+
+#: src/pages/PullRequests.tsx
+msgid "Merged"
+msgstr "已合并"
+
+#: src/pages/PullRequests.tsx
+msgid "Merges when checks pass"
+msgstr "检查通过后合并"
 
 #: src/pages/shell/chat-shared.ts
 #: src/pages/shell/composer.tsx
@@ -4789,12 +5059,17 @@ msgid "Move them to your shared memory."
 msgstr "把它们移到共享记忆。"
 
 #: src/pages/BotContextMenu.tsx
+#: src/pages/Issues.tsx
 msgid "Move to"
 msgstr "移动到"
 
 #: src/pages/ModelRoleSettings.tsx
 msgid "Move up"
 msgstr "上移"
+
+#: src/pages/Automations.tsx
+msgid "Multibranch pipeline"
+msgstr "多分支流水线"
 
 #: src/components/call/CallCard.tsx
 msgid "Mute"
@@ -4879,6 +5154,10 @@ msgstr "需要接管"
 #: src/pages/shell/message-view.tsx
 msgid "Needs you"
 msgstr "需要接管"
+
+#: src/pages/PullRequests.tsx
+msgid "Needs your review"
+msgstr "需要你审阅"
 
 #: src/pages/shell/import-status.ts
 msgid "Needs: {names}"
@@ -5019,18 +5298,44 @@ msgstr "没有匹配的 Bot"
 msgid "No branch checked out"
 msgstr "未检出分支"
 
+#: src/pages/Automations.tsx
+msgid "No builds yet."
+msgstr "还没有构建。"
+
 #. placeholder {0}: data.baseBranch
 #: src/pages/shell/code-panel.tsx
 msgid "No changes against {0} yet."
 msgstr "与 {0} 相比尚无更改。"
 
+#: src/pages/PullRequests.tsx
+msgid "No checks"
+msgstr "没有检查"
+
+#: src/pages/PullRequests.tsx
+msgid "No checks reported. Jenkins builds appear here when they post a status to the pull request."
+msgstr "没有报告检查。Jenkins 构建向拉取请求发布状态后会显示在这里。"
+
 #: src/pages/shell/code-panel.tsx
 msgid "No commands yet."
 msgstr "还没有命令。"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No comments yet."
+msgstr "还没有评论。"
+
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "No description."
+msgstr "没有描述。"
+
 #: src/pages/shell/code-diff.tsx
 msgid "No differences to show."
 msgstr "没有可显示的差异。"
+
+#: src/pages/PullRequests.tsx
+msgid "No file changes."
+msgstr "没有文件更改。"
 
 #: src/components/AskCard.tsx
 #: src/components/SecretAskCard.tsx
@@ -5072,6 +5377,10 @@ msgstr "没有可用的模型目录。"
 msgid "No models listed."
 msgstr "未列出模型。"
 
+#: src/pages/PullRequests.tsx
+msgid "No open pull requests."
+msgstr "没有打开的拉取请求。"
+
 #: src/pages/shell/use-agent-import-source.ts
 msgid "No OpenClaw, Hermes or agent document found."
 msgstr "未找到 OpenClaw、Hermes 或智能体文档。"
@@ -5079,6 +5388,10 @@ msgstr "未找到 OpenClaw、Hermes 或智能体文档。"
 #: src/components/pages/PagesList.tsx
 msgid "No pages match “{query}”."
 msgstr "没有与“{query}”匹配的页面。"
+
+#: src/pages/PullRequests.tsx
+msgid "No pull requests match."
+msgstr "没有匹配的拉取请求。"
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "No remote MCP servers found"
@@ -5098,6 +5411,10 @@ msgstr "不重置"
 #: src/pages/SpaceSearch.tsx
 msgid "No results"
 msgstr "无结果"
+
+#: src/pages/PullRequests.tsx
+msgid "No reviewers yet."
+msgstr "还没有审阅者。"
 
 #: src/pages/RoutineList.tsx
 msgid "No routines yet"
@@ -5135,6 +5452,10 @@ msgstr "还没有工单"
 msgid "No trigger"
 msgstr "无触发器"
 
+#: src/pages/PullRequests.tsx
+msgid "No vote"
+msgstr "未投票"
+
 #: src/components/SpendingLimitSettings.tsx
 #: src/components/vault/VaultItemEditor.tsx
 msgid "None"
@@ -5152,6 +5473,10 @@ msgstr "不是有效的技能"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Not added: {0}"
 msgstr "未添加：{0}"
+
+#: src/pages/Automations.tsx
+msgid "Not built"
+msgstr "未构建"
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Not checked yet"
@@ -5199,6 +5524,10 @@ msgstr "无法正常工作"
 #: src/pages/shell/code-panel.tsx
 msgid "Nothing here yet. The bot clones the repository when it starts on the code."
 msgstr "这里还没有内容。机器人开始处理代码时会克隆仓库。"
+
+#: src/pages/Issues.tsx
+msgid "Nothing here."
+msgstr "这里没有内容。"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Nothing remembered yet"
@@ -5287,6 +5616,7 @@ msgstr "仅自己"
 #: src/components/markdown-link-prompt.tsx
 #: src/components/pages/PagesList.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/computer-panel.tsx
 #: src/pages/shell/import-setup-card.tsx
 #: src/pages/shell/message-view.tsx
@@ -5364,6 +5694,11 @@ msgstr "OpenAI 兼容服务器 URL"
 msgid "OpenClaw or Hermes"
 msgstr "OpenClaw 或 Hermes"
 
+#. placeholder {0}: item.createdBy
+#: src/pages/Issues.tsx
+msgid "opened by {0}"
+msgstr "由 {0} 创建"
+
 #: src/components/pages/DownloadPdfButton.tsx
 msgid "Opens your browser's print dialog. Choose Save as PDF as the destination."
 msgstr "打开浏览器的打印对话框。目标请选择“另存为 PDF”。"
@@ -5410,6 +5745,10 @@ msgstr "其他模型…"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
 msgstr "输出"
+
+#: src/pages/PullRequests.tsx
+msgid "Overview"
+msgstr "概览"
 
 #: src/components/pages/SharePopover.tsx
 #: src/components/SpaceMembersSettings.tsx
@@ -5474,6 +5813,7 @@ msgstr "此 Bot 为你创建的页面会显示在这里。让 Bot 做一个仪�
 msgid "Pages this group builds for you appear here. Ask for a dashboard, tracker or plan to make one."
 msgstr "此群组为你创建的页面会显示在这里。请它做一个仪表板、跟踪表或计划即可创建。"
 
+#: src/pages/Automations.tsx
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Passed"
 msgstr "通过"
@@ -5542,6 +5882,10 @@ msgstr "粘贴你的 API 密钥"
 msgid "Paste your API key, then test again."
 msgstr "请粘贴你的 API 密钥，然后重新测试。"
 
+#: src/pages/Automations.tsx
+msgid "paused"
+msgstr "已暂停"
+
 #: src/pages/RoutineList.tsx
 #: src/pages/shell/import-status.ts
 msgid "Paused"
@@ -5588,6 +5932,10 @@ msgstr "选 {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX} 个"
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr "选择一个分支，或输入新名称以基于 {0} 创建。"
 
+#: src/pages/Automations.tsx
+msgid "Pick a job to see its builds and logs, start a build, or have a bot watch it."
+msgstr "选择一个任务以查看其构建和日志、开始构建，或让机器人关注它。"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Pick a model from the catalog."
 msgstr "请从目录中选择模型。"
@@ -5596,9 +5944,17 @@ msgstr "请从目录中选择模型。"
 msgid "Pick a model from the list or enter a model id served by this endpoint."
 msgstr "请从列表中选择模型，或输入此端点提供的模型 ID。"
 
+#: src/pages/PullRequests.tsx
+msgid "Pick a pull request to see its checks, changes and comments."
+msgstr "选择一个拉取请求以查看其检查、更改和评论。"
+
 #: src/lib/routine-draft.ts
 msgid "Pick a tool to check"
 msgstr "选择要检查的工具"
+
+#: src/pages/Issues.tsx
+msgid "Pick a work item to read it, move it along, or start a bot on it."
+msgstr "选择一个工作项以阅读、推进，或让机器人处理它。"
 
 #: src/components/pages/PagesList.tsx
 #: src/pages/BotContextMenu.tsx
@@ -5621,6 +5977,14 @@ msgstr "播放 {name}"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Playing…"
 msgstr "播放中…"
+
+#. placeholder {0}: item.type
+#. placeholder {1}: item.id
+#. placeholder {2}: item.title
+#. placeholder {3}: item.webUrl ?? ""
+#: src/pages/Issues.tsx
+msgid "Please work on {0} #{1} \"{2}\" ({3})."
+msgstr "请处理 {0} #{1}“{2}”（{3}）。"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Plugin"
@@ -5723,6 +6087,12 @@ msgstr "提供商"
 msgid "Pull request"
 msgstr "拉取请求"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+#: src/pages/shell/work-nav.tsx
+msgid "Pull requests"
+msgstr "拉取请求"
+
 #: src/pages/ActivityList.tsx
 msgid "Queued"
 msgstr "排队中"
@@ -5764,6 +6134,10 @@ msgstr "正在读取仓库…"
 msgid "Ready"
 msgstr "就绪"
 
+#: src/pages/PullRequests.tsx
+msgid "Ready for review"
+msgstr "准备审阅"
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr "原因"
@@ -5772,6 +6146,14 @@ msgstr "原因"
 #: src/pages/onboarding/model-step.tsx
 msgid "Reasoning effort"
 msgstr "推理强度"
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase and fast-forward"
+msgstr "变基并快进"
+
+#: src/pages/PullRequests.tsx
+msgid "Rebase with merge commit"
+msgstr "变基并创建合并提交"
 
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Recall and write"
@@ -5796,6 +6178,10 @@ msgstr "最近"
 #: src/components/SpendingLimitSettings.tsx
 msgid "Recent payments"
 msgstr "最近付款"
+
+#: src/pages/PullRequests.tsx
+msgid "Recently closed"
+msgstr "最近关闭"
 
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Recommended"
@@ -5882,6 +6268,9 @@ msgstr "重定向 URI"
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
 #: src/components/ModelCredits.tsx
+#: src/pages/Automations.tsx
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/code-panel.tsx
 msgid "Refresh"
 msgstr "刷新"
@@ -5907,6 +6296,7 @@ msgid "Registration is closed"
 msgstr "注册已关闭"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Reject"
 msgstr "拒绝"
 
@@ -5916,6 +6306,7 @@ msgid "Reject {0}"
 msgstr "拒绝 {0}"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/PullRequests.tsx
 msgid "Rejected"
 msgstr "已拒绝"
 
@@ -6077,6 +6468,7 @@ msgstr "回复"
 msgid "Replies to"
 msgstr "回复对象"
 
+#: src/pages/PullRequests.tsx
 #: src/pages/shell/message-hover-actions.tsx
 #: src/pages/shell/quote-selection-button.tsx
 msgid "Reply"
@@ -6089,6 +6481,10 @@ msgstr "已取消回复"
 #: src/pages/model-settings/compatible-connection-test.tsx
 msgid "Reply:"
 msgstr "回复："
+
+#: src/pages/PullRequests.tsx
+msgid "Reply…"
+msgstr "回复…"
 
 #. placeholder {0}: replyNameRef.current
 #: src/pages/shell/composer.tsx
@@ -6106,6 +6502,10 @@ msgstr "请重新获取验证码"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "请求"
+
+#: src/pages/PullRequests.tsx
+msgid "Required"
+msgstr "必需"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
@@ -6132,6 +6532,10 @@ msgstr "重置电脑？"
 #: src/pages/Auth.tsx
 msgid "Reset password"
 msgstr "重置密码"
+
+#: src/pages/PullRequests.tsx
+msgid "Reset vote"
+msgstr "重置投票"
 
 #: src/pages/Auth.tsx
 msgid "Reset your password"
@@ -6222,9 +6626,17 @@ msgstr "返回与 {0} 的通话"
 msgid "Return to Rakazo"
 msgstr "返回 Rakazo"
 
+#: src/pages/PullRequests.tsx
+msgid "Review"
+msgstr "审阅"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "请检查提供商设置并重新测试。"
+
+#: src/pages/PullRequests.tsx
+msgid "Reviewers"
+msgstr "审阅者"
 
 #: src/components/bot-templates/bot-template-copy.ts
 msgid "Reviews pull requests waiting on you"
@@ -6478,6 +6890,10 @@ msgstr "按域名搜索"
 msgid "Search integrations.sh"
 msgstr "搜索 integrations.sh"
 
+#: src/pages/Automations.tsx
+msgid "Search jobs"
+msgstr "搜索任务"
+
 #: src/pages/plugins/plugin-browse.tsx
 msgid "Search MCP servers for “{query}”"
 msgstr "在 MCP 服务器中搜索“{query}”"
@@ -6488,6 +6904,10 @@ msgstr "在 MCP 服务器中搜索“{query}”"
 #: src/pages/shell/chat-model-picker.tsx
 msgid "Search models"
 msgstr "搜索模型"
+
+#: src/pages/PullRequests.tsx
+msgid "Search pull requests"
+msgstr "搜索拉取请求"
 
 #: src/pages/shell/shell-sidebar.tsx
 msgid "Search runs"
@@ -6508,6 +6928,10 @@ msgstr "搜索工具"
 #: src/components/VaultSettings.tsx
 msgid "Search Vault"
 msgstr "搜索保管库"
+
+#: src/pages/Issues.tsx
+msgid "Search work items"
+msgstr "搜索工作项"
 
 #. placeholder {0}: filters.query.trim()
 #: src/pages/ActivityList.tsx
@@ -6945,6 +7369,14 @@ msgstr "语音模型"
 msgid "Spending limit"
 msgstr "支出上限"
 
+#: src/pages/PullRequests.tsx
+msgid "Squash and merge"
+msgstr "压缩并合并"
+
+#: src/pages/PullRequests.tsx
+msgid "Squash when checks pass"
+msgstr "检查通过后压缩合并"
+
 #: src/components/AccountAccess.tsx
 msgid "SSO"
 msgstr "单点登录"
@@ -6965,6 +7397,10 @@ msgstr "启动"
 #: src/pages/Paywall.tsx
 msgid "Start {trialDays}-day free trial"
 msgstr "开始 {trialDays} 天免费试用"
+
+#: src/pages/Issues.tsx
+msgid "Start a bot on this"
+msgstr "让机器人处理"
 
 #: src/components/ModelCredits.tsx
 msgid "Start plan"
@@ -7141,6 +7577,10 @@ msgstr "系统"
 msgid "Table"
 msgstr "表格"
 
+#: src/pages/Issues.tsx
+msgid "Tags"
+msgstr "标签"
+
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "接管控制权"
@@ -7169,6 +7609,14 @@ msgstr "团队电脑"
 #: src/pages/RoutineList.tsx
 msgid "Teams message"
 msgstr "Teams 消息"
+
+#: src/pages/Automations.tsx
+msgid "Tell me about each finished build"
+msgstr "每次构建完成时告诉我"
+
+#: src/pages/PullRequests.tsx
+msgid "Tell me about new review comments"
+msgstr "有新的审阅评论时告诉我"
 
 #: src/components/ComputerProviderSettings.tsx
 msgid "Template"
@@ -7679,6 +8127,10 @@ msgstr "直接输入，不录制"
 msgid "Type your answer"
 msgstr "输入你的回答"
 
+#: src/pages/Issues.tsx
+msgid "unassigned"
+msgstr "未分配"
+
 #: src/pages/BotContextMenu.tsx
 #: src/pages/Shell.tsx
 msgid "Unassigned"
@@ -7718,6 +8170,10 @@ msgstr "取消延后"
 #: src/pages/shell/snoozed-chats.tsx
 msgid "Unsnooze {0}"
 msgstr "取消延后 {0}"
+
+#: src/pages/Automations.tsx
+msgid "Unstable"
+msgstr "不稳定"
 
 #. placeholder {0}: pending.file.name
 #: src/pages/shell/use-composer-actions.ts
@@ -7960,6 +8416,18 @@ msgstr "语音请求超时。"
 msgid "Wait a moment and test again."
 msgstr "请稍候并重新测试。"
 
+#: src/pages/PullRequests.tsx
+msgid "Wait for author"
+msgstr "等待作者"
+
+#: src/pages/PullRequests.tsx
+msgid "Waiting for author"
+msgstr "等待作者"
+
+#: src/pages/shell/work-nav.tsx
+msgid "waiting for your review"
+msgstr "等待你审阅"
+
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "排队等候…"
@@ -7980,6 +8448,14 @@ msgstr "正在唤醒…"
 #: src/pages/settings-nav.ts
 msgid "Wallet"
 msgstr "钱包"
+
+#: src/pages/Automations.tsx
+msgid "Watch with a bot"
+msgstr "让机器人关注"
+
+#: src/pages/Automations.tsx
+msgid "Watched by"
+msgstr "关注者"
 
 #: src/components/ModelCredits.tsx
 msgid "Web, desktop and mobile"
@@ -8119,8 +8595,13 @@ msgid "Won't do"
 msgstr "不做"
 
 #: src/components/SignupSurvey.tsx
+#: src/pages/shell/work-nav.tsx
 msgid "Work"
 msgstr "工作"
+
+#: src/pages/Issues.tsx
+msgid "Work items"
+msgstr "工作项"
 
 #: src/pages/ActivityList.tsx
 msgid "Working"
@@ -8166,8 +8647,14 @@ msgstr "按年"
 msgid "Yesterday"
 msgstr "昨天"
 
+#: src/pages/Issues.tsx
+#: src/pages/PullRequests.tsx
+msgid "you"
+msgstr "你"
+
 #: src/components/pages/SharePopover.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/PullRequests.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/message-view.tsx
 #: src/pages/shell/shell-sidebar.tsx
@@ -8298,6 +8785,10 @@ msgstr "你的语音提供商额度已用完。"
 #: src/lib/user-error.ts
 msgid "Your voice provider key was rejected."
 msgstr "你的语音提供商拒绝了该密钥。"
+
+#: src/pages/PullRequests.tsx
+msgid "Yours"
+msgstr "你的"
 
 #: src/components/vault/VaultItemEditor.tsx
 msgid "ZIP or postal code"

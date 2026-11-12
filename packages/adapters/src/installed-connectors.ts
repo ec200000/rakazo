@@ -32,6 +32,7 @@ import {
   sanitizeConnectorError,
 } from "./connector-safety.js";
 import { executeGraphqlOperation, GraphqlConfigSchema } from "./graphql-connectors.js";
+import { jenkinsPreset } from "./jenkins-preset.js";
 import {
   CATALOG_EXECUTE,
   catalogEntries,
@@ -78,10 +79,15 @@ export const MCP_SOURCE_PRESETS: McpSourcePreset[] = [
  * when Echo is configured, so each person connects Echo with their own API token.
  */
 export function mcpSourcePresets(
-  env: { echoUrl?: string | undefined; azureDevOpsUrl?: string | undefined } = {},
+  env: {
+    echoUrl?: string | undefined;
+    azureDevOpsUrl?: string | undefined;
+    jenkinsUrl?: string | undefined;
+  } = {},
 ): McpSourcePreset[] {
   const echo = env.echoUrl?.trim();
   const azureDevOps = azureDevOpsPreset(env.azureDevOpsUrl);
+  const jenkins = jenkinsPreset(env.jenkinsUrl);
   return [
     ...MCP_SOURCE_PRESETS,
     ...(echo
@@ -95,6 +101,7 @@ export function mcpSourcePresets(
         ]
       : []),
     ...(azureDevOps ? [azureDevOps] : []),
+    ...(jenkins ? [jenkins] : []),
   ];
 }
 
@@ -135,7 +142,7 @@ const ApiOperationSchema = z.object({
   queryParameters: z.array(z.string().min(1).max(120)).default([]),
   headerParameters: z.array(ModelHeaderName).default([]),
   /** Query parameters every call sends, such as an API version; arguments cannot replace them. */
-  fixedQuery: z.record(z.string().min(1).max(120), z.string().max(200)).default({}),
+  fixedQuery: z.record(z.string().min(1).max(120), z.string().max(2_000)).default({}),
 });
 
 const ApiConfigSchema = z.object({
@@ -978,11 +985,21 @@ async function executeApiOperation(
   remote: RemoteRequestPolicy,
 ): Promise<unknown> {
   const consumed = new Set<string>();
-  const path = operation.path.replace(/\{([^}]+)\}/g, (_match, name: string) => {
+  const path = operation.path.replace(/\{(\+?)([^}]+)\}/g, (_match, plus: string, name: string) => {
     const value = args[name];
     if (value == null) throw new Error(`Missing path parameter ${name}`);
     consumed.add(name);
-    return encodeURIComponent(String(value));
+    if (!plus) return encodeURIComponent(String(value));
+    // {+name} keeps its slashes (a Jenkins job inside folders); each part is still encoded.
+    return String(value)
+      .split("/")
+      .map((part) => {
+        if (part === "" || part === "." || part === "..") {
+          throw new Error(`Path parameter ${name} has an empty, "." or ".." part`);
+        }
+        return encodeURIComponent(part);
+      })
+      .join("/");
   });
   const url = joinApiUrl(baseUrl, path);
   for (const [key, value] of Object.entries(operation.fixedQuery)) {
