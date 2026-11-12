@@ -36,6 +36,7 @@ export async function repositoryCredential(
   deps: { prisma: PrismaClient; secretStore: SecretStore },
   scope: { spaceId: string; userId: string },
   repoUrl: string,
+  options: { serverFallback?: boolean } = {},
 ): Promise<RepositoryCredential | null> {
   const url = new URL(repoUrl);
   const installs = await deps.prisma.capabilityInstall.findMany({
@@ -66,6 +67,8 @@ export async function repositoryCredential(
       source: "connection",
     };
   }
+  // Pages that act as the person (pull requests, work items) never borrow the server's token.
+  if (options.serverFallback === false) return null;
   const server = gitHostCredentials(gitHostsFromConfig(deploymentConfig()), url.hostname);
   if (server?.token) {
     const header = basic(server.username, server.token);

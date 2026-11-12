@@ -27,6 +27,7 @@ import { SpaceSearchResults } from "../SpaceSearch";
 import type { SettingsSection } from "../shell-overlay";
 import { SidebarHeader } from "./sidebar-header";
 import type { SidebarSearch } from "./use-sidebar-search";
+import { WorkNav } from "./work-nav";
 
 /** Focuses the search box once it renders, its text selected so typing replaces it. */
 export function focusSidebarSearch() {
@@ -190,6 +191,9 @@ export function ShellSidebar({
           setNewSpaceOpen={setNewSpaceOpen}
           setCreateBotOpen={setCreateBotOpen}
         />
+        {activityMode ? null : (
+          <WorkNav mini={mini} navigate={navigate} onNavigate={() => setMobileOpen(false)} />
+        )}
         {mini ||
         !(
           searchOpen ||

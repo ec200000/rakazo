@@ -787,6 +787,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       echoUrl: env.echoUrl,
       azureDevOpsUrl: env.azureDevOpsUrl,
       azureDevOpsApiVersion: env.azureDevOpsApiVersion,
+      jenkinsUrl: env.jenkinsUrl,
       desktopHostChoiceEnabled: Boolean(env.desktopStackToken),
       computerSettingsEnabled: env.computerSettingsEnabled,
       mcpStdioEnabled: env.mcpStdioEnabled,

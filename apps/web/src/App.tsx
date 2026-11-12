@@ -62,6 +62,9 @@ const OnboardingPage = lazyComponent(() =>
 const NotFoundPage = lazyComponent(() =>
   import("./pages/NotFound").then((module) => module.NotFoundPage),
 );
+const PullRequestsPage = lazyComponent(() =>
+  import("./pages/PullRequests").then((module) => module.PullRequestsPage),
+);
 const ArtifactsPage = lazyComponent(() =>
   import("./pages/Artifacts").then((module) => module.ArtifactsPage),
 );
@@ -291,6 +294,11 @@ function SessionApp() {
                 <Route element={<CallLayout />}>
                   <Route path="/onboarding/:step?" element={<OnboardingPage />} />
                   <Route path="/app/artifacts" element={<ArtifactsPage />} />
+                  <Route path="/app/pulls" element={<PullRequestsPage />} />
+                  <Route
+                    path="/app/pulls/:projectId/:repositoryId/:id"
+                    element={<PullRequestsPage />}
+                  />
                   <Route path="/app/artifacts/:artifactId" element={<ArtifactsPage />} />
                   {ticketBoardEnabled ? <Route path="/app/board" element={<BoardPage />} /> : null}
                   <Route path="/app/x/:linkId" element={<NavLinkPage />} />

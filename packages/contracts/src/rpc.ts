@@ -212,6 +212,13 @@ import { SearchQueryOutputSchema } from "./search.js";
 import { SecurityEventListInputSchema, SecurityEventSchema } from "./security-events.js";
 import { SettingsScopeSchema, SpaceSettingSchema, settingsScopeInput } from "./settings-scope.js";
 import { SpaceAvailabilitySchema } from "./space-availability.js";
+import {
+  MergeStrategySchema,
+  PullRequestDetailSchema,
+  PullRequestListSchema,
+  PullRequestRefSchema,
+  WorkStatusSchema,
+} from "./work.js";
 
 const botId = z.object({ botId: Id });
 const groupId = z.object({ groupId: Id });
@@ -886,6 +893,47 @@ export const appContract = {
     run: oc
       .input(z.object({ botId: Id, command: z.string().trim().min(1).max(4000) }))
       .output(ComputerRunResultSchema),
+  },
+  /** Pull requests (and later automations and issues) acting as the signed-in person. */
+  work: {
+    status: oc.output(WorkStatusSchema),
+    pullRequests: oc.output(PullRequestListSchema),
+    pullRequest: oc.input(PullRequestRefSchema).output(PullRequestDetailSchema),
+    pullRequestDiff: oc
+      .input(PullRequestRefSchema.extend({ path: z.string().min(1).max(2000) }))
+      .output(
+        z.object({
+          diff: z.string(),
+          additions: z.number().int(),
+          deletions: z.number().int(),
+          truncated: z.boolean(),
+        }),
+      ),
+    votePullRequest: oc
+      .input(
+        PullRequestRefSchema.extend({
+          vote: z.union([z.literal(10), z.literal(5), z.literal(0), z.literal(-5), z.literal(-10)]),
+        }),
+      )
+      .output(z.object({ ok: z.literal(true) })),
+    commentPullRequest: oc
+      .input(
+        PullRequestRefSchema.extend({
+          content: z.string().trim().min(1).max(20_000),
+          threadId: z.number().int().positive().optional(),
+        }),
+      )
+      .output(z.object({ ok: z.literal(true) })),
+    completePullRequest: oc
+      .input(
+        PullRequestRefSchema.extend({
+          strategy: MergeStrategySchema,
+          deleteSourceBranch: z.boolean(),
+          auto: z.boolean(),
+        }),
+      )
+      .output(z.object({ ok: z.literal(true) })),
+    publishPullRequest: oc.input(PullRequestRefSchema).output(z.object({ ok: z.literal(true) })),
   },
   memory: {
     list: oc

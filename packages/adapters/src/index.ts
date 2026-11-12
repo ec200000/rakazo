@@ -185,6 +185,8 @@ export * from "./realtime.js";
 export * from "./release-watch.js";
 export * from "./remote-mcp.js";
 export * from "./repo-review.js";
+export * from "./text-diff.js";
+export * from "./work-azure-devops.js";
 export * from "./resend-email.js";
 export { finishRoutineHandover } from "./routine-handover.js";
 export * from "./routine-watch.js";

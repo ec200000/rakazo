@@ -41,6 +41,7 @@ import { boardsRoutes } from "./routes/boards.js";
 import { botsRoutes } from "./routes/bots.js";
 import { capabilitiesRoutes } from "./routes/capabilities.js";
 import { computerRoutes } from "./routes/computer.js";
+import { workRoutes } from "./routes/work.js";
 import { computerProviderRoutes } from "./routes/computer-provider.js";
 import { connectionsRoutes } from "./routes/connections.js";
 import { contentRoutes } from "./routes/content.js";
@@ -155,6 +156,8 @@ export interface RouterDeps {
     /** Azure DevOps Server collection URL; offers it as a per-person API connector. */
     azureDevOpsUrl?: string;
     azureDevOpsApiVersion?: string;
+    /** Jenkins controller URL; offered as a per-person API connector. */
+    jenkinsUrl?: string;
     desktopHostChoiceEnabled?: boolean;
     computerSettingsEnabled?: boolean;
     mcpStdioEnabled?: boolean;
@@ -174,6 +177,7 @@ export function createRouter(deps: RouterDeps) {
     ...botsRoutes(ctx),
     ...threadsRoutes(ctx),
     ...computerRoutes(ctx),
+    ...workRoutes(ctx),
     ...computerProviderRoutes(ctx),
     ...memoryRoutes(ctx),
     ...routinesRoutes(ctx),
