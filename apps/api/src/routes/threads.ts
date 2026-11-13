@@ -25,6 +25,7 @@ import {
   withTransactionRetry,
 } from "@rakazo/db";
 import { getLogger } from "@rakazo/logging";
+import { loadAnswerBreakdown } from "../answer-breakdown.js";
 import { releaseComputerControl } from "../computer-control.js";
 import type { RouterDeps } from "../router.js";
 import { createRoutineTestRun, routineTestRunNonce, routineTestTarget } from "../routines.js";
@@ -308,6 +309,16 @@ export function threadsRoutes(ctx: RouterContext) {
         const target = await resolveThreadTarget(deps.prisma, context.actor, input);
         await stopThreadRuns(deps, context.actor, target);
         return { ok: true as const };
+      }),
+      answerBreakdown: authed.threads.answerBreakdown.handler(async ({ context, input }) => {
+        const target = await resolveThreadTarget(deps.prisma, context.actor, input);
+        const breakdown = await loadAnswerBreakdown(deps.prisma, {
+          spaceId: context.actor.spaceId,
+          threadId: target.threadId,
+          runId: input.runId,
+        });
+        if (!breakdown) throw new ORPCError("NOT_FOUND", { message: "No such answer" });
+        return breakdown;
       }),
       stopHelper: authed.threads.stopHelper.handler(async ({ context, input }) => {
         const target = await resolveThreadTarget(deps.prisma, context.actor, input);

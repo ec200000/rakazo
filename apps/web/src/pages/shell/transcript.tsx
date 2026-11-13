@@ -646,7 +646,9 @@ export const Transcript = memo(function Transcript({
                     />
                   </div>
                 </div>
-                {replyTiming ? <ReplyTime timing={replyTiming} /> : null}
+                {replyTiming ? (
+                  <ReplyTime timing={replyTiming} target={artifactTarget} rpc={rpc} />
+                ) : null}
                 {!peerReceipt && messageReactions ? (
                   <div
                     data-testid="message-reactions"

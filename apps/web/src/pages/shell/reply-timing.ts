@@ -1,4 +1,4 @@
-import type { ThreadMessage } from "@rakazo/contracts";
+import type { AnswerBreakdown, ThreadMessage } from "@rakazo/contracts";
 import { isPeerReceiptBlocks } from "@rakazo/core";
 
 export type ReplyTiming = {
@@ -6,6 +6,8 @@ export type ReplyTiming = {
   askedAt: number;
   firstReplyAt: number;
   lastReplyAt: number;
+  /** The run that wrote the answer, when it came from one: its breakdown is fetched by it. */
+  runId?: string;
 };
 
 function isBotReply(message: ThreadMessage) {
@@ -62,16 +64,55 @@ export function replyTimings(
       askedAt,
       firstReplyAt: firstAt,
       lastReplyAt: Date.parse(answer.last.createdAt),
+      ...(answer.first.runId ? { runId: answer.first.runId } : {}),
     });
   }
   return timings;
 }
 
-/** 4s, 1m 05s, 1h 02m. */
-export function formatDuration(ms: number): string {
+/** 4s, 1m 05s, 1h 02m; with `precise`, under ten seconds keeps a tenth (1.2s) or shows ms. */
+export function formatDuration(ms: number, options: { precise?: boolean } = {}): string {
+  if (options.precise && ms < 10_000) {
+    if (ms < 1000) return `${Math.max(0, Math.round(ms))}ms`;
+    return `${(Math.round(ms / 100) / 10).toFixed(1)}s`;
+  }
   const seconds = Math.max(0, Math.round(ms / 1000));
   if (seconds < 60) return `${seconds}s`;
   const minutes = Math.floor(seconds / 60);
   if (minutes < 60) return `${minutes}m ${String(seconds % 60).padStart(2, "0")}s`;
   return `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, "0")}m`;
+}
+
+/** 950, 12.4k, 128k, 1.2M. */
+export function formatTokens(tokens: number): string {
+  if (tokens < 1000) return String(Math.max(0, Math.round(tokens)));
+  if (tokens < 100_000) return `${Math.round(tokens / 100) / 10}k`;
+  if (tokens < 1_000_000) return `${Math.round(tokens / 1000)}k`;
+  return `${Math.round(tokens / 100_000) / 10}M`;
+}
+
+export type BreakdownPartKey = "model" | "tools" | "review" | "waiting" | "queued" | "other";
+
+/** The answer's time in display order, leaving out parts that took almost no time. */
+export function breakdownParts(
+  data: AnswerBreakdown,
+): { key: BreakdownPartKey; ms: number; unknown: boolean }[] {
+  const parts: { key: BreakdownPartKey; ms: number; unknown: boolean }[] = [
+    { key: "model", ms: data.modelMs ?? 0, unknown: data.modelMs === null && data.modelCalls > 0 },
+    { key: "tools", ms: data.toolsMs, unknown: false },
+    { key: "review", ms: data.reviewMs ?? 0, unknown: false },
+    { key: "waiting", ms: data.waitingMs, unknown: false },
+    { key: "queued", ms: data.queuedMs, unknown: false },
+    { key: "other", ms: data.otherMs, unknown: false },
+  ];
+  // Under half a second rounds to "0s", which only adds noise.
+  return parts.filter(
+    (part) => part.unknown || part.ms >= 500 || (part.key === "model" && data.modelCalls > 0),
+  );
+}
+
+/** The share of the context window in use, as a whole percent; null without a known window. */
+export function contextShare(context: NonNullable<AnswerBreakdown["context"]>): number | null {
+  if (!context.windowTokens) return null;
+  return Math.round((100 * context.usedTokens) / context.windowTokens);
 }

@@ -188,6 +188,14 @@ msgstr "{botCount, plural, other {{name} ve # botu silinsin mi?}}"
 msgid "{botName}’s computer"
 msgstr "{botName} adlı botun bilgisayarı"
 
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls · first word after {firstWord} on average"
+msgstr ""
+
 #: src/components/vault/VaultItemEditor.tsx
 msgid "{commandVariable} is reserved and cannot be used as a command variable. Choose another name."
 msgstr "{commandVariable} ayrılmıştır ve komut değişkeni olarak kullanılamaz. Başka bir ad seçin."
@@ -401,6 +409,10 @@ msgstr "{provider} çok geç yanıt verdi. Tekrar deneyin."
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "{remaining} left"
 msgstr "{remaining} kaldı"
+
+#: src/pages/shell/reply-time.tsx
+msgid "{reviewCalls} calls"
+msgstr ""
 
 #: src/pages/BillingSettingsPanel.tsx
 msgid "{seats, plural, one {# seat} other {# seats}}"
@@ -1062,6 +1074,11 @@ msgstr "Yanıtla"
 #: src/components/AskCard.tsx
 msgid "Answered"
 msgstr "Yanıtlandı"
+
+#. placeholder {0}: formatDuration(data.totalMs)
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {0}"
+msgstr ""
 
 #: src/pages/shell/reply-time.tsx
 msgid "Answered in {total}"
@@ -2286,6 +2303,14 @@ msgstr "Çalıştırılacak kod içeriyor"
 #: src/pages/onboarding/model-step.tsx
 msgid "Context limit"
 msgstr "Bağlam sınırı"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call: {used}"
+msgstr ""
 
 #: src/components/ConfirmIdentityDialog.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -4284,6 +4309,10 @@ msgstr "Gelen kutusu ayıklama"
 msgid "Include API keys"
 msgstr "API anahtarlarını dahil et"
 
+#: src/pages/shell/reply-time.tsx
+msgid "includes {helperCalls} helper calls"
+msgstr ""
+
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "Gelen arama"
@@ -4624,6 +4653,10 @@ msgstr "Önizleme yükleniyor…"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Loading voice providers…"
 msgstr "Ses sağlayıcıları yükleniyor…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Loading where the time went…"
+msgstr ""
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/marketplace-inspector.tsx
@@ -4969,6 +5002,7 @@ msgstr "Mod"
 #: src/pages/routine-editor/model-settings.tsx
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Model"
 msgstr "Model"
 
@@ -5510,6 +5544,10 @@ msgstr "Rakazo kataloğunda yok"
 msgid "Not in the plugin catalog"
 msgstr "Eklenti kataloğunda yok"
 
+#: src/pages/shell/reply-time.tsx
+msgid "not measured"
+msgstr ""
+
 #: src/components/GitHubStarPrompt.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
@@ -6031,6 +6069,10 @@ msgstr "PR inceleyici"
 msgid "Preferences"
 msgstr "Tercihler"
 
+#: src/pages/shell/reply-time.tsx
+msgid "preparing each call, saving progress"
+msgstr ""
+
 #: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
@@ -6112,6 +6154,7 @@ msgstr "Kuyrukta"
 
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Rakazo"
 msgstr "Rakazo"
 
@@ -6749,6 +6792,10 @@ msgstr "Çalıştırmalar"
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Runs when this bot receives a verified message from this provider."
 msgstr "Bu bot bu sağlayıcıdan doğrulanmış bir mesaj aldığında çalışır."
+
+#: src/pages/shell/reply-time.tsx
+msgid "Safety review"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Sales & CRM"
@@ -7805,6 +7852,10 @@ msgstr "Düşünme: {0}"
 msgid "This account is deactivated"
 msgstr "Bu hesap devre dışı bırakıldı"
 
+#: src/pages/shell/reply-time.tsx
+msgid "This answer's breakdown isn't available."
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "This app needs its own sign-in setup to connect."
 msgstr "Bu uygulamanın bağlanması için kendi oturum açma kurulumu gerekiyor."
@@ -8024,6 +8075,14 @@ msgstr "Kenar çubuğunu göster/gizle"
 msgid "Tokens"
 msgstr "Token"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read · {outText} written"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read ({reused}% reused from cache) · {outText} written"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 msgid "Tomorrow"
 msgstr "Yarın"
@@ -8047,6 +8106,7 @@ msgstr "Araç adı"
 #: src/components/ApprovalRulesSettings.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Tools"
 msgstr "Araçlar"
 
@@ -8449,6 +8509,10 @@ msgstr ""
 msgid "Waiting for author"
 msgstr ""
 
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting for you"
+msgstr ""
+
 #: src/pages/shell/work-nav.tsx
 msgid "waiting for your review"
 msgstr ""
@@ -8456,6 +8520,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "Sırada bekleniyor…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting to start"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"

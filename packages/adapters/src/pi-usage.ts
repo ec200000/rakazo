@@ -348,7 +348,11 @@ export function observedPiStream(
   const stream = createAssistantMessageEventStream();
   const reported: ReportedUsageFields = new Set();
   const callId = randomUUID();
+  // Timing for the answer breakdown: set when the request is sent and at its first output.
+  let sentAt: number | undefined;
+  let firstOutputAt: number | undefined;
   const emitUsage = async (usage: AgentUsage, operationKind = attribution.operationKind) => {
+    const endedAt = Date.now();
     const event = {
       type: "usage" as const,
       ...usage,
@@ -357,6 +361,13 @@ export function observedPiStream(
       callId,
       agentId: attribution.agentId,
       operationKind,
+      ...(sentAt !== undefined ? { durationMs: Math.max(0, endedAt - sentAt) } : {}),
+      ...(sentAt !== undefined && firstOutputAt !== undefined
+        ? { firstTokenMs: Math.max(0, firstOutputAt - sentAt) }
+        : {}),
+      ...(Number.isFinite(model.contextWindow) && model.contextWindow > 0
+        ? { contextWindow: model.contextWindow }
+        : {}),
     };
     try {
       await hooks?.recordUsage?.(event);
@@ -456,6 +467,7 @@ export function observedPiStream(
           }),
         );
         let upstream: ReturnType<Models["streamSimple"]>;
+        sentAt = Date.now();
         try {
           const reportRequestId = (id: string) =>
             reservation !== undefined ? observer?.onRequestId?.(reservation, id) : undefined;
@@ -504,6 +516,7 @@ export function observedPiStream(
             })()
           : upstream;
         for await (const event of events) {
+          if (firstOutputAt === undefined && event.type !== "start") firstOutputAt = Date.now();
           // A terminal error can arrive with empty content after a partial answer streamed.
           const received = partialMessage;
           partialMessage =

@@ -55,6 +55,9 @@ export async function recordUsage(
     callId: event.callId ?? null,
     operationKind: attribution.operationKind ?? event.operationKind ?? "answer",
     agentId: event.agentId ?? null,
+    durationMs: event.durationMs ?? null,
+    firstTokenMs: event.firstTokenMs ?? null,
+    contextWindow: event.contextWindow ?? null,
   };
   return withTransactionRetry(() =>
     prisma.$transaction(async (tx) => {

@@ -189,6 +189,14 @@ msgstr "{botCount, plural, one {要刪除 {name} 及其 # 個機器人嗎？} ot
 msgid "{botName}’s computer"
 msgstr "{botName} 的電腦"
 
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls"
+msgstr "{calls} 次呼叫"
+
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls · first word after {firstWord} on average"
+msgstr "{calls} 次呼叫 · 平均 {firstWord} 後出現首個字"
+
 #: src/components/vault/VaultItemEditor.tsx
 msgid "{commandVariable} is reserved and cannot be used as a command variable. Choose another name."
 msgstr "{commandVariable} 是保留名稱，不能用作命令變數。請選擇其他名稱。"
@@ -402,6 +410,10 @@ msgstr "{provider} 回應超時。請重試。"
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "{remaining} left"
 msgstr "剩餘 {remaining}"
+
+#: src/pages/shell/reply-time.tsx
+msgid "{reviewCalls} calls"
+msgstr "{reviewCalls} 次呼叫"
 
 #: src/pages/BillingSettingsPanel.tsx
 msgid "{seats, plural, one {# seat} other {# seats}}"
@@ -1063,6 +1075,11 @@ msgstr "接聽"
 #: src/components/AskCard.tsx
 msgid "Answered"
 msgstr "已回答"
+
+#. placeholder {0}: formatDuration(data.totalMs)
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {0}"
+msgstr "用時 {0} 回答"
 
 #: src/pages/shell/reply-time.tsx
 msgid "Answered in {total}"
@@ -2287,6 +2304,14 @@ msgstr "包含可執行的程式碼"
 #: src/pages/onboarding/model-step.tsx
 msgid "Context limit"
 msgstr "上下文長度限制"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call"
+msgstr "上次呼叫的上下文"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call: {used}"
+msgstr "上次呼叫的上下文：{used}"
 
 #: src/components/ConfirmIdentityDialog.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -4285,6 +4310,10 @@ msgstr "收件匣整理"
 msgid "Include API keys"
 msgstr "包含 API 金鑰"
 
+#: src/pages/shell/reply-time.tsx
+msgid "includes {helperCalls} helper calls"
+msgstr "含 {helperCalls} 次助手呼叫"
+
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "來電"
@@ -4625,6 +4654,10 @@ msgstr "正在載入預覽…"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Loading voice providers…"
 msgstr "正在載入語音供應商…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Loading where the time went…"
+msgstr "正在載入時間分佈…"
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/marketplace-inspector.tsx
@@ -4970,6 +5003,7 @@ msgstr "模式"
 #: src/pages/routine-editor/model-settings.tsx
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Model"
 msgstr "模型"
 
@@ -5511,6 +5545,10 @@ msgstr "不在 Rakazo 目錄中"
 msgid "Not in the plugin catalog"
 msgstr "不在外掛程式目錄中"
 
+#: src/pages/shell/reply-time.tsx
+msgid "not measured"
+msgstr "未測量"
+
 #: src/components/GitHubStarPrompt.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
@@ -6032,6 +6070,10 @@ msgstr "PR 審查員"
 msgid "Preferences"
 msgstr "偏好設定"
 
+#: src/pages/shell/reply-time.tsx
+msgid "preparing each call, saving progress"
+msgstr "準備每次呼叫、儲存進度"
+
 #: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
@@ -6113,6 +6155,7 @@ msgstr "排隊中"
 
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Rakazo"
 msgstr "Rakazo"
 
@@ -6750,6 +6793,10 @@ msgstr "執行"
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Runs when this bot receives a verified message from this provider."
 msgstr "當此機器人收到來自這個供應商且通過驗證的訊息時執行。"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Safety review"
+msgstr "安全審查"
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Sales & CRM"
@@ -7806,6 +7853,10 @@ msgstr "思考：{0}"
 msgid "This account is deactivated"
 msgstr "此帳戶已停用"
 
+#: src/pages/shell/reply-time.tsx
+msgid "This answer's breakdown isn't available."
+msgstr "此回答的時間分佈無法使用。"
+
 #: src/lib/user-error.ts
 msgid "This app needs its own sign-in setup to connect."
 msgstr "此應用程式需要單獨設定登入才能連線。"
@@ -8025,6 +8076,14 @@ msgstr "顯示或隱藏側邊欄"
 msgid "Tokens"
 msgstr "Token"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read · {outText} written"
+msgstr "權杖：讀取 {inText} · 寫出 {outText}"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read ({reused}% reused from cache) · {outText} written"
+msgstr "權杖：讀取 {inText}（{reused}% 來自快取）· 寫出 {outText}"
+
 #: src/pages/BotContextMenu.tsx
 msgid "Tomorrow"
 msgstr "明天"
@@ -8048,6 +8107,7 @@ msgstr "工具名稱"
 #: src/components/ApprovalRulesSettings.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Tools"
 msgstr "工具"
 
@@ -8450,6 +8510,10 @@ msgstr "等待作者"
 msgid "Waiting for author"
 msgstr "等待作者"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting for you"
+msgstr "等待你"
+
 #: src/pages/shell/work-nav.tsx
 msgid "waiting for your review"
 msgstr "等待你審閱"
@@ -8457,6 +8521,10 @@ msgstr "等待你審閱"
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "排隊等候…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting to start"
+msgstr "等待開始"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"

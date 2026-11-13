@@ -188,6 +188,14 @@ msgstr "{botCount, plural, other {{name}과(와) 봇 #개를 삭제할까요?}}"
 msgid "{botName}’s computer"
 msgstr "{botName}의 컴퓨터"
 
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls · first word after {firstWord} on average"
+msgstr ""
+
 #: src/components/vault/VaultItemEditor.tsx
 msgid "{commandVariable} is reserved and cannot be used as a command variable. Choose another name."
 msgstr "{commandVariable}은(는) 예약되어 있어 명령 변수로 사용할 수 없습니다. 다른 이름을 선택하세요."
@@ -401,6 +409,10 @@ msgstr "{provider}의 응답 시간이 초과되었습니다. 다시 시도하�
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "{remaining} left"
 msgstr "남은 시간 {remaining}"
+
+#: src/pages/shell/reply-time.tsx
+msgid "{reviewCalls} calls"
+msgstr ""
 
 #: src/pages/BillingSettingsPanel.tsx
 msgid "{seats, plural, one {# seat} other {# seats}}"
@@ -1062,6 +1074,11 @@ msgstr "답변"
 #: src/components/AskCard.tsx
 msgid "Answered"
 msgstr "응답함"
+
+#. placeholder {0}: formatDuration(data.totalMs)
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {0}"
+msgstr ""
 
 #: src/pages/shell/reply-time.tsx
 msgid "Answered in {total}"
@@ -2286,6 +2303,14 @@ msgstr "실행할 코드 포함"
 #: src/pages/onboarding/model-step.tsx
 msgid "Context limit"
 msgstr "컨텍스트 한도"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call: {used}"
+msgstr ""
 
 #: src/components/ConfirmIdentityDialog.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -4284,6 +4309,10 @@ msgstr "받은편지함 정리"
 msgid "Include API keys"
 msgstr "API 키 포함"
 
+#: src/pages/shell/reply-time.tsx
+msgid "includes {helperCalls} helper calls"
+msgstr ""
+
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "걸려온 전화"
@@ -4624,6 +4653,10 @@ msgstr "미리보기를 불러오는 중…"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Loading voice providers…"
 msgstr "음성 서비스를 불러오는 중…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Loading where the time went…"
+msgstr ""
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/marketplace-inspector.tsx
@@ -4969,6 +5002,7 @@ msgstr "모드"
 #: src/pages/routine-editor/model-settings.tsx
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Model"
 msgstr "모델"
 
@@ -5510,6 +5544,10 @@ msgstr "Rakazo 카탈로그에 없음"
 msgid "Not in the plugin catalog"
 msgstr "플러그인 카탈로그에 없음"
 
+#: src/pages/shell/reply-time.tsx
+msgid "not measured"
+msgstr ""
+
 #: src/components/GitHubStarPrompt.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
@@ -6031,6 +6069,10 @@ msgstr "PR 리뷰어"
 msgid "Preferences"
 msgstr "환경설정"
 
+#: src/pages/shell/reply-time.tsx
+msgid "preparing each call, saving progress"
+msgstr ""
+
 #: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
@@ -6112,6 +6154,7 @@ msgstr "대기 중"
 
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Rakazo"
 msgstr "Rakazo"
 
@@ -6749,6 +6792,10 @@ msgstr "실행"
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Runs when this bot receives a verified message from this provider."
 msgstr "이 봇이 이 서비스에서 확인된 메시지를 받으면 실행됩니다."
+
+#: src/pages/shell/reply-time.tsx
+msgid "Safety review"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Sales & CRM"
@@ -7805,6 +7852,10 @@ msgstr "사고: {0}"
 msgid "This account is deactivated"
 msgstr "이 계정은 비활성화되었습니다"
 
+#: src/pages/shell/reply-time.tsx
+msgid "This answer's breakdown isn't available."
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "This app needs its own sign-in setup to connect."
 msgstr "이 앱을 연결하려면 자체 로그인 설정이 필요합니다."
@@ -8024,6 +8075,14 @@ msgstr "사이드바 표시/숨기기"
 msgid "Tokens"
 msgstr "토큰"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read · {outText} written"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read ({reused}% reused from cache) · {outText} written"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 msgid "Tomorrow"
 msgstr "내일"
@@ -8047,6 +8106,7 @@ msgstr "도구 이름"
 #: src/components/ApprovalRulesSettings.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Tools"
 msgstr "도구"
 
@@ -8449,6 +8509,10 @@ msgstr ""
 msgid "Waiting for author"
 msgstr ""
 
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting for you"
+msgstr ""
+
 #: src/pages/shell/work-nav.tsx
 msgid "waiting for your review"
 msgstr ""
@@ -8456,6 +8520,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "줄에서 기다리는 중…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting to start"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"

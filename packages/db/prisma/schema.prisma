@@ -2045,9 +2045,15 @@ model UsageRecord {
   /// Durable attribution, deliberately without lifecycle foreign keys.
   parentRunId        String?
   agentId            String?
+  /// How long the call took, how long until its first output, and the model's context window,
+  /// for the answer breakdown. Null for calls recorded before they were measured.
+  durationMs         Int?
+  firstTokenMs       Int?
+  contextWindow      Int?
   createdAt          DateTime @default(now())
 
   @@index([spaceId, userId, createdAt])
+  @@index([runId])
   @@map("usage_records")
 }
 

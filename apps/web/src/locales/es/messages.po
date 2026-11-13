@@ -188,6 +188,14 @@ msgstr "{botCount, plural, one {¿Eliminar {name} y su # bot?} other {¿Eliminar
 msgid "{botName}’s computer"
 msgstr "Computadora de {botName}"
 
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls · first word after {firstWord} on average"
+msgstr ""
+
 #: src/components/vault/VaultItemEditor.tsx
 msgid "{commandVariable} is reserved and cannot be used as a command variable. Choose another name."
 msgstr "{commandVariable} está reservada y no puede usarse como variable de comando. Elige otro nombre."
@@ -401,6 +409,10 @@ msgstr "{provider} tardó demasiado en responder. Vuelve a intentarlo."
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "{remaining} left"
 msgstr "Quedan {remaining}"
+
+#: src/pages/shell/reply-time.tsx
+msgid "{reviewCalls} calls"
+msgstr ""
 
 #: src/pages/BillingSettingsPanel.tsx
 msgid "{seats, plural, one {# seat} other {# seats}}"
@@ -1062,6 +1074,11 @@ msgstr "Contestar"
 #: src/components/AskCard.tsx
 msgid "Answered"
 msgstr "Respondido"
+
+#. placeholder {0}: formatDuration(data.totalMs)
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {0}"
+msgstr ""
 
 #: src/pages/shell/reply-time.tsx
 msgid "Answered in {total}"
@@ -2286,6 +2303,14 @@ msgstr "Contiene código ejecutable"
 #: src/pages/onboarding/model-step.tsx
 msgid "Context limit"
 msgstr "Límite de contexto"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call: {used}"
+msgstr ""
 
 #: src/components/ConfirmIdentityDialog.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -4284,6 +4309,10 @@ msgstr "Clasificación del correo"
 msgid "Include API keys"
 msgstr "Incluir claves de API"
 
+#: src/pages/shell/reply-time.tsx
+msgid "includes {helperCalls} helper calls"
+msgstr ""
+
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "Llamada entrante"
@@ -4624,6 +4653,10 @@ msgstr "Cargando vista previa…"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Loading voice providers…"
 msgstr "Cargando proveedores de voz…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Loading where the time went…"
+msgstr ""
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/marketplace-inspector.tsx
@@ -4969,6 +5002,7 @@ msgstr "Modo"
 #: src/pages/routine-editor/model-settings.tsx
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Model"
 msgstr "Modelo"
 
@@ -5510,6 +5544,10 @@ msgstr "No está en el catálogo de Rakazo"
 msgid "Not in the plugin catalog"
 msgstr "No está en el catálogo de plugins"
 
+#: src/pages/shell/reply-time.tsx
+msgid "not measured"
+msgstr ""
+
 #: src/components/GitHubStarPrompt.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
@@ -6031,6 +6069,10 @@ msgstr "Revisor de PR"
 msgid "Preferences"
 msgstr "Preferencias"
 
+#: src/pages/shell/reply-time.tsx
+msgid "preparing each call, saving progress"
+msgstr ""
+
 #: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
@@ -6112,6 +6154,7 @@ msgstr "En cola"
 
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Rakazo"
 msgstr "Rakazo"
 
@@ -6749,6 +6792,10 @@ msgstr "Ejecuciones"
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Runs when this bot receives a verified message from this provider."
 msgstr "Se ejecuta cuando este bot recibe un mensaje verificado de este proveedor."
+
+#: src/pages/shell/reply-time.tsx
+msgid "Safety review"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Sales & CRM"
@@ -7805,6 +7852,10 @@ msgstr "Razonamiento: {0}"
 msgid "This account is deactivated"
 msgstr "Esta cuenta está desactivada"
 
+#: src/pages/shell/reply-time.tsx
+msgid "This answer's breakdown isn't available."
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "This app needs its own sign-in setup to connect."
 msgstr "Esta app necesita su propia configuración de inicio de sesión para conectarse."
@@ -8024,6 +8075,14 @@ msgstr "Mostrar u ocultar barra lateral"
 msgid "Tokens"
 msgstr "Tokens"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read · {outText} written"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read ({reused}% reused from cache) · {outText} written"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 msgid "Tomorrow"
 msgstr "Mañana"
@@ -8047,6 +8106,7 @@ msgstr "Nombre de la herramienta"
 #: src/components/ApprovalRulesSettings.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -8449,6 +8509,10 @@ msgstr ""
 msgid "Waiting for author"
 msgstr ""
 
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting for you"
+msgstr ""
+
 #: src/pages/shell/work-nav.tsx
 msgid "waiting for your review"
 msgstr ""
@@ -8456,6 +8520,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "Esperando en la cola…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting to start"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"

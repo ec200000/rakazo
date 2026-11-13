@@ -188,6 +188,14 @@ msgstr "{botCount, plural, one {{name} और उसका # बॉट हटा
 msgid "{botName}’s computer"
 msgstr "{botName} का कंप्यूटर"
 
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "{calls} calls · first word after {firstWord} on average"
+msgstr ""
+
 #: src/components/vault/VaultItemEditor.tsx
 msgid "{commandVariable} is reserved and cannot be used as a command variable. Choose another name."
 msgstr "{commandVariable} आरक्षित है और कमांड वेरिएबल के रूप में इस्तेमाल नहीं हो सकता। दूसरा नाम चुनें।"
@@ -401,6 +409,10 @@ msgstr "{provider} ने जवाब देने में बहुत स�
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "{remaining} left"
 msgstr "{remaining} शेष"
+
+#: src/pages/shell/reply-time.tsx
+msgid "{reviewCalls} calls"
+msgstr ""
 
 #: src/pages/BillingSettingsPanel.tsx
 msgid "{seats, plural, one {# seat} other {# seats}}"
@@ -1062,6 +1074,11 @@ msgstr "कॉल उठाएँ"
 #: src/components/AskCard.tsx
 msgid "Answered"
 msgstr "उत्तर दिया गया"
+
+#. placeholder {0}: formatDuration(data.totalMs)
+#: src/pages/shell/reply-time.tsx
+msgid "Answered in {0}"
+msgstr ""
 
 #: src/pages/shell/reply-time.tsx
 msgid "Answered in {total}"
@@ -2286,6 +2303,14 @@ msgstr "चलाने योग्य कोड है"
 #: src/pages/onboarding/model-step.tsx
 msgid "Context limit"
 msgstr "कॉन्टेक्स्ट सीमा"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Context on the last call: {used}"
+msgstr ""
 
 #: src/components/ConfirmIdentityDialog.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -4284,6 +4309,10 @@ msgstr "इनबॉक्स छंटाई"
 msgid "Include API keys"
 msgstr "API कुंजियाँ शामिल करें"
 
+#: src/pages/shell/reply-time.tsx
+msgid "includes {helperCalls} helper calls"
+msgstr ""
+
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "आने वाली कॉल"
@@ -4624,6 +4653,10 @@ msgstr "प्रीव्यू लोड हो रहा है…"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Loading voice providers…"
 msgstr "आवाज़ प्रोवाइडर्स लोड हो रहे हैं…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Loading where the time went…"
+msgstr ""
 
 #: src/components/bot-templates/bot-templates-dialog.tsx
 #: src/components/integrations/marketplace-inspector.tsx
@@ -4969,6 +5002,7 @@ msgstr "मोड"
 #: src/pages/routine-editor/model-settings.tsx
 #: src/pages/shell/agent-import-plan.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Model"
 msgstr "मॉडल"
 
@@ -5510,6 +5544,10 @@ msgstr "Rakazo के कैटलॉग में नहीं"
 msgid "Not in the plugin catalog"
 msgstr "प्लगइन कैटलॉग में नहीं"
 
+#: src/pages/shell/reply-time.tsx
+msgid "not measured"
+msgstr ""
+
 #: src/components/GitHubStarPrompt.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
@@ -6031,6 +6069,10 @@ msgstr "PR रिव्यूअर"
 msgid "Preferences"
 msgstr "प्राथमिकताएँ"
 
+#: src/pages/shell/reply-time.tsx
+msgid "preparing each call, saving progress"
+msgstr ""
+
 #: src/components/integrations/marketplace-inspector.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/plugins/github-import.tsx
@@ -6112,6 +6154,7 @@ msgstr "कतार में"
 
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Rakazo"
 msgstr "Rakazo"
 
@@ -6749,6 +6792,10 @@ msgstr "रन"
 #: src/pages/routine-editor/trigger-cards.tsx
 msgid "Runs when this bot receives a verified message from this provider."
 msgstr "जब इस बॉट को इस प्रोवाइडर से सत्यापित संदेश मिलता है, तब चलता है।"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Safety review"
+msgstr ""
 
 #: src/pages/plugins/use-catalog-browse.ts
 msgid "Sales & CRM"
@@ -7805,6 +7852,10 @@ msgstr "सोच: {0}"
 msgid "This account is deactivated"
 msgstr "यह खाता निष्क्रिय है"
 
+#: src/pages/shell/reply-time.tsx
+msgid "This answer's breakdown isn't available."
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "This app needs its own sign-in setup to connect."
 msgstr "कनेक्ट करने के लिए इस ऐप को अपना साइन-इन सेटअप चाहिए।"
@@ -8024,6 +8075,14 @@ msgstr "साइडबार दिखाएं या छिपाएं"
 msgid "Tokens"
 msgstr "टोकन"
 
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read · {outText} written"
+msgstr ""
+
+#: src/pages/shell/reply-time.tsx
+msgid "Tokens: {inText} read ({reused}% reused from cache) · {outText} written"
+msgstr ""
+
 #: src/pages/BotContextMenu.tsx
 msgid "Tomorrow"
 msgstr "कल"
@@ -8047,6 +8106,7 @@ msgstr "टूल का नाम"
 #: src/components/ApprovalRulesSettings.tsx
 #: src/pages/plugins/connector-detail.tsx
 #: src/pages/shell/bot-settings-sections.tsx
+#: src/pages/shell/reply-time.tsx
 msgid "Tools"
 msgstr "टूल"
 
@@ -8449,6 +8509,10 @@ msgstr ""
 msgid "Waiting for author"
 msgstr ""
 
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting for you"
+msgstr ""
+
 #: src/pages/shell/work-nav.tsx
 msgid "waiting for your review"
 msgstr ""
@@ -8456,6 +8520,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "कतार में प्रतीक्षा…"
+
+#: src/pages/shell/reply-time.tsx
+msgid "Waiting to start"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"

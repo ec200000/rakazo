@@ -748,6 +748,12 @@ export type AgentRuntimeEvent =
       callId?: string;
       operationKind?: UsageOperationKind;
       agentId?: string;
+      /** Wall time of this call, from sending the request to its last streamed event. */
+      durationMs?: number;
+      /** From sending the request to the first streamed output: mostly reading the prompt. */
+      firstTokenMs?: number;
+      /** The model's context window for this call, in tokens. */
+      contextWindow?: number;
     } & AgentUsage)
   | { type: "checkpoint"; blob: string }
   | {

@@ -1,6 +1,12 @@
 import type { ThreadMessage } from "@rakazo/contracts";
 import { describe, expect, it } from "vitest";
-import { formatDuration, replyTimings } from "./reply-timing";
+import {
+  breakdownParts,
+  contextShare,
+  formatDuration,
+  formatTokens,
+  replyTimings,
+} from "./reply-timing";
 
 let seq = 0;
 function msg(role: ThreadMessage["role"], second: number, extra: Partial<ThreadMessage> = {}) {
@@ -29,6 +35,7 @@ describe("reply timings", () => {
       askedAt: Date.parse(ask2.createdAt),
       firstReplyAt: Date.parse(a.createdAt),
       lastReplyAt: Date.parse(b.createdAt),
+      runId: "r1",
     });
   });
 
@@ -53,5 +60,42 @@ describe("reply timings", () => {
     expect(formatDuration(4_200)).toBe("4s");
     expect(formatDuration(65_000)).toBe("1m 05s");
     expect(formatDuration(3_720_000)).toBe("1h 02m");
+  });
+
+  it("formats short durations precisely and token counts compactly", () => {
+    expect(formatDuration(450, { precise: true })).toBe("450ms");
+    expect(formatDuration(1_240, { precise: true })).toBe("1.2s");
+    expect(formatDuration(12_400, { precise: true })).toBe("12s");
+    expect(formatTokens(950)).toBe("950");
+    expect(formatTokens(12_400)).toBe("12.4k");
+    expect(formatTokens(128_000)).toBe("128k");
+    expect(formatTokens(1_250_000)).toBe("1.3M");
+  });
+
+  it("lists the parts that took time and the context share", () => {
+    const data = {
+      totalMs: 10_000,
+      queuedMs: 0,
+      waitingMs: 0,
+      modelMs: null,
+      toolsMs: 3_000,
+      otherMs: 7_000,
+      model: "m",
+      modelCalls: 2,
+      firstTokenMs: null,
+      reviewCalls: 0,
+      reviewMs: null,
+      helperCalls: 0,
+      tokens: { input: null, cached: null, output: null, reasoning: null },
+      tools: [],
+      context: { usedTokens: 32_000, windowTokens: 128_000 },
+    };
+    expect(breakdownParts(data).map((part) => [part.key, part.unknown])).toEqual([
+      ["model", true],
+      ["tools", false],
+      ["other", false],
+    ]);
+    expect(contextShare(data.context)).toBe(25);
+    expect(contextShare({ usedTokens: 5, windowTokens: null })).toBeNull();
   });
 });
