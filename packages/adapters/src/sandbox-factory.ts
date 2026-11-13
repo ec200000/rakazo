@@ -11,6 +11,7 @@ import type { KubernetesSandboxOptions } from "./kubernetes-sandbox.js";
 import { KubernetesSandboxProvider } from "./kubernetes-sandbox.js";
 import { NoneSandboxProvider } from "./none-sandbox.js";
 import { NovitaSandboxProvider } from "./novita-sandbox.js";
+import { packageMirrorEnv, packageMirrorsFromEnv } from "./package-mirrors.js";
 import { RailwaySandboxProvider } from "./railway-sandbox.js";
 
 export interface SandboxProviderOptions {
@@ -160,6 +161,7 @@ export async function createSandboxProvider(
         runtimeClassName: opts.kubernetesRuntimeClassName,
         runAsUser: opts.kubernetesRunAsUser,
         serviceAccountName: opts.kubernetesServiceAccount,
+        extraEnv: packageMirrorEnv(packageMirrorsFromEnv()),
         computerImage: opts.kubernetesComputerImage,
         cpuLimit: opts.kubernetesCpuLimit,
         memoryLimit: opts.kubernetesMemoryLimit,

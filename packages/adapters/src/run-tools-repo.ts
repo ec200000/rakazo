@@ -1,29 +1,29 @@
 /**
- * repo_status, repo_sync and repo_push: fixed git scripts run in the bot's computer for its
- * repository. The person's git credential reaches only the one command that needs the network,
- * as git config in its environment, and is redacted from everything the command prints; the
- * model never sees it and cannot put it in a command of its own.
+ * repo_status, repo_sync and repo_push: fixed git scripts run in the bot's computer, once per
+ * repository the bot works on (or the one it names). The person's git credential reaches only
+ * the one command that needs the network, as git config in its environment, and is redacted
+ * from everything the command prints; the model never sees it and cannot put it in a command of
+ * its own.
  */
 import { randomUUID } from "node:crypto";
 import type { ComputerCommand } from "@rakazo/contracts";
 import { COMPUTER_COMMAND_OUTPUT_MAX_CHARS, GitBranchNameSchema } from "@rakazo/contracts";
 import { redactSecrets, sandboxCommandTimeoutMs } from "@rakazo/core";
-import { RunHistoryWriteError } from "@rakazo/db";
+import { botRepositories, RunHistoryWriteError } from "@rakazo/db";
 import { getLogger } from "@rakazo/logging";
+import type { BotRepositoryEntry } from "./bot-repository.js";
 import {
+  botRepositoryEntries,
   REPO_PUSH_SCRIPT,
   REPO_STATUS_SCRIPT,
   REPO_SYNC_SCRIPT,
   repositoryCredential,
-  repositoryFolder,
   repositoryGitEnv,
 } from "./bot-repository.js";
 import { resolveBotWorkspaceCwd } from "./computer-support.js";
 import type { RunContext } from "./run-context.js";
 import { addRunSecrets } from "./run-context.js";
 import type { ToolCall, ToolHandlers } from "./run-tool-gate.js";
-
-const DEFAULT_BASE_BRANCH = "main";
 
 function record(ctx: RunContext, payload: ComputerCommand) {
   const { deps, run, runId, bot, thread } = ctx;
@@ -41,57 +41,68 @@ function record(ctx: RunContext, payload: ComputerCommand) {
     });
 }
 
-async function runRepoScript(
+/** The bot's repositories with valid base branches, and the one branch the person chose. */
+export function botRepositoryPlan(bot: {
+  repos?: unknown;
+  repoUrl?: string | null;
+  repoBaseBranch?: string | null;
+  repoBranch?: string | null;
+}) {
+  const repositories = botRepositoryEntries(
+    botRepositories(bot).map((repo) => ({
+      ...repo,
+      baseBranch:
+        repo.baseBranch && GitBranchNameSchema.safeParse(repo.baseBranch).success
+          ? repo.baseBranch
+          : null,
+    })),
+  );
+  const branch =
+    bot.repoBranch && GitBranchNameSchema.safeParse(bot.repoBranch).success ? bot.repoBranch : "";
+  return { repositories, branch };
+}
+
+type RepoResult = {
+  repository: string;
+  folder: string;
+  baseBranch: string;
+  code: number;
+  stdout: string;
+  stderr: string;
+};
+
+async function runInRepository(
   ctx: RunContext,
   call: ToolCall,
   script: string,
-  options: { network: boolean },
-) {
+  repo: BotRepositoryEntry,
+  branch: string,
+  network: boolean,
+  person: { name: string | null; email: string | null } | null,
+): Promise<RepoResult> {
   const { bot, deps, run, context } = ctx;
-  const repoUrl = bot.repoUrl;
-  if (!repoUrl)
-    return call.finish({ error: "This bot has no repository. Set one in its settings." });
-  const branch =
-    bot.repoBranch && GitBranchNameSchema.safeParse(bot.repoBranch).success ? bot.repoBranch : "";
-  const base =
-    bot.repoBaseBranch && GitBranchNameSchema.safeParse(bot.repoBaseBranch).success
-      ? bot.repoBaseBranch
-      : DEFAULT_BASE_BRANCH;
-  if (call.name === "repo_push" && !branch) {
-    return call.finish({
-      error:
-        "No working branch is set. Ask the person to choose one in the Branch box above the chat.",
-    });
-  }
-  const credential = options.network
+  const credential = network
     ? await repositoryCredential(
         { prisma: deps.prisma, secretStore: deps.secretStore },
         { spaceId: run.spaceId, userId: run.userId },
-        repoUrl,
+        repo.url,
       )
     : null;
   if (credential) addRunSecrets(ctx, credential.secrets);
-  const person = options.network
-    ? await deps.prisma.user.findUnique({
-        where: { id: run.userId },
-        select: { name: true, email: true },
-      })
-    : null;
-  const folder = repositoryFolder(repoUrl);
   const env: Record<string, string> = {
-    ...(options.network ? repositoryGitEnv(repoUrl, credential) : {}),
-    REPO_URL: repoUrl,
-    REPO_DIR: folder,
-    REPO_BASE: base,
+    ...(network ? repositoryGitEnv(repo.url, credential) : {}),
+    REPO_URL: repo.url,
+    REPO_DIR: repo.folder,
+    REPO_BASE: repo.baseBranch,
     REPO_BRANCH: branch,
     ...(person?.name ? { REPO_USER_NAME: person.name } : {}),
     ...(person?.email ? { REPO_USER_EMAIL: person.email } : {}),
   };
   const cwd = resolveBotWorkspaceCwd(ctx.computer.mode, bot.id, undefined);
   const commandEvent = {
-    executionId: call.executionId,
+    executionId: `${call.executionId}:${repo.folder}`,
     kind: "shell" as const,
-    command: call.name,
+    command: `${call.name} ${repo.folder}`,
     cwd: cwd ?? ".",
   };
   await record(ctx, { ...commandEvent, status: "running", exitCode: null, output: "" });
@@ -132,17 +143,65 @@ async function runRepoScript(
         ? " The server refused the saved credential; ask the person to check their Azure DevOps connection in Integrations."
         : " The server asked for a login; ask the person to connect Azure DevOps in Integrations with a personal access token."
       : "";
-  return call.finish({
+  return {
+    repository: repo.url,
+    folder: repo.folder,
+    baseBranch: repo.baseBranch,
+    code,
     stdout: safeOut,
     stderr: `${safeErr}${hint}`,
-    code,
-    repository: repoUrl,
-    folder,
-    baseBranch: base,
+  };
+}
+
+async function runRepoScript(
+  ctx: RunContext,
+  call: ToolCall,
+  script: string,
+  options: { network: boolean },
+) {
+  const { repositories, branch } = botRepositoryPlan(ctx.bot);
+  if (repositories.length === 0) {
+    return call.finish({ error: "This bot has no repository. Set one in its settings." });
+  }
+  const wanted = typeof call.args.repository === "string" ? call.args.repository.trim() : "";
+  const selected = wanted
+    ? repositories.filter(
+        (repo) =>
+          repo.folder === wanted ||
+          repo.folder === `repos/${wanted}` ||
+          repo.url === wanted ||
+          repo.url.replace(/\.git$/, "") === wanted.replace(/\.git$/, ""),
+      )
+    : repositories;
+  if (selected.length === 0) {
+    return call.finish({
+      error: `No repository named ${wanted}. This bot's repositories: ${repositories.map((repo) => repo.folder).join(", ")}.`,
+    });
+  }
+  if (call.name === "repo_push" && !branch) {
+    return call.finish({
+      error:
+        "No working branch is set. Ask the person to choose one in the Branch box above the chat.",
+    });
+  }
+  const person = options.network
+    ? await ctx.deps.prisma.user.findUnique({
+        where: { id: ctx.run.userId },
+        select: { name: true, email: true },
+      })
+    : null;
+  const results: RepoResult[] = [];
+  // One at a time: the repositories share the computer, and output stays in order.
+  for (const repo of selected) {
+    results.push(await runInRepository(ctx, call, script, repo, branch, options.network, person));
+  }
+  const pushed = call.name === "repo_push" ? results.filter((result) => result.code === 0) : [];
+  return call.finish({
     workingBranch: branch || null,
-    ...(call.name === "repo_push" && code === 0
+    results,
+    ...(pushed.length
       ? {
-          next: `Pushed. If this finishes the task, ask the person with ask_user whether to open a pull request from ${branch} into ${base}.`,
+          next: `Pushed ${pushed.map((result) => result.folder).join(", ")}. If this finishes the task, ask the person with ask_user, once for each pushed repository, whether to open a pull request from ${branch} into its base branch.`,
         }
       : {}),
   });

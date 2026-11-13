@@ -3,6 +3,7 @@ import type {
   AgentSkillCatalogEntry,
   Bot,
   BotAvatarSet,
+  BotRepositoryInput,
   ComputerMode,
   ModelCatalogEntry,
   ReplyMode,
@@ -109,8 +110,7 @@ export function BotSettings({
     modelId?: string | null;
     thinkingLevel?: ThinkingLevel | null;
     disabledBuiltinTools?: string[];
-    repoUrl?: string | null;
-    repoBaseBranch?: string | null;
+    repos?: BotRepositoryInput[];
     repoBranch?: string | null;
   }) => Promise<void>;
   onExport: () => Promise<void>;

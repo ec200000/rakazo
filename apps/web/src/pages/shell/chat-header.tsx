@@ -87,8 +87,8 @@ export function ChatHeader({
         </span>
       </Button>
       <div className="flex items-center justify-self-end gap-2">
-        {!inGroup && active?.repoUrl ? <BranchBox bot={active} /> : null}
-        {!inGroup && active?.repoUrl ? (
+        {!inGroup && active?.repos?.length ? <BranchBox bot={active} /> : null}
+        {!inGroup && active?.repos?.length ? (
           <IconTooltip label={codeOpen ? t`Hide code` : t`Show code`}>
             <Button
               variant="floating"

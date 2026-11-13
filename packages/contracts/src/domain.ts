@@ -88,8 +88,18 @@ export const BotSchema = z.object({
   title: z.string(),
   description: z.string(),
   instructions: z.string(),
-  repoUrl: z.string().nullable().optional(),
-  repoBaseBranch: z.string().nullable().optional(),
+  /** The repositories this bot works on, each in its own folder under repos/. */
+  repos: z
+    .array(
+      z.object({
+        url: z.string(),
+        baseBranch: z.string().nullable(),
+        /** The Jenkins multibranch job that builds this repository, e.g. team/job/app. */
+        jenkinsJob: z.string().nullable(),
+      }),
+    )
+    .optional(),
+  /** The one branch the person chose to work on, in every repository. */
   repoBranch: z.string().nullable().optional(),
   instructionHistory: z.array(InstructionVersionSchema).optional(),
   color: z.string(),
@@ -497,6 +507,26 @@ export const GitRepositoryUrlSchema = z
     }
   }, "Use the repository's https clone URL, without a user name or token");
 
+export const MAX_BOT_REPOSITORIES = 10;
+
+/** A Jenkins job path as in its URL after the first /job/, e.g. `team/job/app`. */
+const JenkinsJobInput = z
+  .string()
+  .trim()
+  .min(1)
+  .max(500)
+  .refine(
+    (value) => value.split("/").every((part) => part !== "" && part !== "." && part !== ".."),
+    "Use the job's path as in its URL after /job/, e.g. team/job/app",
+  );
+
+export const BotRepositoryInput = z.object({
+  url: GitRepositoryUrlSchema,
+  baseBranch: GitBranchNameSchema.nullable().default(null),
+  jenkinsJob: JenkinsJobInput.nullable().default(null),
+});
+export type BotRepositoryInput = z.infer<typeof BotRepositoryInput>;
+
 export const UpdateBotInput = z
   .object({
     botId: Id,
@@ -504,9 +534,8 @@ export const UpdateBotInput = z
     description: z.string().trim().max(BOT_DESCRIPTION_MAX_LENGTH).optional(),
     instructions: z.string().trim().max(BOT_INSTRUCTIONS_MAX_LENGTH).optional(),
     expectedInstructions: z.string().max(BOT_INSTRUCTIONS_MAX_LENGTH).optional(),
-    /** The repository this bot works on; null removes it. */
-    repoUrl: GitRepositoryUrlSchema.nullable().optional(),
-    repoBaseBranch: GitBranchNameSchema.nullable().optional(),
+    /** The repositories this bot works on, in order; an empty list removes them. */
+    repos: z.array(BotRepositoryInput).max(MAX_BOT_REPOSITORIES).optional(),
     /** The branch the person chose to work on now; null clears it. */
     repoBranch: GitBranchNameSchema.nullable().optional(),
     /** Ignored; installed mobile apps may still send it. */

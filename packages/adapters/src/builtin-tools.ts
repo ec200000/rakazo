@@ -458,20 +458,47 @@ export const builtinAgentTools: ConnectorTool[] = [
   {
     name: "repo_status",
     description:
-      "Your git repository's local state: the folder it is in, the checked-out branch, uncommitted changes and recent commits. Needs no network.",
-    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      "Your git repositories' local state: each one's folder, checked-out branch, uncommitted changes and recent commits. Needs no network.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        repository: {
+          type: "string",
+          description: "One repository's folder name (as repo_status lists it); omit for all.",
+        },
+      },
+      additionalProperties: false,
+    },
   },
   {
     name: "repo_sync",
     description:
-      "Clone your repository if needed, fetch it, and switch to the working branch the person chose (creating it from the base branch when it does not exist yet). Run this before working on code and after the person changes the branch. Git credentials are handled for you; never put tokens in commands.",
-    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      "Clone your repositories if needed, fetch them, and switch each to the working branch the person chose (creating it from that repository's base branch when it does not exist yet). Run this before working on code and after the person changes the branch. Git credentials are handled for you; never put tokens in commands.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        repository: {
+          type: "string",
+          description: "One repository's folder name (as repo_status lists it); omit for all.",
+        },
+      },
+      additionalProperties: false,
+    },
   },
   {
     name: "repo_push",
     description:
-      "Push the working branch to the repository's server. Commit with git in the shell first. Only the working branch the person chose can be pushed.",
-    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      "Push the working branch of each repository you changed (or the one you name) to its server. Commit with git in the shell first. Only the working branch the person chose can be pushed.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        repository: {
+          type: "string",
+          description: "One repository's folder name (as repo_status lists it); omit for all.",
+        },
+      },
+      additionalProperties: false,
+    },
   },
   {
     name: "shell",

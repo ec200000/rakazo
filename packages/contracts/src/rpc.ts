@@ -622,9 +622,22 @@ export const appContract = {
     duplicate: oc.input(botId).output(BotSchema),
     reorder: oc.input(ReorderBotsInput).output(z.object({ ok: z.literal(true) })),
     /** Branches of the bot's repository, read with its person's git credentials. */
-    repositoryBranches: oc
-      .input(z.object({ botId: Id }))
-      .output(z.object({ branches: z.array(z.string()), error: z.string().optional() })),
+    repositoryBranches: oc.input(z.object({ botId: Id })).output(
+      z.object({
+        /** Every branch name in any of the bot's repositories. */
+        branches: z.array(z.string()),
+        repositories: z
+          .array(
+            z.object({
+              folder: z.string(),
+              branches: z.array(z.string()),
+              error: z.string().optional(),
+            }),
+          )
+          .optional(),
+        error: z.string().optional(),
+      }),
+    ),
     update: oc.input(UpdateBotInput).output(BotSchema),
     restoreInstructions: oc
       .input(
@@ -890,14 +903,28 @@ export const appContract = {
     screenUrl: oc.input(botId).output(z.object({ url: z.string().nullable() })),
     heartbeat: oc.input(botId).output(z.object({ ok: z.literal(true) })),
     /** What the bot's working branch changes against its base branch. */
-    repoChanges: oc.input(botId).output(RepoChangesSchema),
+    repoChanges: oc
+      .input(z.object({ botId: Id, folder: z.string().max(300).optional() }))
+      .output(RepoChangesSchema),
     /** One changed file's unified diff against the base branch. */
     repoDiff: oc
-      .input(z.object({ botId: Id, path: z.string().min(1).max(1000) }))
+      .input(
+        z.object({
+          botId: Id,
+          path: z.string().min(1).max(1000),
+          folder: z.string().max(300).optional(),
+        }),
+      )
       .output(z.object({ path: z.string(), diff: z.string(), truncated: z.boolean() })),
     /** Runs the person's own command in their bot's running computer, in its repository. */
     run: oc
-      .input(z.object({ botId: Id, command: z.string().trim().min(1).max(4000) }))
+      .input(
+        z.object({
+          botId: Id,
+          command: z.string().trim().min(1).max(4000),
+          folder: z.string().max(300).optional(),
+        }),
+      )
       .output(ComputerRunResultSchema),
   },
   /** Pull requests (and later automations and issues) acting as the signed-in person. */

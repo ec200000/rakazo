@@ -185,6 +185,7 @@ import {
 } from "./run-tool-selection.js";
 import { applyTool } from "./run-tools.js";
 import { historyMyChatsAllowed } from "./run-tools-memory.js";
+import { botRepositoryPlan } from "./run-tools-repo.js";
 import type { UserComputerState } from "./run-tools-user-computer.js";
 import { USER_COMPUTER_SHELL_TOOL, userComputerOwner } from "./run-tools-user-computer.js";
 import { createRunTrustLoaders } from "./run-trust.js";
@@ -1270,7 +1271,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             trigger: run.trigger,
             semanticMemoryEnabled,
             semanticMemoryForgets: Boolean(semanticMemory?.forget),
-            repository: Boolean(bot.repoUrl),
+            repository: botRepositoryPlan(bot).repositories.length > 0,
             mediaImagesEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.images),
             mediaVideoEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.video),
             paidServicesEnabled: Boolean(paidServices),
@@ -1769,7 +1770,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
               instructions: userTurnInstructions({
                 botInstructions: [
                   runIdentityInstruction(bot, run.trigger),
-                  botRepositoryInstruction(bot),
+                  botRepositoryInstruction(botRepositoryPlan(bot)),
                   botEmail
                     ? botEmailInstruction(botEmail, {
                         // Only the tools this bot has: its owner may turn any of them off.

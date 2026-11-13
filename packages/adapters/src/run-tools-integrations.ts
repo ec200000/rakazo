@@ -2,6 +2,7 @@ import type { ConnectorApp } from "@rakazo/adapter-kit";
 import { isBackgroundRunTrigger, redactSecrets } from "@rakazo/core";
 import { normalizedHttpUrl } from "@rakazo/core/egress";
 import { getLogger } from "@rakazo/logging";
+import { createdPullRequest, watchCreatedPullRequest } from "./auto-pr-watch.js";
 import { executeCloudAgentTool } from "./cloud-agent-service.js";
 import { collectLogIds } from "./composio-connector.js";
 import { connectApp } from "./connect-app.js";
@@ -75,6 +76,9 @@ export async function connectorTool(ctx: RunContext, call: ToolCall) {
         }
       }
     }
+    // A pull request the bot opened is watched for review comments until it closes.
+    const opened = createdPullRequest(name, args, result);
+    if (opened) await watchCreatedPullRequest(deps, run, bot.id, opened);
     return call.finish(result);
   }
   return call.finish({ error: `unknown tool ${name}` });

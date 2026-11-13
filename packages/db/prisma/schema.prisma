@@ -999,6 +999,9 @@ model Bot {
   repoUrl                String?
   repoBaseBranch         String?
   repoBranch             String?
+  /// The repositories this bot works on: [{ url, baseBranch, jenkinsJob }]. Replaces repoUrl and
+  /// repoBaseBranch, which the migration copied in; repoBranch is the one branch for all of them.
+  repos                  Json?
   routines          Routine[]
   scratchpadItems   ScratchpadItem[]
   taughtSkills      TaughtSkill[]
@@ -1516,6 +1519,9 @@ model Routine {
   watch          Json?
   /// Last check's result (RoutineWatchStateSchema), written by the checker.
   watchState     Json?
+  /// Set on routines Rakazo manages for the bot (its branch's Jenkins build, a pull request it
+  /// opened); unique per bot, so they are updated and removed instead of duplicated.
+  autoKey        String?
   lastRunAt      DateTime?
   nextRunAt      DateTime?
   /// Runs in a row the model provider refused for the account; each one spaces out the schedule.
@@ -1526,6 +1532,7 @@ model Routine {
 
   @@index([active, nextRunAt])
   @@index([spaceId, botId])
+  @@unique([botId, autoKey])
   @@map("routines")
 }
 

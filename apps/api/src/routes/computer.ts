@@ -5,6 +5,7 @@ import { computerControlExpireJobKey } from "@rakazo/adapter-kit";
 import type { ComputerExecutionLease } from "@rakazo/adapters";
 import {
   applyTeachingDesktopInput,
+  botRepositoryPlan,
   COMPUTER_SCREEN_UNAVAILABLE,
   ComputerBusyError,
   checkpointAndStopComputer,
@@ -27,7 +28,6 @@ import {
   REPO_FILE_DIFF_SCRIPT,
   rateLimitEnds,
   releaseComputerExecutionLease,
-  repositoryFolder,
   resolveBotUploadPath,
   resolveBotWorkspaceCwd,
   resolveBotWorkspacePath,
@@ -45,7 +45,6 @@ import {
   attachmentSizeLabel,
   ComputerCommandSchema,
   foldComputerCommands,
-  GitBranchNameSchema,
 } from "@rakazo/contracts";
 import { ACTIVE_RUN_STATUSES, COMPUTER_USING_RUNS, scrollDirection } from "@rakazo/core";
 import { addScreenProxyCapability } from "@rakazo/core/node/screen-capability";
@@ -87,16 +86,18 @@ const PERSON_COMMAND_TIMEOUT_MS = 120_000;
 const PERSON_COMMAND_OUTPUT_MAX_CHARS = 200_000;
 
 type RepoBot = {
-  id: string;
+  repos?: unknown;
   repoUrl: string | null;
   repoBaseBranch: string | null;
   repoBranch: string | null;
 };
 
-function repoBase(bot: RepoBot) {
-  return bot.repoBaseBranch && GitBranchNameSchema.safeParse(bot.repoBaseBranch).success
-    ? bot.repoBaseBranch
-    : "main";
+/** The repository a code panel request is about: the one named by folder, else the first. */
+function chosenRepository(bot: RepoBot, folder: string | undefined) {
+  const { repositories } = botRepositoryPlan(bot);
+  const repo =
+    (folder ? repositories.find((entry) => entry.folder === folder) : undefined) ?? repositories[0];
+  return { repo: repo ?? null, repositories };
 }
 
 /** Runs a command in a running computer and collects its output, keeping only the end. */
@@ -890,10 +891,12 @@ export function computerRoutes(ctx: RouterContext) {
       }),
       repoChanges: authed.computer.repoChanges.handler(async ({ context, input }) => {
         const bot = await repos.getBot(context.actor, input.botId);
-        const baseBranch = repoBase(bot);
+        const { repo, repositories } = chosenRepository(bot, input.folder);
+        const baseBranch = repo?.baseBranch ?? "main";
         const empty: RepoChanges = {
           state: "no-repository",
           folder: null,
+          repositories: repositories.map((entry) => ({ folder: entry.folder, url: entry.url })),
           baseBranch,
           branch: null,
           workingBranch: bot.repoBranch,
@@ -903,8 +906,8 @@ export function computerRoutes(ctx: RouterContext) {
           files: [],
           truncated: false,
         };
-        if (!bot.repoUrl) return empty;
-        const folder = repositoryFolder(bot.repoUrl);
+        if (!repo) return empty;
+        const folder = repo.folder;
         const computer = bot.computer;
         if (computer?.state !== "running" || !computer.providerRef) {
           return { ...empty, state: "asleep" as const, folder };
@@ -934,6 +937,7 @@ export function computerRoutes(ctx: RouterContext) {
         return {
           ...changes,
           folder,
+          repositories: empty.repositories,
           baseBranch,
           workingBranch: bot.repoBranch,
         };
@@ -943,8 +947,9 @@ export function computerRoutes(ctx: RouterContext) {
         if (!isRepoRelativePath(input.path)) {
           throw new ORPCError("BAD_REQUEST", { message: "Not a path in the repository." });
         }
+        const { repo } = chosenRepository(bot, input.folder);
         const computer = bot.computer;
-        if (!bot.repoUrl || !computer || computer.state !== "running" || !computer.providerRef) {
+        if (!repo || !computer || computer.state !== "running" || !computer.providerRef) {
           throw new ORPCError("CONFLICT", { message: "Wake the computer to see changes." });
         }
         const mode = parseComputerMode(computer.scope);
@@ -955,8 +960,8 @@ export function computerRoutes(ctx: RouterContext) {
               argv: ["bash", "-c", REPO_FILE_DIFF_SCRIPT, "rakazo-repo-diff"],
               cwd: resolveBotWorkspaceCwd(mode, bot.id, undefined),
               env: {
-                REPO_DIR: repositoryFolder(bot.repoUrl),
-                REPO_BASE: repoBase(bot),
+                REPO_DIR: repo.folder,
+                REPO_BASE: repo.baseBranch,
                 REPO_PATH: input.path,
               },
               timeoutMs: REPO_READ_TIMEOUT_MS,
@@ -982,7 +987,7 @@ export function computerRoutes(ctx: RouterContext) {
         const mode = parseComputerMode(computer.scope);
         const home = resolveBotWorkspaceCwd(mode, bot.id, undefined);
         // Start in the repository when it has been cloned, else in the bot's workspace.
-        const folder = bot.repoUrl ? repositoryFolder(bot.repoUrl) : "";
+        const folder = chosenRepository(bot, input.folder).repo?.folder ?? "";
         const script = folder
           ? `if [ -d "$RAKAZO_REPO_DIR" ]; then cd "$RAKAZO_REPO_DIR"; fi\n${input.command}`
           : input.command;

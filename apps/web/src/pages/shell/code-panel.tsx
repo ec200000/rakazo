@@ -1,7 +1,17 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Bot, RepoChange } from "@rakazo/contracts";
 import { ACTIVE_RUN_STATUSES } from "@rakazo/core";
-import { Button, Input, Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from "@rakazo/ui-web";
+import {
+  Button,
+  Input,
+  NativeSelect,
+  NativeSelectOption,
+  Spinner,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@rakazo/ui-web";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChevronDown,
@@ -28,35 +38,58 @@ function working(bot: Pick<Bot, "status">) {
  * The bot's code beside its chat: what its branch changes (with diffs), its repository's
  * files, and the commands it ran, with a box to run one of your own.
  */
-export function CodePanel({
-  bot,
-}: {
-  bot: Pick<Bot, "id" | "status" | "repoUrl" | "repoBranch" | "repoBaseBranch">;
-}) {
+export function CodePanel({ bot }: { bot: Pick<Bot, "id" | "status" | "repos" | "repoBranch"> }) {
+  const { t } = useLingui();
   const [tab, setTab] = useState<CodeTab>("changes");
+  const repositories = bot.repos ?? [];
+  // Which repository the panel shows; the server names folders, so start with the first.
+  const [folder, setFolder] = useState<string | undefined>(undefined);
+  const queries = useSpaceQueries();
+  const listing = useQuery({
+    ...queries.computer.repoChanges.queryOptions({ input: { botId: bot.id } }),
+    enabled: repositories.length > 1,
+  });
+  const choices = listing.data?.repositories ?? [];
   return (
-    <Tabs value={tab} onValueChange={(next) => setTab(next as CodeTab)} data-testid="code-panel">
-      <TabsList className="w-full">
-        <TabsTrigger value="changes">
-          <Trans>Changes</Trans>
-        </TabsTrigger>
-        <TabsTrigger value="files">
-          <Trans>Files</Trans>
-        </TabsTrigger>
-        <TabsTrigger value="terminal">
-          <Trans>Terminal</Trans>
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="changes" className="pt-3">
-        <ChangesTab bot={bot} />
-      </TabsContent>
-      <TabsContent value="files" className="pt-3">
-        <FilesTab bot={bot} />
-      </TabsContent>
-      <TabsContent value="terminal" className="pt-3">
-        <TerminalTab bot={bot} />
-      </TabsContent>
-    </Tabs>
+    <div className="space-y-3">
+      {choices.length > 1 ? (
+        <NativeSelect
+          aria-label={t`Repository`}
+          data-testid="code-repository"
+          value={folder ?? choices[0]?.folder ?? ""}
+          onChange={(event) => setFolder(event.target.value)}
+          className="w-full"
+        >
+          {choices.map((choice) => (
+            <NativeSelectOption key={choice.folder} value={choice.folder}>
+              {choice.folder.replace(/^repos\//, "")}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
+      ) : null}
+      <Tabs value={tab} onValueChange={(next) => setTab(next as CodeTab)} data-testid="code-panel">
+        <TabsList className="w-full">
+          <TabsTrigger value="changes">
+            <Trans>Changes</Trans>
+          </TabsTrigger>
+          <TabsTrigger value="files">
+            <Trans>Files</Trans>
+          </TabsTrigger>
+          <TabsTrigger value="terminal">
+            <Trans>Terminal</Trans>
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="changes" className="pt-3">
+          <ChangesTab key={folder ?? ""} bot={bot} folder={folder} />
+        </TabsContent>
+        <TabsContent value="files" className="pt-3">
+          <FilesTab key={folder ?? ""} bot={bot} folder={folder} />
+        </TabsContent>
+        <TabsContent value="terminal" className="pt-3">
+          <TerminalTab bot={bot} folder={folder} />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
 
@@ -104,12 +137,18 @@ const STATUS_LETTER: Record<RepoChange["status"], { letter: string; className: s
   conflict: { letter: "!", className: "text-destructive" },
 };
 
-function ChangesTab({ bot }: { bot: Pick<Bot, "id" | "status" | "repoBranch"> }) {
+function ChangesTab({
+  bot,
+  folder,
+}: {
+  bot: Pick<Bot, "id" | "status" | "repoBranch">;
+  folder?: string;
+}) {
   const { t } = useLingui();
   const queries = useSpaceQueries();
   const busy = working(bot);
   const changes = useQuery({
-    ...queries.computer.repoChanges.queryOptions({ input: { botId: bot.id } }),
+    ...queries.computer.repoChanges.queryOptions({ input: { botId: bot.id, folder } }),
     refetchInterval: busy ? 4_000 : 20_000,
   });
   const [openPath, setOpenPath] = useState<string | null>(null);
@@ -280,7 +319,9 @@ function ChangesTab({ bot }: { bot: Pick<Bot, "id" | "status" | "repoBranch"> })
                   )}
                 </span>
               </button>
-              {openPath === file.path ? <FileDiff botId={bot.id} path={file.path} /> : null}
+              {openPath === file.path ? (
+                <FileDiff botId={bot.id} path={file.path} folder={folder} />
+              ) : null}
             </li>
           ))}
         </ul>
@@ -294,10 +335,10 @@ function ChangesTab({ bot }: { bot: Pick<Bot, "id" | "status" | "repoBranch"> })
   );
 }
 
-function FileDiff({ botId, path }: { botId: string; path: string }) {
+function FileDiff({ botId, path, folder }: { botId: string; path: string; folder?: string }) {
   const { t } = useLingui();
   const queries = useSpaceQueries();
-  const diff = useQuery(queries.computer.repoDiff.queryOptions({ input: { botId, path } }));
+  const diff = useQuery(queries.computer.repoDiff.queryOptions({ input: { botId, path, folder } }));
   if (diff.isPending) {
     return (
       <div className="flex justify-center border-t border-border py-3">
@@ -319,11 +360,13 @@ function FileDiff({ botId, path }: { botId: string; path: string }) {
   );
 }
 
-function FilesTab({ bot }: { bot: Pick<Bot, "id"> }) {
+function FilesTab({ bot, folder }: { bot: Pick<Bot, "id">; folder?: string }) {
   const { t } = useLingui();
   const queries = useSpaceQueries();
   // The server names the repository folder; the Changes tab shares this query.
-  const changes = useQuery(queries.computer.repoChanges.queryOptions({ input: { botId: bot.id } }));
+  const changes = useQuery(
+    queries.computer.repoChanges.queryOptions({ input: { botId: bot.id, folder } }),
+  );
   const root = changes.data?.folder ?? "";
   const [picked, setDir] = useState<string | null>(null);
   const dir = picked ?? root;
@@ -459,7 +502,7 @@ type PersonCommand = {
   running: boolean;
 };
 
-function TerminalTab({ bot }: { bot: Pick<Bot, "id" | "status"> }) {
+function TerminalTab({ bot, folder }: { bot: Pick<Bot, "id" | "status">; folder?: string }) {
   const { t } = useLingui();
   const queries = useSpaceQueries();
   const busy = working(bot);
@@ -481,7 +524,11 @@ function TerminalTab({ bot }: { bot: Pick<Bot, "id" | "status"> }) {
       { id, command: text, output: "", exitCode: null, running: true },
     ]);
     try {
-      const result = await rpc.computer.run({ botId: bot.id, command: text });
+      const result = await rpc.computer.run({
+        botId: bot.id,
+        command: text,
+        ...(folder ? { folder } : {}),
+      });
       setMine((current) =>
         current.map((item) =>
           item.id === id

@@ -13,7 +13,7 @@ import type { PrismaClient } from "@rakazo/db";
 import { availableInSpace, itemSecretIn } from "@rakazo/db";
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
-import { azureDevOpsPreset } from "./azure-devops-preset.js";
+import { azureDevOpsOperations, azureDevOpsPreset } from "./azure-devops-preset.js";
 import {
   AuthSchema,
   applyCredential,
@@ -32,7 +32,7 @@ import {
   sanitizeConnectorError,
 } from "./connector-safety.js";
 import { executeGraphqlOperation, GraphqlConfigSchema } from "./graphql-connectors.js";
-import { jenkinsPreset } from "./jenkins-preset.js";
+import { jenkinsOperations, jenkinsPreset } from "./jenkins-preset.js";
 import {
   CATALOG_EXECUTE,
   catalogEntries,
@@ -152,6 +152,28 @@ const ApiConfigSchema = z.object({
 });
 
 type ApiOperation = z.infer<typeof ApiOperationSchema>;
+
+/**
+ * Azure DevOps and Jenkins connections keep the operations of the Rakazo they were made with;
+ * a later Rakazo's preset (new tools, new parameters) replaces them, keeping the API version.
+ */
+function currentPresetConfig(
+  config: z.infer<typeof ApiConfigSchema>,
+): z.infer<typeof ApiConfigSchema> {
+  const ids = config.operations.map((operation) => operation.id);
+  if (ids.length && ids.every((id) => id.startsWith("ado_"))) {
+    const version = config.operations.find((operation) => operation.fixedQuery["api-version"])
+      ?.fixedQuery["api-version"];
+    return {
+      ...config,
+      operations: ApiOperationSchema.array().parse(azureDevOpsOperations(version)),
+    };
+  }
+  if (ids.length && ids.every((id) => id.startsWith("jenkins_"))) {
+    return { ...config, operations: ApiOperationSchema.array().parse(jenkinsOperations()) };
+  }
+  return config;
+}
 type InstalledRow = {
   id: string;
   kind: string;
@@ -292,7 +314,7 @@ export class InstalledConnectorProvider implements ConnectorProvider {
         }));
       }
       if (install.kind === "api") {
-        const config = ApiConfigSchema.parse(install.config);
+        const config = currentPresetConfig(ApiConfigSchema.parse(install.config));
         return config.operations.map((operation) => ({
           name: operation.name ?? operation.id,
           description: operationDescription(
@@ -416,7 +438,7 @@ export class InstalledConnectorProvider implements ConnectorProvider {
         };
         return;
       }
-      const config = ApiConfigSchema.parse(install.config);
+      const config = currentPresetConfig(ApiConfigSchema.parse(install.config));
       const operation = config.operations.find(
         (candidate) => candidate.id === (call.route?.toolName ?? call.tool),
       );

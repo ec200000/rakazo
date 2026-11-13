@@ -109,6 +109,8 @@ export const RepoChangesSchema = z.object({
   state: z.enum(["no-repository", "asleep", "not-cloned", "ready"]),
   /** The repository folder, relative to the bot's workspace (as the Files tab lists it). */
   folder: z.string().nullable(),
+  /** All of the bot's repositories, for choosing which one to show. */
+  repositories: z.array(z.object({ folder: z.string(), url: z.string() })).default([]),
   baseBranch: z.string(),
   /** The branch checked out in the folder, and the one the person chose above the chat. */
   branch: z.string().nullable(),

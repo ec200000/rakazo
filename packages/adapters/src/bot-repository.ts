@@ -118,6 +118,41 @@ export function repositoryFolder(repoUrl: string): string {
   return `repos/${name || "repository"}`;
 }
 
+export type BotRepositoryEntry = {
+  url: string;
+  baseBranch: string;
+  jenkinsJob: string | null;
+  /** repos/<name>, unique among the bot's repositories. */
+  folder: string;
+};
+
+/** A bot's repositories with their folders; two repositories with one name get repos/<name>-2. */
+export function botRepositoryEntries(
+  repos: { url: string; baseBranch: string | null; jenkinsJob: string | null }[],
+  defaultBase = "main",
+): BotRepositoryEntry[] {
+  const used = new Set<string>();
+  return repos.flatMap((repo) => {
+    let folder: string;
+    try {
+      folder = repositoryFolder(repo.url);
+    } catch {
+      return [];
+    }
+    let candidate = folder;
+    for (let n = 2; used.has(candidate); n += 1) candidate = `${folder}-${n}`;
+    used.add(candidate);
+    return [
+      {
+        url: repo.url,
+        baseBranch: repo.baseBranch || defaultBase,
+        jenkinsJob: repo.jenkinsJob,
+        folder: candidate,
+      },
+    ];
+  });
+}
+
 /** Clones once, fetches, then switches to the person's branch (made from the base when new). */
 export const REPO_SYNC_SCRIPT = `set -eu
 mkdir -p "$(dirname "$REPO_DIR")"

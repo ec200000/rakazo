@@ -237,6 +237,11 @@ export function azureDevOpsOperations(apiVersion = DEFAULT_AZURE_DEVOPS_API_VERS
             items: object({ id: { type: "string" } }, ["id"]),
             description: "Reviewer ids from ado_find_people.",
           },
+          workItemRefs: {
+            type: "array",
+            items: object({ id: { type: "string" } }, ["id"]),
+            description: 'Azure Boards work items to link, e.g. [{"id": "412"}].',
+          },
         },
         ["project", "repository", "sourceRefName", "targetRefName", "title"],
       ),

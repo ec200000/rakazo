@@ -97,6 +97,8 @@ export interface KubernetesSandboxOptions {
   runAsUser?: number;
   /** Service account of every Computer; its token is never mounted. Unset means "default". */
   serviceAccountName?: string;
+  /** Extra environment for every computer container (package mirrors, JDK locations). */
+  extraEnv?: Record<string, string>;
 }
 
 export interface KubernetesSandboxSdk {
@@ -109,6 +111,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
   private readonly runtimeClassName: string | undefined;
   private readonly runAsUser: number | undefined;
   private readonly serviceAccountName: string | undefined;
+  private readonly extraEnv: Record<string, string>;
   private readonly computerImage: string;
   private readonly cpuLimit: string | undefined;
   private readonly memoryLimit: string | undefined;
@@ -156,8 +159,11 @@ export class KubernetesSandboxProvider implements SandboxProvider {
     this.namespace = options.namespace?.trim() || DEFAULT_NAMESPACE;
     this.runtimeClassName = options.runtimeClassName?.trim() || undefined;
     this.serviceAccountName = options.serviceAccountName?.trim() || undefined;
+    this.extraEnv = options.extraEnv ?? {};
     this.runAsUser =
-      Number.isSafeInteger(options.runAsUser) && options.runAsUser! > 0 ? options.runAsUser : undefined;
+      Number.isSafeInteger(options.runAsUser) && options.runAsUser! > 0
+        ? options.runAsUser
+        : undefined;
     this.computerImage = options.computerImage?.trim() || DEFAULT_COMPUTER_IMAGE;
     this.cpuLimit = options.cpuLimit?.trim() || undefined;
     this.memoryLimit = options.memoryLimit?.trim() || undefined;
@@ -489,6 +495,7 @@ export class KubernetesSandboxProvider implements SandboxProvider {
             env: [
               ...Object.entries(COMPUTER_CACHE_ENV).map(([name, value]) => ({ name, value })),
               { name: "VNC_RESOLUTION", value: "1280x800" },
+              ...Object.entries(this.extraEnv).map(([name, value]) => ({ name, value })),
               ...(trust
                 ? [
                     ...TRUST_BUNDLE_ENV.map((name) => ({ name, value: TRUST_BUNDLE })),

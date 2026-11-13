@@ -23,6 +23,8 @@ export const ROUTINE_WATCH_KINDS = ["files", "command", "tool"] as const;
 export const ROUTINE_WATCH_DEFAULT_MINUTES = 15;
 /** Keep unattended checks from hammering computers or connected services. */
 export const ROUTINE_WATCH_MIN_MINUTES = 5;
+/** A tool watch is one API call and starts no computer, so it may check every minute (CI builds). */
+export const ROUTINE_TOOL_WATCH_MIN_MINUTES = 1;
 
 export const RoutineWatchSchema = z
   .object({
@@ -35,13 +37,20 @@ export const RoutineWatchSchema = z
     everyMinutes: z
       .number()
       .int()
-      .min(ROUTINE_WATCH_MIN_MINUTES)
+      .min(ROUTINE_TOOL_WATCH_MIN_MINUTES)
       .max(1440)
       .default(ROUTINE_WATCH_DEFAULT_MINUTES),
     /** Post "No changes" in chat on every quiet check, not only in history. */
     loud: z.boolean().default(false),
   })
   .superRefine((value, ctx) => {
+    if (value.kind !== "tool" && value.everyMinutes < ROUTINE_WATCH_MIN_MINUTES) {
+      ctx.addIssue({
+        code: "custom",
+        message: `Check a computer at most every ${ROUTINE_WATCH_MIN_MINUTES} minutes`,
+        path: ["everyMinutes"],
+      });
+    }
     if (value.kind === "files" && !value.paths?.length) {
       ctx.addIssue({ code: "custom", message: "Add a file or folder to watch", path: ["paths"] });
     }

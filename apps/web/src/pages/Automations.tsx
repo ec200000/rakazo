@@ -354,7 +354,7 @@ function JobPane({ path }: { path: string }) {
             tool: "jenkins_last_completed_build",
             args: { job: path },
             track: ["number", "result"],
-            everyMinutes: 5,
+            everyMinutes: 1,
           },
         }),
       t`${bot.name} now watches this job and tells you about each finished build.`,

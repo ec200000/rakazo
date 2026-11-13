@@ -3,6 +3,7 @@ import { ORPCError } from "@orpc/server";
 import { runContinueJob } from "@rakazo/adapter-kit";
 import {
   archiveBot,
+  botRepositoryEntries,
   checkpointAndStopComputer,
   defaultVaultItemTitle,
   forgetBotSecret,
@@ -36,6 +37,7 @@ import type { Prisma } from "@rakazo/db";
 import {
   BotSectionNameConflictError,
   botProfileLabelsChanged,
+  botRepositories,
   ComputerLimitError,
   commitBotUpdate,
   expireComputerExecutionLeases,
@@ -53,6 +55,7 @@ import { getLogger } from "@rakazo/logging";
 import type { AgentImportServices } from "../agent-import.js";
 import { agentImportSetupState, createImportedBot, previewAgentImport } from "../agent-import.js";
 import { deleteAgentSecret, listAgentSecrets, putAgentSecret } from "../agent-secrets.js";
+import { syncBranchBuildWatches } from "../auto-routines.js";
 import { botEmailAddress, botEmailAddresses, claimBotEmailAddress } from "../bot-email-address.js";
 import { changedBotSettings } from "../bot-setting-analytics.js";
 import { createBotFromTemplate, listBotTemplates } from "../bot-templates.js";
@@ -406,27 +409,48 @@ export function botsRoutes(ctx: RouterContext) {
       repositoryBranches: authed.bots.repositoryBranches.handler(async ({ context, input }) => {
         const bot = await deps.prisma.bot.findFirst({
           where: { id: input.botId, spaceId: context.actor.spaceId },
-          select: { repoUrl: true },
+          select: { repos: true, repoUrl: true, repoBaseBranch: true },
         });
         if (!bot) throw new IsolationError();
-        if (!bot.repoUrl) return { branches: [] };
-        try {
-          return {
-            branches: await listRemoteBranches(
-              bot.repoUrl,
-              await repositoryCredential(
-                { prisma: deps.prisma, secretStore: deps.secrets },
-                context.actor,
-                bot.repoUrl,
-              ),
-            ),
-          };
-        } catch (error) {
-          return {
-            branches: [],
-            error: error instanceof Error ? error.message : "Could not list branches",
-          };
-        }
+        const entries = botRepositoryEntries(botRepositories(bot));
+        if (entries.length === 0) return { branches: [], repositories: [] };
+        // Every repository's branches, read at once; one branch name then serves all of them.
+        const listed = await Promise.all(
+          entries.map(async (entry) => {
+            try {
+              const branches = await listRemoteBranches(
+                entry.url,
+                await repositoryCredential(
+                  { prisma: deps.prisma, secretStore: deps.secrets },
+                  context.actor,
+                  entry.url,
+                ),
+              );
+              return { folder: entry.folder, branches, error: undefined };
+            } catch (error) {
+              return {
+                folder: entry.folder,
+                branches: [] as string[],
+                error: error instanceof Error ? error.message : "Could not list branches",
+              };
+            }
+          }),
+        );
+        const names = [...new Set(listed.flatMap((repo) => repo.branches))].sort((a, b) =>
+          a.localeCompare(b),
+        );
+        const failed = listed.filter((repo) => repo.error);
+        return {
+          branches: names,
+          repositories: listed.map((repo) => ({
+            folder: repo.folder,
+            branches: repo.branches,
+            ...(repo.error ? { error: repo.error } : {}),
+          })),
+          ...(failed.length
+            ? { error: failed.map((repo) => `${repo.folder}: ${repo.error}`).join("; ") }
+            : {}),
+        };
       }),
       update: authed.bots.update.handler(async ({ context, input }) => {
         const existing = await repos.getBot(context.actor, input.botId);
@@ -504,14 +528,16 @@ export function botsRoutes(ctx: RouterContext) {
               ? { fleetManagement: input.fleetManagement }
               : {}),
             ...(input.replyMode !== undefined ? { replyMode: input.replyMode } : {}),
-            ...(input.repoUrl !== undefined
+            ...(input.repos !== undefined
               ? {
-                  repoUrl: input.repoUrl,
-                  // Another repository's branches do not carry over.
-                  ...(input.repoUrl === null ? { repoBaseBranch: null, repoBranch: null } : {}),
+                  repos: input.repos as Prisma.InputJsonValue,
+                  // The old single-repository columns now live in the list.
+                  repoUrl: null,
+                  repoBaseBranch: null,
+                  // Without repositories there is no branch to keep.
+                  ...(input.repos.length === 0 ? { repoBranch: null } : {}),
                 }
               : {}),
-            ...(input.repoBaseBranch !== undefined ? { repoBaseBranch: input.repoBaseBranch } : {}),
             ...(input.repoBranch !== undefined ? { repoBranch: input.repoBranch } : {}),
             ...(input.disabledBuiltinTools !== undefined
               ? { disabledBuiltinTools: input.disabledBuiltinTools }
@@ -527,6 +553,10 @@ export function botsRoutes(ctx: RouterContext) {
         });
         for (const setting of changedBotSettings(existing, input)) {
           deps.analytics?.capture(context.actor.userId, { name: "bot_setting_changed", setting });
+        }
+        // The branch's Jenkins builds follow the repositories and the branch the person picked.
+        if (input.repos !== undefined || input.repoBranch !== undefined) {
+          await syncBranchBuildWatches(deps, context.actor, input.botId);
         }
         const bots = await repos.listBots(context.actor);
         const bot = bots.find((b) => b.id === input.botId);

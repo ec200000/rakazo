@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Routine, RoutineEmailSenders } from "@rakazo/contracts";
-import { ROUTINE_WATCH_MIN_MINUTES } from "@rakazo/contracts";
+import { ROUTINE_TOOL_WATCH_MIN_MINUTES, ROUTINE_WATCH_MIN_MINUTES } from "@rakazo/contracts";
 import {
   Button,
   DropdownMenu,
@@ -136,7 +136,7 @@ export function WatchTriggerCard({
           <Input
             id={`${id}-every`}
             type="number"
-            min={ROUTINE_WATCH_MIN_MINUTES}
+            min={watch.kind === "tool" ? ROUTINE_TOOL_WATCH_MIN_MINUTES : ROUTINE_WATCH_MIN_MINUTES}
             max={1440}
             value={watch.everyMinutes || ""}
             onChange={(e) =>
@@ -150,7 +150,12 @@ export function WatchTriggerCard({
                 ...watch,
                 everyMinutes: Math.min(
                   1440,
-                  Math.max(ROUTINE_WATCH_MIN_MINUTES, Math.round(watch.everyMinutes)),
+                  Math.max(
+                    watch.kind === "tool"
+                      ? ROUTINE_TOOL_WATCH_MIN_MINUTES
+                      : ROUTINE_WATCH_MIN_MINUTES,
+                    Math.round(watch.everyMinutes),
+                  ),
                 ),
               })
             }
@@ -196,8 +201,8 @@ export function MessageTriggerCard({
       : provider === "slack"
         ? t`Slack message`
         : provider === "teams"
-        ? t`Teams message`
-        : t`Message event`;
+          ? t`Teams message`
+          : t`Message event`;
   return (
     <div className="rounded-xl border border-border p-3">
       <div className="flex items-center gap-2.5 px-0.5">

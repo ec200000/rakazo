@@ -19,6 +19,7 @@ import type { PrismaClient } from "@rakazo/db";
 import { getLogger } from "@rakazo/logging";
 import { normalizeWorkspacePath, teamBotWorkspaceDirectory } from "./computer-support.js";
 import { createStagingDirectory, LocalAgentHomeStore } from "./home.js";
+import { packageMirrorHomeFiles, packageMirrorsFromEnv } from "./package-mirrors.js";
 import { isSandboxDamagedError } from "./sandbox-errors.js";
 import { shouldSkipPortableWorkspaceFile, WORKSPACE_SAVE_LIMITS } from "./workspace-save-policy.js";
 
@@ -107,6 +108,7 @@ export async function ensureComputerWorkspaceLayout(
   botId: string | undefined,
   context: AdapterContext,
 ): Promise<void> {
+  await writePackageMirrorFiles(sandbox, computer, context);
   if (scope !== "team" || !botId) return;
   await manageComputerWorkspaceDirectories(
     sandbox,
@@ -591,4 +593,27 @@ export async function manageComputerWorkspaceDirectories(
   if (code !== 0)
     throw new Error(`Could not prepare Team Computer folders${stderr ? `: ${stderr.trim()}` : ""}`);
   return [];
+}
+
+/**
+ * The deployment's package mirror settings (Maven, Gradle, Helm) in a Kubernetes computer's home,
+ * written each time it starts; a person's own computer is never touched.
+ */
+async function writePackageMirrorFiles(
+  sandbox: SandboxProvider,
+  computer: ComputerRef,
+  context: AdapterContext,
+) {
+  if (computer.kind !== "kubernetes" || !process.env.RAKAZO_PACKAGE_MIRRORS?.trim()) return;
+  for (const file of packageMirrorHomeFiles(packageMirrorsFromEnv())) {
+    await sandbox
+      .writeFile(
+        computer,
+        { path: file.path, content: new TextEncoder().encode(file.content) },
+        context,
+      )
+      .catch((error: unknown) =>
+        getLogger().warn("package mirror file", { path: file.path, error: String(error) }),
+      );
+  }
 }

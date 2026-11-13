@@ -25,6 +25,7 @@ import { comparePlugins, containsSecret, matchesPluginQuery } from "@rakazo/core
 import type { Prisma } from "@rakazo/db";
 import { AVAILABILITY_SELECT, availableInSpace, itemSecretIn, spaceAvailability } from "@rakazo/db";
 import { requireAdmin } from "../admins.js";
+import { syncAllBranchBuildWatches } from "../auto-routines.js";
 import { isDeploymentInstall } from "../deployment-capabilities.js";
 import { searchIntegrationCatalog } from "../integration-catalog.js";
 import { assertMcpRemoteEndpoint, mayUsePrivateEndpoint } from "../mcp-servers.js";
@@ -317,6 +318,10 @@ export function capabilitiesRoutes(ctx: RouterContext) {
             },
           });
         });
+        // Bots with Jenkins jobs start watching their branch's builds once Jenkins is connected.
+        if (input.kind === "api" && jenkinsPreset(deps.env.jenkinsUrl)?.url === source) {
+          await syncAllBranchBuildWatches(deps, context.actor);
+        }
         return {
           id: row.id,
           kind: row.kind as "skill" | "plugin" | "mcp" | "api" | "connection",

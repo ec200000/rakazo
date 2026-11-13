@@ -86,6 +86,7 @@ function mapBot(
     repoUrl?: string | null;
     repoBaseBranch?: string | null;
     repoBranch?: string | null;
+    repos?: unknown;
     instructionHistory?: unknown;
     color: string;
     avatarSet?: string;
@@ -130,8 +131,7 @@ function mapBot(
     title: "",
     description: bot.description,
     instructions: bot.instructions,
-    repoUrl: bot.repoUrl ?? null,
-    repoBaseBranch: bot.repoBaseBranch ?? null,
+    repos: botRepositories(bot),
     repoBranch: bot.repoBranch ?? null,
     instructionHistory: InstructionVersionSchema.array().parse(bot.instructionHistory ?? []),
     color: bot.color,
@@ -778,4 +778,31 @@ export function createRepos(
       return mapBot(updated);
     },
   };
+}
+
+/** A bot's repositories; a row from before the list keeps its one repository. */
+export function botRepositories(bot: {
+  repos?: unknown;
+  repoUrl?: string | null;
+  repoBaseBranch?: string | null;
+}): { url: string; baseBranch: string | null; jenkinsJob: string | null }[] {
+  if (Array.isArray(bot.repos)) {
+    return bot.repos.flatMap((raw) => {
+      if (!raw || typeof raw !== "object") return [];
+      const entry = raw as Record<string, unknown>;
+      if (typeof entry.url !== "string" || !entry.url) return [];
+      return [
+        {
+          url: entry.url,
+          baseBranch:
+            typeof entry.baseBranch === "string" && entry.baseBranch ? entry.baseBranch : null,
+          jenkinsJob:
+            typeof entry.jenkinsJob === "string" && entry.jenkinsJob ? entry.jenkinsJob : null,
+        },
+      ];
+    });
+  }
+  return bot.repoUrl
+    ? [{ url: bot.repoUrl, baseBranch: bot.repoBaseBranch ?? null, jenkinsJob: null }]
+    : [];
 }

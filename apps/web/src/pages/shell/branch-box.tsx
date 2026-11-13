@@ -16,11 +16,7 @@ const SHOWN = 50;
  * new name; the bot never names branches itself, and creates a new one from the base branch
  * the next time it syncs.
  */
-export function BranchBox({
-  bot,
-}: {
-  bot: Pick<Bot, "id" | "repoUrl" | "repoBranch" | "repoBaseBranch">;
-}) {
+export function BranchBox({ bot }: { bot: Pick<Bot, "id" | "repos" | "repoBranch"> }) {
   const { t } = useLingui();
   const queries = useSpaceQueries();
   const queryClient = useQueryClient();
@@ -35,6 +31,9 @@ export function BranchBox({
     staleTime: 30_000,
   });
   const typed = query.trim();
+  const repoCount = branches.data?.repositories?.length ?? 0;
+  const inRepos = (name: string) =>
+    (branches.data?.repositories ?? []).filter((repo) => repo.branches.includes(name)).length;
   const list = (branches.data?.branches ?? []).filter((name) =>
     name.toLowerCase().includes(typed.toLowerCase()),
   );
@@ -84,9 +83,17 @@ export function BranchBox({
       </PopoverTrigger>
       <PopoverContent initialFocus={inputRef} className="w-80 gap-2 p-3" align="end">
         <p className="text-body-sm text-muted-foreground">
-          <Trans>
-            Pick a branch, or type a new name to create it from {bot.repoBaseBranch ?? "main"}.
-          </Trans>
+          {(bot.repos?.length ?? 0) > 1 ? (
+            <Trans>
+              One branch for all {bot.repos?.length ?? 0} repositories. Pick one, or type a new name
+              to create it from each repository's base branch.
+            </Trans>
+          ) : (
+            <Trans>
+              Pick a branch, or type a new name to create it from{" "}
+              {bot.repos?.[0]?.baseBranch ?? "main"}.
+            </Trans>
+          )}
         </p>
         <Input
           ref={inputRef}
@@ -139,7 +146,12 @@ export function BranchBox({
               <span className="w-4 shrink-0">
                 {name === bot.repoBranch ? <Check className="size-4" /> : null}
               </span>
-              <span className="truncate">{name}</span>
+              <span className="min-w-0 flex-1 truncate">{name}</span>
+              {repoCount > 1 ? (
+                <span className="shrink-0 text-label text-muted-foreground">
+                  {inRepos(name)}/{repoCount}
+                </span>
+              ) : null}
             </button>
           ))}
           {list.length > SHOWN ? (

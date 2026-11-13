@@ -15,6 +15,7 @@ import {
 } from "./bot-repository.js";
 import { botRepositoryInstruction } from "./run-instructions.js";
 import { REPO_TOOL_NAMES } from "./run-tool-selection.js";
+import { botRepositoryPlan } from "./run-tools-repo.js";
 
 const ENV = { ...process.env, GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_NOSYSTEM: "1" };
 let root: string;
@@ -194,32 +195,39 @@ describe("repository settings", () => {
       expect(GitRepositoryUrlSchema.safeParse(bad).success).toBe(false);
   });
 
-  it("tells the bot its repository and to ask for a branch it does not have", () => {
-    expect(
-      botRepositoryInstruction({ repoUrl: null, repoBaseBranch: null, repoBranch: null }),
-    ).toBe("");
-    const waiting = botRepositoryInstruction({
-      repoUrl: "https://ado.example/_git/r",
-      repoBaseBranch: null,
-      repoBranch: null,
-    });
-    expect(waiting).toContain("base branch main");
+  it("tells the bot its repositories and to ask for a branch it does not have", () => {
+    expect(botRepositoryInstruction(botRepositoryPlan({ repos: [], repoBranch: null }))).toBe("");
+    const waiting = botRepositoryInstruction(
+      botRepositoryPlan({ repos: [{ url: "https://ado.example/_git/r" }], repoBranch: null }),
+    );
+    expect(waiting).toContain("folder repos/r, base branch main");
     expect(waiting).toContain("ask them to choose or type one in the Branch box");
-    expect(
-      botRepositoryInstruction({
-        repoUrl: "https://a/_git/r",
-        repoBaseBranch: "dev",
-        repoBranch: "f",
-      }),
-    ).toContain("working branch f");
-    const offer = botRepositoryInstruction({
-      repoUrl: "https://a/_git/r",
-      repoBaseBranch: "dev",
-      repoBranch: "f",
+    const two = botRepositoryPlan({
+      repos: [
+        { url: "https://a/_git/service", baseBranch: "dev", jenkinsJob: "team/job/service" },
+        { url: "https://b/_git/service", baseBranch: "main" },
+        { url: "https://a/_git/client", baseBranch: "not a branch!" },
+      ],
+      repoBranch: "feature/login",
     });
-    expect(offer).toContain("offer a pull request yourself: call ask_user");
-    expect(offer).toContain("into dev");
-    expect(offer).toContain("Open it only after they agree");
+    expect(two.repositories.map((repo) => [repo.folder, repo.baseBranch, repo.jenkinsJob])).toEqual(
+      [
+        ["repos/service", "dev", "team/job/service"],
+        ["repos/service-2", "main", null],
+        ["repos/client", "main", null],
+      ],
+    );
+    const offer = botRepositoryInstruction(two);
+    expect(offer).toContain("You work on 3 git repositories");
+    expect(offer).toContain("working branch feature/login");
+    expect(offer).toContain("for each repository you pushed, call ask_user");
+    expect(offer).toContain("workItemRefs");
+    // A bot from before the list keeps its one repository.
+    expect(
+      botRepositoryPlan({ repoUrl: "https://a/_git/old", repoBaseBranch: "trunk" }).repositories,
+    ).toEqual([
+      { url: "https://a/_git/old", baseBranch: "trunk", jenkinsJob: null, folder: "repos/old" },
+    ]);
     expect([...REPO_TOOL_NAMES]).toEqual(["repo_status", "repo_sync", "repo_push"]);
   });
 });
