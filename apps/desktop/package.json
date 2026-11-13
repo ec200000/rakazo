@@ -117,14 +117,19 @@
       ]
     },
     "nsis": {
-      "artifactName": "${productName}-Setup-${version}.${ext}"
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "include": "assets/installer.nsh",
+      "warningsAsErrors": false
     },
     "win": {
       "icon": "assets/icon.ico",
       "target": [
         "nsis"
       ],
-      "verifyUpdateCodeSignature": true
+      "verifyUpdateCodeSignature": false
     },
     "linux": {
       "executableName": "rakazo",
@@ -135,9 +140,8 @@
     },
     "publish": [
       {
-        "provider": "github",
-        "owner": "elie222",
-        "repo": "rakazo"
+        "provider": "generic",
+        "url": "https://rakazo-server.invalid/desktop-updates/win"
       }
     ]
   }

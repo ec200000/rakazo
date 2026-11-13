@@ -39,7 +39,7 @@ import {
   windowFrom,
 } from "./app-window.js";
 import type { ElectronAutoUpdater } from "./auto-update.js";
-import { DesktopUpdateController } from "./auto-update.js";
+import { DesktopUpdateController, serverUpdateFeed } from "./auto-update.js";
 import { createBadgeHandler } from "./badge.js";
 import { openBrowserAuth } from "./browser-auth.js";
 import { appWindowTargets, desktop } from "./desktop-state.js";
@@ -103,6 +103,15 @@ const appOpener = createAppOpener(openAppOnce);
 /** Prior app window kept until setup is persisted (or the switch is abandoned). */
 let pendingPreviousWindow: BrowserWindow | null = null;
 const reportsErrors = desktopReportsErrors(app.isPackaged);
+/** `--rakazo-server-url=https://rakazo.example`, for a shortcut or an admin's install script. */
+function serverUrlArgument(argv: readonly string[]): string | undefined {
+  const prefix = "--rakazo-server-url=";
+  const value = argv
+    .find((arg) => arg.startsWith(prefix))
+    ?.slice(prefix.length)
+    .trim();
+  return value || undefined;
+}
 const updaterEnvironment = {
   // A `--dir` build has no update feed to read.
   packaged: app.isPackaged && existsSync(path.join(process.resourcesPath, "app-update.yml")),
@@ -507,6 +516,8 @@ app.whenReady().then(async () => {
     process.platform === "linux"
       ? (update) => verifyDownloadedLinuxUpdate(update, (url, signal) => net.fetch(url, { signal }))
       : undefined,
+    // Updates come from the Rakazo server this app is connected to, as Echo's desktop app does.
+    () => serverUpdateFeed(remoteServerOrigin(), process.platform),
   );
   try {
     desktop.hostComputer = await prepareHostComputer(userDataDir);
@@ -599,7 +610,7 @@ app.whenReady().then(async () => {
   });
   desktop.currentSetup = await readSetup(userDataDir);
   const target = resolveStartupTarget({
-    envUrl: process.env.RAKAZO_WEB_URL,
+    envUrl: process.env.RAKAZO_WEB_URL ?? serverUrlArgument(process.argv),
     saved: desktop.currentSetup,
     forceSetup: process.env.RAKAZO_FORCE_SETUP === "1",
   });

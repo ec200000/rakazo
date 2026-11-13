@@ -6,6 +6,7 @@ import {
   initialUpdateState,
   MIN_CHECK_INTERVAL_MS,
   reduceUpdateState,
+  serverUpdateFeed,
   shouldCheck,
   updaterSupport,
 } from "./auto-update.js";
@@ -786,6 +787,50 @@ describe("DesktopUpdateController", () => {
       expect(fake.updater.autoInstallOnAppQuit).toBe(true);
       controller.installOnQuit();
       expect(fake.updater.quitAndInstall).not.toHaveBeenCalled();
+    });
+  });
+});
+
+describe("updates from the connected Rakazo server", () => {
+  it("names the platform's folder on that server", () => {
+    expect(serverUpdateFeed("https://rakazo.apps.example", "win32")).toBe(
+      "https://rakazo.apps.example/desktop-updates/win/",
+    );
+    expect(serverUpdateFeed("https://rakazo.apps.example/", "darwin")).toBe(
+      "https://rakazo.apps.example/desktop-updates/mac/",
+    );
+    expect(serverUpdateFeed(null, "win32")).toBeNull();
+  });
+
+  it("waits for a server, then points the updater at it and follows a switch", async () => {
+    const setFeedURL = vi.fn();
+    const fake = fakeUpdater({ setFeedURL });
+    let origin: string | null = null;
+    let now = 1_000;
+    const controller = new DesktopUpdateController(
+      packaged,
+      async () => fake.updater,
+      { now: () => now, iso: () => NOW },
+      undefined,
+      undefined,
+      () => serverUpdateFeed(origin, "win32"),
+    );
+    await controller.check(false);
+    expect(fake.updater.checkForUpdates).not.toHaveBeenCalled();
+    origin = "https://one.example";
+    await controller.check(true);
+    expect(setFeedURL).toHaveBeenLastCalledWith({
+      provider: "generic",
+      url: "https://one.example/desktop-updates/win/",
+    });
+    expect(fake.updater.checkForUpdates).toHaveBeenCalledTimes(1);
+    origin = "https://two.example";
+    now += 120_000;
+    fake.emit("update-not-available");
+    await controller.check(true);
+    expect(setFeedURL).toHaveBeenLastCalledWith({
+      provider: "generic",
+      url: "https://two.example/desktop-updates/win/",
     });
   });
 });

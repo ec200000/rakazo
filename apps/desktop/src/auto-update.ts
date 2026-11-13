@@ -251,6 +251,22 @@ export interface ElectronAutoUpdater {
   checkForUpdates: () => Promise<unknown>;
   downloadUpdate: () => Promise<unknown>;
   quitAndInstall: (isSilent?: boolean, isForceRunAfter?: boolean) => void;
+  setFeedURL?: (options: { provider: "generic"; url: string }) => void;
+}
+
+/**
+ * Where a self-hosted server publishes this platform's installers, like Echo's desktop updates:
+ * `<server>/desktop-updates/win/latest.yml` and the installer beside it. Null before the app is
+ * connected to a server.
+ */
+export function serverUpdateFeed(origin: string | null, platform: string): string | null {
+  if (!origin) return null;
+  const folder = platform === "win32" ? "win" : platform === "darwin" ? "mac" : "linux";
+  try {
+    return new URL(`desktop-updates/${folder}/`, `${origin.replace(/\/+$/, "")}/`).href;
+  } catch {
+    return null;
+  }
 }
 
 export interface DownloadedUpdate {
@@ -307,6 +323,7 @@ export class DesktopUpdateController {
   private downloadPromise: Promise<DesktopUpdateState> | null = null;
   private checkWasRequested = false;
   private installStarted = false;
+  private feed: string | null = null;
 
   constructor(
     private readonly environment: UpdaterEnvironment,
@@ -314,6 +331,8 @@ export class DesktopUpdateController {
     private readonly clock: UpdateClock = systemClock,
     private readonly onInstallFailure?: () => void,
     private readonly verifyDownload?: DownloadVerifier,
+    /** The connected server's update feed; checks wait until there is one. */
+    private readonly feedUrl?: () => string | null,
   ) {
     this.current = initialUpdateState(environment);
   }
@@ -443,6 +462,14 @@ export class DesktopUpdateController {
     }
     const updater = await this.updater();
     if (updater === null) return this.current;
+    if (this.feedUrl) {
+      const feed = this.feedUrl();
+      if (feed === null) return this.current;
+      if (feed !== this.feed) {
+        updater.setFeedURL?.({ provider: "generic", url: feed });
+        this.feed = feed;
+      }
+    }
     now = this.clock.now();
     if (!shouldCheck(this.current, now, this.lastCheck, checkOptions)) return this.current;
     this.lastCheck = now;

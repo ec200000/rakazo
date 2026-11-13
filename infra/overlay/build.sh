@@ -25,6 +25,15 @@ mkdir -p "$context/apps/api" "$context/apps/worker" "$context/apps/web" "$contex
 cp -R apps/api/dist "$context/apps/api/dist"
 cp -R apps/worker/dist "$context/apps/worker/dist"
 cp -R apps/web/dist "$context/apps/web/dist"
+# The Windows desktop installer and its update feed, when built (build-windows-desktop.sh): the web
+# app serves them at /desktop-updates/win/, where installed apps look for updates.
+if [[ -f apps/desktop/out/latest.yml ]]; then
+  installer=$(sed -n 's/^path: //p' apps/desktop/out/latest.yml)
+  mkdir -p "$context/apps/web/dist/desktop-updates/win"
+  cp apps/desktop/out/latest.yml "apps/desktop/out/$installer" "apps/desktop/out/$installer.blockmap" \
+    "$context/apps/web/dist/desktop-updates/win/"
+  echo "Serving the Windows desktop app $installer at /desktop-updates/win/"
+fi
 # The schema and migrations the bundled database client was generated from.
 cp -R packages/db/prisma "$context/packages/db/prisma"
 cp infra/overlay/Dockerfile "$context/"
