@@ -71,7 +71,7 @@ export function BranchBox({ bot }: { bot: Pick<Bot, "id" | "repos" | "repoBranch
           <Button
             variant="floating"
             data-testid="branch-box"
-            className="app-no-drag h-9 max-w-56 gap-1.5 px-3"
+            className="app-no-drag h-9 min-w-0 max-w-56 shrink gap-1.5 px-3"
             aria-label={t`Working branch`}
           />
         }

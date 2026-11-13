@@ -47,7 +47,7 @@ export function ChatHeader({
   const [inviteOpen, setInviteOpen] = useState(false);
   const macChrome = windowChromeKind(desktopBridge()) === "darwin";
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 grid grid-cols-[1fr_minmax(0,auto)_1fr] items-center gap-2 px-3 py-[13px] md:px-[22px] [&_button]:pointer-events-auto">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 grid grid-cols-[minmax(0,1fr)_minmax(7rem,auto)_minmax(0,1fr)] items-center gap-2 px-3 py-[13px] md:px-[22px] [&_button]:pointer-events-auto">
       <div className="flex items-center">
         {macChrome ? <WindowChrome className="md:hidden" /> : null}
         <Button
@@ -86,7 +86,7 @@ export function ChatHeader({
           </span>
         </span>
       </Button>
-      <div className="flex items-center justify-self-end gap-2">
+      <div className="flex min-w-0 items-center justify-self-end gap-2">
         {!inGroup && active?.repos?.length ? <BranchBox bot={active} /> : null}
         {!inGroup && active?.repos?.length ? (
           <IconTooltip label={codeOpen ? t`Hide code` : t`Show code`}>
@@ -98,7 +98,7 @@ export function ChatHeader({
               aria-pressed={codeOpen}
               data-active={codeOpen ? "" : undefined}
               onClick={onToggleCode}
-              className="app-no-drag"
+              className="app-no-drag shrink-0"
             >
               <Code strokeWidth={1.7} className="size-[17px]" />
             </Button>

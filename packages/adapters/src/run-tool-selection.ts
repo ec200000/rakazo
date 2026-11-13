@@ -95,6 +95,16 @@ export function offersAgentConnectionTools(options: {
   );
 }
 
+/** oc, kubectl and helm against the person's own clusters, offered once they connect one. */
+export const CLUSTER_TOOL_NAMES: ReadonlySet<string> = new Set(["cluster_read", "cluster_change"]);
+
+/** Test containers beside the bot's computer, offered where computers run on Kubernetes. */
+export const SERVICE_TOOL_NAMES: ReadonlySet<string> = new Set([
+  "service_start",
+  "service_list",
+  "service_stop",
+]);
+
 /** Tools for the bot's git repository, offered only to bots that have one. */
 export const REPO_TOOL_NAMES: ReadonlySet<string> = new Set([
   "repo_status",
@@ -128,6 +138,10 @@ export function selectBuiltinToolsForRun(options: {
   disabledBuiltinTools?: readonly string[];
   /** The bot has a git repository to work on (repo_status, repo_sync, repo_push). */
   repository?: boolean;
+  /** The person connected an OpenShift or Kubernetes cluster (cluster_read, cluster_change). */
+  clusters?: boolean;
+  /** The computer can start service pods beside it (service_start, service_list, service_stop). */
+  services?: boolean;
   fleetManagement?: boolean;
   /** A follow-up run whose source message the user wrote. */
   followUpFromUser?: boolean;
@@ -172,6 +186,8 @@ export function selectBuiltinToolsForRun(options: {
     (tool) =>
       !disabled.has(tool.name) &&
       (Boolean(options.repository) || !REPO_TOOL_NAMES.has(tool.name)) &&
+      (Boolean(options.clusters) || !CLUSTER_TOOL_NAMES.has(tool.name)) &&
+      (Boolean(options.services) || !SERVICE_TOOL_NAMES.has(tool.name)) &&
       (options.trigger !== "created" || CREATED_RUN_TOOL_NAMES.has(tool.name)) &&
       (options.trigger !== BACKGROUND_HELPER_TRIGGER ||
         BACKGROUND_HELPER_TOOL_NAMES.has(tool.name)) &&

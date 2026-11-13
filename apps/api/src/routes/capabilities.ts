@@ -13,6 +13,8 @@ import {
   jenkinsInstallConfig,
   jenkinsPreset,
   mcpSourcePresets,
+  OPENSHIFT_PRESET_ID,
+  openshiftInstallConfig,
   pluginPreviewDto,
   prepareApiInstall,
   prepareGraphqlInstall,
@@ -241,6 +243,22 @@ export function capabilitiesRoutes(ctx: RouterContext) {
                 throw new Error("Azure DevOps is not configured on this server");
               source = azureDevOps.url;
               config = azureDevOpsInstallConfig(deps.env.azureDevOpsApiVersion);
+            }
+            // An OpenShift cluster: the person's own API URL and token; bots run oc and helm with it.
+            if (config.preset === OPENSHIFT_PRESET_ID) {
+              let api: URL;
+              try {
+                api = new URL(source);
+              } catch {
+                throw new Error(
+                  "Enter the cluster's API URL, e.g. https://api.cluster.example:6443",
+                );
+              }
+              if (api.protocol !== "https:")
+                throw new Error("The cluster's API URL must use https");
+              if (!credential) throw new Error("Paste your token from oc whoami -t");
+              source = api.origin;
+              config = openshiftInstallConfig();
             }
             // The Jenkins preset: the deployment's controller, its operations, the person's token.
             if (config.preset === JENKINS_PRESET_ID) {

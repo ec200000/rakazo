@@ -12,6 +12,7 @@ import {
   BUILTIN_AGENT_TOOL_NAMES,
   PAGE_BROWSER_TOOL_NAMES,
 } from "./run-tool-selection.js";
+import { clusterTools } from "./run-tools-cluster.js";
 import { computerTools, pageBrowserTool } from "./run-tools-computer.js";
 import { emailTools } from "./run-tools-email.js";
 import { feedbackTools } from "./run-tools-feedback.js";
@@ -25,6 +26,7 @@ import { preferenceTools } from "./run-tools-preferences.js";
 import { purchaseTools } from "./run-tools-purchases.js";
 import { repoTools } from "./run-tools-repo.js";
 import { secretTools } from "./run-tools-secrets.js";
+import { serviceTools } from "./run-tools-services.js";
 import { taskTools } from "./run-tools-tasks.js";
 import {
   USER_COMPUTER_ACT_TOOL,
@@ -40,6 +42,8 @@ import { argumentGiven } from "./update-bot-patch.js";
 const TOOL_HANDLERS = new Map<string, ToolHandler>([
   ...Object.entries(computerTools),
   ...Object.entries(repoTools),
+  ...Object.entries(clusterTools),
+  ...Object.entries(serviceTools),
   ...Object.entries(fileTools),
   ...Object.entries(pageTools),
   ...Object.entries(memoryTools),

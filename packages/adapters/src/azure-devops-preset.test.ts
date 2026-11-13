@@ -63,6 +63,7 @@ describe("Azure DevOps preset", () => {
       ["executor", undefined],
       ["echo", "https://echo.example/mcp"],
       ["azure-devops", COLLECTION],
+      ["openshift", undefined],
     ]);
   });
 

@@ -839,6 +839,10 @@ msgstr "패스키 추가"
 msgid "Add provider"
 msgstr "서비스 추가"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Add repository"
+msgstr ""
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add rule"
 msgstr "규칙 추가"
@@ -2927,7 +2931,7 @@ msgid "Could not save the credential"
 msgstr "자격 증명을 저장하지 못했습니다"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Could not save the repository"
+msgid "Could not save the repositories"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx
@@ -4436,6 +4440,10 @@ msgstr ""
 msgid "Jenkins jobs"
 msgstr ""
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Jenkins multibranch job"
+msgstr ""
+
 #: src/pages/Automations.tsx
 msgid "Job"
 msgstr ""
@@ -5579,6 +5587,11 @@ msgstr "1일 {0}에"
 msgid "On the button"
 msgstr "버튼 금액"
 
+#. placeholder {0}: bot.repos?.length ?? 0
+#: src/pages/shell/branch-box.tsx
+msgid "One branch for all {0} repositories. Pick one, or type a new name to create it from each repository's base branch."
+msgstr ""
+
 #: src/lib/cron.ts
 msgid "One-time"
 msgstr "한 번"
@@ -5927,7 +5940,7 @@ msgstr "사진"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "{GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}개 선택"
 
-#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#. placeholder {0}: bot.repos?.[0]?.baseBranch ?? "main"
 #: src/pages/shell/branch-box.tsx
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr ""
@@ -6392,6 +6405,10 @@ msgstr "헤더 삭제"
 msgid "Remove message trigger"
 msgstr "메시지 트리거 제거"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Remove repository"
+msgstr ""
+
 #: src/pages/RoutineSchedule.tsx
 msgid "Remove schedule"
 msgstr "일정 제거"
@@ -6492,6 +6509,10 @@ msgid "Replying to {0}"
 msgstr "{0}에게 답장 중"
 
 #: src/pages/shell/repository-settings.tsx
+msgid "Repositories"
+msgstr ""
+
+#: src/pages/shell/code-panel.tsx
 msgid "Repository"
 msgstr ""
 
@@ -6771,7 +6792,7 @@ msgid "Save marketplace"
 msgstr ""
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Save repository"
+msgid "Save repositories"
 msgstr ""
 
 #: src/components/ComputerMaintenanceActions.tsx
@@ -7701,7 +7722,7 @@ msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next
 msgstr ""
 
 #: src/pages/shell/repository-settings.tsx
-msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgid "The git repositories this bot works on. Choose one branch for all of them above the chat; git signs in with your Azure DevOps connection from Integrations. With a Jenkins job, the bot watches its branch's builds and asks you before fixing a failure."
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -8294,6 +8315,10 @@ msgstr "기본값 사용"
 msgid "Use defaults for {label}"
 msgstr "{label}에 기본값 사용"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Use each repository's https clone URL, without a user name or token."
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr "이 봇에서 사용"
@@ -8319,7 +8344,7 @@ msgid "Use Rakazo credits"
 msgstr "Rakazo 크레딧 사용"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Use the repository's https clone URL, without a user name or token."
+msgid "Use the Jenkins job's path as in its URL after /job/, e.g. team/job/app."
 msgstr ""
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx

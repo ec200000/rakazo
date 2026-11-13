@@ -640,7 +640,7 @@ function scheduleWatch(
       others.length > 1 ? `${others.slice(0, -1).join(", ")} or ${others.at(-1)}` : others[0];
     return {
       success: false,
-      error: `A watch takes no schedule: it checks every watch.everyMinutes minutes (${ROUTINE_WATCH_MIN_MINUTES} to 1440; a tool watch from 1). Call again without ${named}.`,
+      error: `A watch takes no schedule: it checks every watch.everyMinutes minutes (${ROUTINE_WATCH_MIN_MINUTES} to 1440). Call again without ${named}.`,
     };
   }
   // Some models send the object as JSON text; take it either way.

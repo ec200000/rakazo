@@ -501,6 +501,78 @@ export const builtinAgentTools: ConnectorTool[] = [
     },
   },
   {
+    name: "cluster_read",
+    description:
+      "Run one read-only oc, kubectl or helm command (get, describe, logs, diff, helm list/status/template/diff, --dry-run) against a cluster the person connected, with their own access. No pipes or redirects; credentials are added for you.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        command: { type: "string", description: "e.g. oc get pods -n payments" },
+        cluster: {
+          type: "string",
+          description: "The connected cluster's name; omit when there is one.",
+        },
+        cwd: { type: "string", description: "Folder to run in, e.g. repos/app for a local chart." },
+      },
+      required: ["command"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "cluster_change",
+    description:
+      "Change a cluster with one oc, kubectl or helm command (helm upgrade/install/rollback/uninstall, oc apply/delete/scale/rollout restart), as the person. Preview it first with cluster_read; the person approves every change after seeing the namespace, your summary and the preview.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        command: { type: "string" },
+        namespace: { type: "string", description: "The namespace the change is in." },
+        summary: { type: "string", description: "One or two sentences: what changes and why." },
+        preview: {
+          type: "string",
+          description: "The diff or dry-run output from cluster_read, shortened if long.",
+        },
+        cluster: { type: "string" },
+        cwd: { type: "string" },
+      },
+      required: ["command", "namespace", "summary", "preview"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "service_start",
+    description:
+      "Start a test container beside your computer (e.g. postgres:16 for tests) and get the host and port to reach it from the computer. Images come through the deployment's image mirror. Give writablePaths for folders it writes to (e.g. /var/lib/postgresql/data).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        name: { type: "string", description: "Short name, e.g. db." },
+        image: { type: "string", description: "e.g. postgres:16" },
+        port: { type: "integer" },
+        env: { type: "object", additionalProperties: { type: "string" } },
+        args: { type: "array", items: { type: "string" } },
+        writablePaths: { type: "array", items: { type: "string" } },
+      },
+      required: ["name", "image", "port"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "service_list",
+    description: "List the test containers running beside your computer.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "service_stop",
+    description: "Stop a test container you started.",
+    inputSchema: {
+      type: "object",
+      properties: { name: { type: "string" } },
+      required: ["name"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "shell",
     description:
       "Run a command inside this bot's computer. cwd defaults to the bot's folder on a Team Computer and the workspace root on a Private Computer. Output can arrive while the command is still running; tell the user any one-time code or sign-in URL in that output. A command is stopped after a few minutes, so on Linux or macOS start longer work, such as a coding agent CLI, as its own statement `nohup <command> < /dev/null > <log> 2>&1 &`, never after `&&`, and read the log to follow it.",

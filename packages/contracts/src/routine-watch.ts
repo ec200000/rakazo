@@ -23,8 +23,15 @@ export const ROUTINE_WATCH_KINDS = ["files", "command", "tool"] as const;
 export const ROUTINE_WATCH_DEFAULT_MINUTES = 15;
 /** Keep unattended checks from hammering computers or connected services. */
 export const ROUTINE_WATCH_MIN_MINUTES = 5;
-/** A tool watch is one API call and starts no computer, so it may check every minute (CI builds). */
+/** A CI build check (a Jenkins tool) is one small API call, so it may run every minute. */
 export const ROUTINE_TOOL_WATCH_MIN_MINUTES = 1;
+
+/** The shortest interval a watch may use: a minute for Jenkins builds, five for everything else. */
+export function routineWatchMinMinutes(watch: { kind: string; tool?: string | undefined }) {
+  return watch.kind === "tool" && watch.tool?.startsWith("jenkins_")
+    ? ROUTINE_TOOL_WATCH_MIN_MINUTES
+    : ROUTINE_WATCH_MIN_MINUTES;
+}
 
 export const RoutineWatchSchema = z
   .object({
@@ -44,10 +51,13 @@ export const RoutineWatchSchema = z
     loud: z.boolean().default(false),
   })
   .superRefine((value, ctx) => {
-    if (value.kind !== "tool" && value.everyMinutes < ROUTINE_WATCH_MIN_MINUTES) {
+    if (value.everyMinutes < routineWatchMinMinutes(value)) {
       ctx.addIssue({
-        code: "custom",
-        message: `Check a computer at most every ${ROUTINE_WATCH_MIN_MINUTES} minutes`,
+        code: "too_small",
+        origin: "number",
+        minimum: ROUTINE_WATCH_MIN_MINUTES,
+        inclusive: true,
+        message: `Too small: expected number to be >=${ROUTINE_WATCH_MIN_MINUTES}`,
         path: ["everyMinutes"],
       });
     }

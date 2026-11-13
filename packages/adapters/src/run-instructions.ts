@@ -475,6 +475,17 @@ export function botRepositoryInstruction(bot: {
   ].join(" ");
 }
 
+/** The person's own clusters, which the bot may read freely and change only with approval. */
+export function clusterInstruction(clusters: { name: string; url: string }[]): string {
+  if (clusters.length === 0) return "";
+  const list = clusters.map((cluster) => `${cluster.name} (${cluster.url})`).join(", ");
+  return [
+    `You can use the person's own access to these clusters: ${list}.`,
+    "Read with cluster_read (oc, kubectl or helm). Before any change, preview it with cluster_read (helm diff upgrade, helm upgrade --dry-run, oc diff), then call cluster_change with the namespace, a short summary and the preview; the person approves each change.",
+    "Never put tokens in commands; credentials are added for you.",
+  ].join(" ");
+}
+
 /** The bot's own address, which it may give out, and the inbox tools this run has. */
 export function botEmailInstruction(
   address: string,

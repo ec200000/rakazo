@@ -142,7 +142,9 @@ async function runInRepository(
       ? credential
         ? " The server refused the saved credential; ask the person to check their Azure DevOps connection in Integrations."
         : " The server asked for a login; ask the person to connect Azure DevOps in Integrations with a personal access token."
-      : "";
+      : code !== 0 && /would be overwritten|Please commit your changes or stash them/.test(`${safeOut}${safeErr}`)
+        ? ` ${repo.folder} has uncommitted changes that switching to ${branch} would overwrite. Show the person what changed (git status) and ask whether to commit them on the current branch, stash them, or discard them; do nothing to them before they answer.`
+        : "";
   return {
     repository: repo.url,
     folder: repo.folder,

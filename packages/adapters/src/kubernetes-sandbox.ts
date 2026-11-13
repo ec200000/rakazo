@@ -30,6 +30,7 @@ import { COMPUTER_CACHE_ENV } from "@rakazo/core/node/desktop-runtime";
 import type { RawExecEvent } from "./exec-computer.js";
 import { ExecComputer, COMPUTER_IMAGE_WORKSPACE as WORKSPACE } from "./exec-computer.js";
 import { LinuxDesktop, onBotScreen } from "./linux-desktop.js";
+import { botServices } from "./run-tools-services.js";
 import { sandboxNotFoundError } from "./sandbox-errors.js";
 
 const DISPLAY_START = 20;
@@ -398,10 +399,17 @@ export class KubernetesSandboxProvider implements SandboxProvider {
 
   async stop(computer: ComputerRef, _context: AdapterContext): Promise<void> {
     await this.deletePod(this.podId(computer));
+    // Test containers the bot started beside this computer go with it.
+    await botServices()
+      ?.stopForComputer(this.podId(computer))
+      .catch(() => undefined);
   }
 
   async destroy(computer: ComputerRef, _context: AdapterContext): Promise<void> {
     await this.deletePod(this.podId(computer));
+    await botServices()
+      ?.stopForComputer(this.podId(computer))
+      .catch(() => undefined);
   }
 
   private async clients(): Promise<KubernetesSandboxSdk> {

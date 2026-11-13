@@ -57,6 +57,7 @@ import { createBrowserProvider } from "./browser-provider-factory.js";
 import { partitionTools } from "./builtin-tool-bridge.js";
 import { agentConnectionTools, builtinAgentTools } from "./builtin-tools.js";
 import { cloudAgentsEnabled } from "./cloud-agent-factory.js";
+import { personClusters } from "./cluster-access.js";
 import { mergeConnectedPlugins, needsLivePluginSync } from "./composio-connector.js";
 import { diskNoteInstruction, recordComputerDisk } from "./computer-disk.js";
 import { scheduleComputerSleep } from "./computer-idle.js";
@@ -136,6 +137,7 @@ import {
   BOT_DIRECTORY_LIMIT,
   botEmailInstruction,
   botRepositoryInstruction,
+  clusterInstruction,
   dockerComputerToolInstruction,
   persistentComputerInstruction,
   runIdentityInstruction,
@@ -186,6 +188,7 @@ import {
 import { applyTool } from "./run-tools.js";
 import { historyMyChatsAllowed } from "./run-tools-memory.js";
 import { botRepositoryPlan } from "./run-tools-repo.js";
+import { botServices } from "./run-tools-services.js";
 import type { UserComputerState } from "./run-tools-user-computer.js";
 import { USER_COMPUTER_SHELL_TOOL, userComputerOwner } from "./run-tools-user-computer.js";
 import { createRunTrustLoaders } from "./run-trust.js";
@@ -1258,6 +1261,12 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             userComputerScreen = device.platform === "darwin" || device.platform === "win32";
           } else userComputer = "offline";
         }
+        // The owner's own clusters; people chatting in a shared channel never reach them.
+        const clusters = nonOwnerChatRun
+          ? []
+          : await personClusters(deps.prisma, { spaceId: run.spaceId, userId: run.userId }).catch(
+              () => [],
+            );
         const builtins = [
           ...selectBuiltinToolsForRun({
             ticketBoardEnabled: deps.ticketBoardEnabled,
@@ -1272,6 +1281,8 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             semanticMemoryEnabled,
             semanticMemoryForgets: Boolean(semanticMemory?.forget),
             repository: botRepositoryPlan(bot).repositories.length > 0,
+            clusters: clusters.length > 0,
+            services: botServices() !== null && !nonOwnerChatRun,
             mediaImagesEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.images),
             mediaVideoEnabled: Boolean(deps.artifacts && mediaGeneration?.capabilities.video),
             paidServicesEnabled: Boolean(paidServices),
@@ -1771,6 +1782,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
                 botInstructions: [
                   runIdentityInstruction(bot, run.trigger),
                   botRepositoryInstruction(botRepositoryPlan(bot)),
+                  clusterInstruction(clusters),
                   botEmail
                     ? botEmailInstruction(botEmail, {
                         // Only the tools this bot has: its owner may turn any of them off.

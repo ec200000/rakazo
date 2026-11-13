@@ -839,6 +839,10 @@ msgstr "Dodaj klucz dostępu"
 msgid "Add provider"
 msgstr "Dodaj dostawcę"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Add repository"
+msgstr "Dodaj repozytorium"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add rule"
 msgstr "Dodaj regułę"
@@ -2927,8 +2931,8 @@ msgid "Could not save the credential"
 msgstr "Nie udało się zapisać danych uwierzytelniających"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Could not save the repository"
-msgstr "Nie udało się zapisać repozytorium"
+msgid "Could not save the repositories"
+msgstr "Nie udało się zapisać repozytoriów"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
@@ -4436,6 +4440,10 @@ msgstr "Jenkins tego nie przyjął"
 msgid "Jenkins jobs"
 msgstr "Zadania Jenkinsa"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Jenkins multibranch job"
+msgstr "Zadanie wielogałęziowe Jenkinsa"
+
 #: src/pages/Automations.tsx
 msgid "Job"
 msgstr "Zadanie"
@@ -5579,6 +5587,11 @@ msgstr "pierwszego dnia miesiąca o {0}"
 msgid "On the button"
 msgstr "Na przycisku"
 
+#. placeholder {0}: bot.repos?.length ?? 0
+#: src/pages/shell/branch-box.tsx
+msgid "One branch for all {0} repositories. Pick one, or type a new name to create it from each repository's base branch."
+msgstr "Jedna gałąź dla wszystkich repozytoriów ({0}). Wybierz ją lub wpisz nową nazwę, aby utworzyć ją z gałęzi bazowej każdego repozytorium."
+
 #: src/lib/cron.ts
 msgid "One-time"
 msgstr "Jednorazowo"
@@ -5927,7 +5940,7 @@ msgstr "Zdjęcie"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "Wybierz {GROUP_MEMBER_MIN}-{GROUP_MEMBER_MAX}"
 
-#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#. placeholder {0}: bot.repos?.[0]?.baseBranch ?? "main"
 #: src/pages/shell/branch-box.tsx
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr "Wybierz gałąź albo wpisz nową nazwę, aby utworzyć ją z {0}."
@@ -6392,6 +6405,10 @@ msgstr "Usuń nagłówek"
 msgid "Remove message trigger"
 msgstr "Usuń wyzwalacz wiadomości"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Remove repository"
+msgstr "Usuń repozytorium"
+
 #: src/pages/RoutineSchedule.tsx
 msgid "Remove schedule"
 msgstr "Usuń harmonogram"
@@ -6492,6 +6509,10 @@ msgid "Replying to {0}"
 msgstr "Odpowiedź do {0}"
 
 #: src/pages/shell/repository-settings.tsx
+msgid "Repositories"
+msgstr "Repozytoria"
+
+#: src/pages/shell/code-panel.tsx
 msgid "Repository"
 msgstr "Repozytorium"
 
@@ -6771,8 +6792,8 @@ msgid "Save marketplace"
 msgstr "Zapisz marketplace"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Save repository"
-msgstr "Zapisz repozytorium"
+msgid "Save repositories"
+msgstr "Zapisz repozytoria"
 
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
@@ -7701,8 +7722,8 @@ msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next
 msgstr "Folder jest na {otherBranch}, a nie na {0}. Bot przełączy się przy następnej synchronizacji."
 
 #: src/pages/shell/repository-settings.tsx
-msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
-msgstr "Repozytorium git, na którym pracuje ten bot. Gałąź wybierasz nad czatem; git loguje się Twoim połączeniem Azure DevOps z Integracji."
+msgid "The git repositories this bot works on. Choose one branch for all of them above the chat; git signs in with your Azure DevOps connection from Integrations. With a Jenkins job, the bot watches its branch's builds and asks you before fixing a failure."
+msgstr "Repozytoria git, nad którymi pracuje ten bot. Wybierz jedną gałąź dla wszystkich nad czatem; git loguje się twoim połączeniem Azure DevOps z Integracji. Z zadaniem Jenkinsa bot obserwuje buildy swojej gałęzi i pyta cię przed naprawą błędu."
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -8294,6 +8315,10 @@ msgstr "Użyj domyślnych"
 msgid "Use defaults for {label}"
 msgstr "Użyj domyślnych dla {label}"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Use each repository's https clone URL, without a user name or token."
+msgstr "Użyj adresu https do klonowania każdego repozytorium, bez nazwy użytkownika i tokenu."
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr "Użyj w tym bocie"
@@ -8319,8 +8344,8 @@ msgid "Use Rakazo credits"
 msgstr "Użyj środków Rakazo"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Use the repository's https clone URL, without a user name or token."
-msgstr "Użyj adresu https do klonowania repozytorium, bez nazwy użytkownika i tokenu."
+msgid "Use the Jenkins job's path as in its URL after /job/, e.g. team/job/app."
+msgstr "Użyj ścieżki zadania Jenkinsa z jego adresu po /job/, np. team/job/app."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."

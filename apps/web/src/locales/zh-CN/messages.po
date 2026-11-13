@@ -839,6 +839,10 @@ msgstr "添加通行密钥"
 msgid "Add provider"
 msgstr "添加提供商"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Add repository"
+msgstr "添加仓库"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add rule"
 msgstr "添加规则"
@@ -2927,7 +2931,7 @@ msgid "Could not save the credential"
 msgstr "无法保存凭据"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Could not save the repository"
+msgid "Could not save the repositories"
 msgstr "无法保存仓库"
 
 #: src/pages/shell/message-cards.tsx
@@ -4436,6 +4440,10 @@ msgstr "Jenkins 未接受该操作"
 msgid "Jenkins jobs"
 msgstr "Jenkins 任务"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Jenkins multibranch job"
+msgstr "Jenkins 多分支任务"
+
 #: src/pages/Automations.tsx
 msgid "Job"
 msgstr "任务"
@@ -5579,6 +5587,11 @@ msgstr "1 日 {0}"
 msgid "On the button"
 msgstr "按钮上的金额"
 
+#. placeholder {0}: bot.repos?.length ?? 0
+#: src/pages/shell/branch-box.tsx
+msgid "One branch for all {0} repositories. Pick one, or type a new name to create it from each repository's base branch."
+msgstr "所有 {0} 个仓库共用一个分支。选择一个，或输入新名称，从每个仓库的基础分支创建。"
+
 #: src/lib/cron.ts
 msgid "One-time"
 msgstr "一次性"
@@ -5927,7 +5940,7 @@ msgstr "照片"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "选 {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX} 个"
 
-#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#. placeholder {0}: bot.repos?.[0]?.baseBranch ?? "main"
 #: src/pages/shell/branch-box.tsx
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr "选择一个分支，或输入新名称以基于 {0} 创建。"
@@ -6392,6 +6405,10 @@ msgstr "移除请求头"
 msgid "Remove message trigger"
 msgstr "移除消息触发器"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Remove repository"
+msgstr "移除仓库"
+
 #: src/pages/RoutineSchedule.tsx
 msgid "Remove schedule"
 msgstr "移除计划"
@@ -6492,6 +6509,10 @@ msgid "Replying to {0}"
 msgstr "正在回复 {0}"
 
 #: src/pages/shell/repository-settings.tsx
+msgid "Repositories"
+msgstr "仓库"
+
+#: src/pages/shell/code-panel.tsx
 msgid "Repository"
 msgstr "仓库"
 
@@ -6771,7 +6792,7 @@ msgid "Save marketplace"
 msgstr "保存市场"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Save repository"
+msgid "Save repositories"
 msgstr "保存仓库"
 
 #: src/components/ComputerMaintenanceActions.tsx
@@ -7701,8 +7722,8 @@ msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next
 msgstr "文件夹当前在 {otherBranch} 上，而不是 {0}。机器人下次同步时会切换。"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
-msgstr "此机器人工作的 git 仓库。在聊天上方选择分支；git 使用你在集成中的 Azure DevOps 连接登录。"
+msgid "The git repositories this bot works on. Choose one branch for all of them above the chat; git signs in with your Azure DevOps connection from Integrations. With a Jenkins job, the bot watches its branch's builds and asks you before fixing a failure."
+msgstr "此机器人处理的 git 仓库。在聊天上方为所有仓库选择一个分支；git 使用你在集成中的 Azure DevOps 连接登录。设置 Jenkins 任务后，机器人会关注其分支的构建，并在修复失败前询问你。"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -8294,6 +8315,10 @@ msgstr "使用默认设置"
 msgid "Use defaults for {label}"
 msgstr "{label}使用默认设置"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Use each repository's https clone URL, without a user name or token."
+msgstr "请使用每个仓库的 https 克隆 URL，不要包含用户名或令牌。"
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr "用于此 Bot"
@@ -8319,8 +8344,8 @@ msgid "Use Rakazo credits"
 msgstr "使用 Rakazo 额度"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Use the repository's https clone URL, without a user name or token."
-msgstr "请使用仓库的 https 克隆 URL，不要包含用户名或令牌。"
+msgid "Use the Jenkins job's path as in its URL after /job/, e.g. team/job/app."
+msgstr "使用 Jenkins 任务 URL 中 /job/ 之后的路径，例如 team/job/app。"
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."

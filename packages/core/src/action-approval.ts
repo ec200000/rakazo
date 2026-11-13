@@ -61,6 +61,8 @@ const EXPLICIT_APPROVAL_BUILTIN_TOOLS = new Set([
   "create_space",
   "set_child_instructions",
   "set_child_bot_model",
+  // A change to a real cluster: the person sees the namespace, summary and preview every time.
+  "cluster_change",
 ]);
 
 const UNATTENDED_SAFE_BUILTIN_TOOLS = new Set([

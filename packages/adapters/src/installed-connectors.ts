@@ -14,6 +14,7 @@ import { availableInSpace, itemSecretIn } from "@rakazo/db";
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
 import { azureDevOpsOperations, azureDevOpsPreset } from "./azure-devops-preset.js";
+import { openshiftPreset } from "./cluster-access.js";
 import {
   AuthSchema,
   applyCredential,
@@ -102,6 +103,7 @@ export function mcpSourcePresets(
       : []),
     ...(azureDevOps ? [azureDevOps] : []),
     ...(jenkins ? [jenkins] : []),
+    openshiftPreset(),
   ];
 }
 

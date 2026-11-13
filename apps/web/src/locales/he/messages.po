@@ -839,6 +839,10 @@ msgstr "הוספת מפתח גישה"
 msgid "Add provider"
 msgstr "הוספת ספק"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Add repository"
+msgstr "הוסף מאגר"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add rule"
 msgstr "הוספת כלל"
@@ -2927,8 +2931,8 @@ msgid "Could not save the credential"
 msgstr "לא ניתן לשמור את פרטי הגישה"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Could not save the repository"
-msgstr "לא ניתן לשמור את המאגר"
+msgid "Could not save the repositories"
+msgstr "לא ניתן לשמור את המאגרים"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
@@ -4436,6 +4440,10 @@ msgstr "Jenkins לא קיבל את זה"
 msgid "Jenkins jobs"
 msgstr "ה-jobs של Jenkins"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Jenkins multibranch job"
+msgstr "Job מרובה ענפים ב-Jenkins"
+
 #: src/pages/Automations.tsx
 msgid "Job"
 msgstr "Job"
@@ -5579,6 +5587,11 @@ msgstr "ב-1 לחודש בשעה {0}"
 msgid "On the button"
 msgstr "על הכפתור"
 
+#. placeholder {0}: bot.repos?.length ?? 0
+#: src/pages/shell/branch-box.tsx
+msgid "One branch for all {0} repositories. Pick one, or type a new name to create it from each repository's base branch."
+msgstr "ענף אחד לכל {0} המאגרים. בחר אחד, או הקלד שם חדש כדי ליצור אותו מענף הבסיס של כל מאגר."
+
 #: src/lib/cron.ts
 msgid "One-time"
 msgstr "חד-פעמי"
@@ -5927,7 +5940,7 @@ msgstr "תמונה"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "יש לבחור {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 
-#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#. placeholder {0}: bot.repos?.[0]?.baseBranch ?? "main"
 #: src/pages/shell/branch-box.tsx
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr "בחרו ענף, או הקלידו שם חדש כדי ליצור אותו מתוך {0}."
@@ -6392,6 +6405,10 @@ msgstr "הסרת header"
 msgid "Remove message trigger"
 msgstr "הסרת טריגר ההודעה"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Remove repository"
+msgstr "הסר מאגר"
+
 #: src/pages/RoutineSchedule.tsx
 msgid "Remove schedule"
 msgstr "הסרת התזמון"
@@ -6492,6 +6509,10 @@ msgid "Replying to {0}"
 msgstr "תשובה ל-{0}"
 
 #: src/pages/shell/repository-settings.tsx
+msgid "Repositories"
+msgstr "מאגרים"
+
+#: src/pages/shell/code-panel.tsx
 msgid "Repository"
 msgstr "מאגר"
 
@@ -6771,8 +6792,8 @@ msgid "Save marketplace"
 msgstr "שמירת המרקטפלייס"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Save repository"
-msgstr "שמירת המאגר"
+msgid "Save repositories"
+msgstr "שמור מאגרים"
 
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
@@ -7701,8 +7722,8 @@ msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next
 msgstr "התיקייה נמצאת על {otherBranch} ולא על {0}. הבוט יעבור בסנכרון הבא."
 
 #: src/pages/shell/repository-settings.tsx
-msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
-msgstr "מאגר ה-git שהבוט הזה עובד עליו. את הענף בוחרים מעל הצ'אט; git מתחבר עם חיבור ה-Azure DevOps שלכם מהאינטגרציות."
+msgid "The git repositories this bot works on. Choose one branch for all of them above the chat; git signs in with your Azure DevOps connection from Integrations. With a Jenkins job, the bot watches its branch's builds and asks you before fixing a failure."
+msgstr "מאגרי ה-git שהבוט עובד עליהם. בחר ענף אחד לכולם מעל הצ'אט; git מתחבר עם חיבור ה-Azure DevOps שלך מהאינטגרציות. עם job של Jenkins, הבוט עוקב אחרי ה-builds של הענף ושואל אותך לפני שהוא מתקן כישלון."
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -8294,6 +8315,10 @@ msgstr "שימוש בברירות המחדל"
 msgid "Use defaults for {label}"
 msgstr "שימוש בברירות המחדל עבור {label}"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Use each repository's https clone URL, without a user name or token."
+msgstr "השתמש בכתובת השכפול ב-https של כל מאגר, בלי שם משתמש או טוקן."
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr "שימוש בבוט הזה"
@@ -8319,8 +8344,8 @@ msgid "Use Rakazo credits"
 msgstr "שימוש בקרדיטים של Rakazo"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Use the repository's https clone URL, without a user name or token."
-msgstr "השתמשו בכתובת ה-https לשכפול המאגר, בלי שם משתמש או טוקן."
+msgid "Use the Jenkins job's path as in its URL after /job/, e.g. team/job/app."
+msgstr "השתמש בנתיב ה-job של Jenkins כפי שהוא בכתובת אחרי /job/, למשל team/job/app."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."

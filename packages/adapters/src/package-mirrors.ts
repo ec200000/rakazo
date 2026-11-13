@@ -69,7 +69,8 @@ export function packageMirrorEnv(mirrors: PackageMirrors): Record<string, string
       COREPACK_ENABLE_DOWNLOAD_PROMPT: "0",
     });
   }
-  if (mirrors.maven) env.MVNW_REPOURL = mirrors.maven.replace(/\/+$/, "");
+  // The Maven wrapper downloads Maven itself from here.
+  if (mirrors.maven) Object.assign(env, { MVNW_REPOURL: mirrors.maven.replace(/\/+$/, "") });
   return env;
 }
 

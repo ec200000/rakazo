@@ -839,6 +839,10 @@ msgstr "Add passkey"
 msgid "Add provider"
 msgstr "Add provider"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Add repository"
+msgstr "Add repository"
+
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Add rule"
 msgstr "Add rule"
@@ -2927,8 +2931,8 @@ msgid "Could not save the credential"
 msgstr "Could not save the credential"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Could not save the repository"
-msgstr "Could not save the repository"
+msgid "Could not save the repositories"
+msgstr "Could not save the repositories"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not save this choice"
@@ -4436,6 +4440,10 @@ msgstr "Jenkins did not accept that"
 msgid "Jenkins jobs"
 msgstr "Jenkins jobs"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Jenkins multibranch job"
+msgstr "Jenkins multibranch job"
+
 #: src/pages/Automations.tsx
 msgid "Job"
 msgstr "Job"
@@ -5579,6 +5587,11 @@ msgstr "on the 1st at {0}"
 msgid "On the button"
 msgstr "On the button"
 
+#. placeholder {0}: bot.repos?.length ?? 0
+#: src/pages/shell/branch-box.tsx
+msgid "One branch for all {0} repositories. Pick one, or type a new name to create it from each repository's base branch."
+msgstr "One branch for all {0} repositories. Pick one, or type a new name to create it from each repository's base branch."
+
 #: src/lib/cron.ts
 msgid "One-time"
 msgstr "One-time"
@@ -5927,7 +5940,7 @@ msgstr "Photo"
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 
-#. placeholder {0}: bot.repoBaseBranch ?? "main"
+#. placeholder {0}: bot.repos?.[0]?.baseBranch ?? "main"
 #: src/pages/shell/branch-box.tsx
 msgid "Pick a branch, or type a new name to create it from {0}."
 msgstr "Pick a branch, or type a new name to create it from {0}."
@@ -6392,6 +6405,10 @@ msgstr "Remove header"
 msgid "Remove message trigger"
 msgstr "Remove message trigger"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Remove repository"
+msgstr "Remove repository"
+
 #: src/pages/RoutineSchedule.tsx
 msgid "Remove schedule"
 msgstr "Remove schedule"
@@ -6492,6 +6509,10 @@ msgid "Replying to {0}"
 msgstr "Replying to {0}"
 
 #: src/pages/shell/repository-settings.tsx
+msgid "Repositories"
+msgstr "Repositories"
+
+#: src/pages/shell/code-panel.tsx
 msgid "Repository"
 msgstr "Repository"
 
@@ -6771,8 +6792,8 @@ msgid "Save marketplace"
 msgstr "Save marketplace"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Save repository"
-msgstr "Save repository"
+msgid "Save repositories"
+msgstr "Save repositories"
 
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
@@ -7701,8 +7722,8 @@ msgid "The folder is on {otherBranch}, not on {0}. The bot switches when it next
 msgstr "The folder is on {otherBranch}, not on {0}. The bot switches when it next syncs."
 
 #: src/pages/shell/repository-settings.tsx
-msgid "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
-msgstr "The git repository this bot works on. Choose the branch above the chat; git signs in with your Azure DevOps connection from Integrations."
+msgid "The git repositories this bot works on. Choose one branch for all of them above the chat; git signs in with your Azure DevOps connection from Integrations. With a Jenkins job, the bot watches its branch's builds and asks you before fixing a failure."
+msgstr "The git repositories this bot works on. Choose one branch for all of them above the chat; git signs in with your Azure DevOps connection from Integrations. With a Jenkins job, the bot watches its branch's builds and asks you before fixing a failure."
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
@@ -8294,6 +8315,10 @@ msgstr "Use defaults"
 msgid "Use defaults for {label}"
 msgstr "Use defaults for {label}"
 
+#: src/pages/shell/repository-settings.tsx
+msgid "Use each repository's https clone URL, without a user name or token."
+msgstr "Use each repository's https clone URL, without a user name or token."
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr "Use in this bot"
@@ -8319,8 +8344,8 @@ msgid "Use Rakazo credits"
 msgstr "Use Rakazo credits"
 
 #: src/pages/shell/repository-settings.tsx
-msgid "Use the repository's https clone URL, without a user name or token."
-msgstr "Use the repository's https clone URL, without a user name or token."
+msgid "Use the Jenkins job's path as in its URL after /job/, e.g. team/job/app."
+msgstr "Use the Jenkins job's path as in its URL after /job/, e.g. team/job/app."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."

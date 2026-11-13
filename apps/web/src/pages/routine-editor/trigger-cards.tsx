@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { Routine, RoutineEmailSenders } from "@rakazo/contracts";
-import { ROUTINE_TOOL_WATCH_MIN_MINUTES, ROUTINE_WATCH_MIN_MINUTES } from "@rakazo/contracts";
+import { routineWatchMinMinutes } from "@rakazo/contracts";
 import {
   Button,
   DropdownMenu,
@@ -136,7 +136,7 @@ export function WatchTriggerCard({
           <Input
             id={`${id}-every`}
             type="number"
-            min={watch.kind === "tool" ? ROUTINE_TOOL_WATCH_MIN_MINUTES : ROUTINE_WATCH_MIN_MINUTES}
+            min={routineWatchMinMinutes(watch)}
             max={1440}
             value={watch.everyMinutes || ""}
             onChange={(e) =>
@@ -150,12 +150,7 @@ export function WatchTriggerCard({
                 ...watch,
                 everyMinutes: Math.min(
                   1440,
-                  Math.max(
-                    watch.kind === "tool"
-                      ? ROUTINE_TOOL_WATCH_MIN_MINUTES
-                      : ROUTINE_WATCH_MIN_MINUTES,
-                    Math.round(watch.everyMinutes),
-                  ),
+                  Math.max(routineWatchMinMinutes(watch), Math.round(watch.everyMinutes)),
                 ),
               })
             }
