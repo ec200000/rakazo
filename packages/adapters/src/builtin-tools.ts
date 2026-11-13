@@ -542,7 +542,7 @@ export const builtinAgentTools: ConnectorTool[] = [
   {
     name: "service_start",
     description:
-      "Start a test container beside your computer (e.g. postgres:16 for tests) and get the host and port to reach it from the computer. Images come through the deployment's image mirror. Give writablePaths for folders it writes to (e.g. /var/lib/postgresql/data).",
+      "Start a test container beside your computer (e.g. postgres:16 for tests) and get the host and port to reach it from the computer. Images come through the deployment's image mirror. Give writablePaths for folders it writes to; it runs as a non-root user, so point data folders at a subfolder (postgres: writablePaths /var/lib/postgresql/data and /var/run/postgresql, and env PGDATA=/var/lib/postgresql/data/db).",
     inputSchema: {
       type: "object",
       properties: {
